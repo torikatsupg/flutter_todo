@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_todo/router/my_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Text("hello"),
-        ),
-      ),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const MyRouter();
   }
 }
