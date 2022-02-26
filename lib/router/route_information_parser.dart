@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/router/todo_path.dart';
 
-class RouteInformationParserImpl extends RouteInformationParser<TodoPath> {
-
+class RouteInformationParserImpl extends RouteInformationParser<BasePath> {
   @override
-  Future<TodoPath> parseRouteInformation(
+  Future<BasePath> parseRouteInformation(
       RouteInformation routeInformation) async {
-    if (routeInformation.location == '/root') {
-      return RootPath();
+    if (routeInformation.location == '/signin') {
+      return SigninPath();
+    } else if (routeInformation.location == '/signup') {
+      return SignupPath();
+    } else if (routeInformation.location == '/home/todo?tab=todo') {
+      return TodoTabPath();
+    } else if (routeInformation.location == '/home/todo?tab=done') {
+      return DoneTabPath();
+    } else if (routeInformation.location == '/home/todo') {
+      return TodoTabPath();
+    } else if (routeInformation.location == '/home/mypage') {
+      return MyPagePath();
     } else if (routeInformation.location == '/home') {
-      return HomePath();
+      return TodoTabPath();
     } else {
-      return RootPath();
+      return TodoTabPath();
     }
   }
 
   @override
-  RouteInformation restoreRouteInformation(TodoPath configuration) {
-    if (configuration is RootPath) {
-      return const RouteInformation(location: '/root');
-    } else if (configuration is HomePath) {
-      return const RouteInformation(location: '/home');
-    } else {
-      return const RouteInformation(location: '/root');
-    }
-  }
+  RouteInformation restoreRouteInformation(BasePath configuration) =>
+      RouteInformation(location: configuration.location);
 }

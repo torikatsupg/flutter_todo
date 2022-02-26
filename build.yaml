@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      source_gen|combining_builder:
+        options:
+          build_extensions:
+            '^lib/{{}}.dart': 'lib/generated/{{}}.g.dart'
+      freezed:
+        generate_for:
+          include: 
+            - 'lib/model/**.dart'
+            - 'lib/request/**.dart'
+        options:
+          build_extensions:
+            '^lib/{{}}.dart': 'lib/generated/{{}}.freezed.dart'
+          # explicit_to_json: true
