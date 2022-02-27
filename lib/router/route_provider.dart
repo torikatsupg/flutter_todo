@@ -17,7 +17,14 @@ class RouteNotifier extends StateNotifier<BasePath> {
   void setTabIndex(int tabIndex) =>
       state = TodoTabPathFactory.fromIndex(tabIndex);
 
-  bool pop() => false;
+  bool pop() {
+    final path = state;
+    if (path is IdPath) {
+      set(HomePathFactory.fromIndex(path.index, path.tabIndex));
+      return false;
+    }
+    return false;
+  }
 }
 
 // =======

@@ -2,9 +2,14 @@ abstract class BasePath {
   String get location;
 }
 
+class UnknownPath extends BasePath {
+  @override
+  String get location => '/unkown';
+}
+
 class SignupPath extends BasePath {
   @override
-  String get location => 'signup';
+  String get location => '/signup';
 }
 
 class SigninPath extends BasePath {
@@ -44,6 +49,17 @@ class DoneTabPath extends TodoPath {
   int get tabIndex => 1;
 }
 
+class IdPath extends TodoPath {
+  IdPath(this.id, this.tabIndex);
+  final String id;
+
+  @override
+  final int tabIndex;
+
+  @override
+  String get location => '${super.location}/id/$id?tab=done';
+}
+
 class MyPagePath extends HomePath {
   @override
   String get location => '${super.location}/mypage';
@@ -79,3 +95,4 @@ class TodoTabPathFactory {
     }
   }
 }
+
