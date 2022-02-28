@@ -27,7 +27,7 @@ class _MyRouterState extends ConsumerState<MyRouter> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routeInformationParser: _routeInformationParser,
-      routerDelegate: _routerDelegate
+      routerDelegate: _routerDelegate,
     );
   }
 }
