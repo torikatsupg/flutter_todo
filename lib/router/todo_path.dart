@@ -1,31 +1,48 @@
 abstract class BasePath {
-  String get location;
+  String get location => '$paths?$querys';
+  String get paths;
+  String get querys;
 }
 
 class UnknownPath extends BasePath {
   @override
-  String get location => '/unkown';
+  String get paths => '/unknown';
+
+  @override
+  String get querys => '';
 }
 
 class SignupPath extends BasePath {
   @override
-  String get location => '/signup';
+  String get paths => '/signup';
+
+  @override
+  String get querys => '';
 }
 
 class SigninPath extends BasePath {
   @override
-  String get location => '/signin';
+  String get paths => '/signin';
+
+  @override
+  String get querys => '';
 }
 
 abstract class HomePath extends BasePath {
   @override
-  String get location => '/home';
+  String get paths => '/home';
+
+  @override
+  String get querys => '';
   int get index;
 }
 
 abstract class TodoPath extends HomePath {
   @override
-  String get location => '${super.location}/todo';
+  String get paths => '${super.paths}/todo';
+
+  @override
+  String get querys => '';
 
   @override
   int get index => 0;
@@ -35,7 +52,10 @@ abstract class TodoPath extends HomePath {
 
 class TodoTabPath extends TodoPath {
   @override
-  String get location => '${super.location}?tab=todo';
+  String get paths => '${super.paths}/todo';
+
+  @override
+  String get querys => 'tab=todo';
 
   @override
   int get tabIndex => 0;
@@ -43,7 +63,10 @@ class TodoTabPath extends TodoPath {
 
 class DoneTabPath extends TodoPath {
   @override
-  String get location => '${super.location}?tab=done';
+  String get paths => '${super.paths}/todo';
+
+  @override
+  String get querys => 'tab=done';
 
   @override
   int get tabIndex => 1;
@@ -57,12 +80,26 @@ class IdPath extends TodoPath {
   final int tabIndex;
 
   @override
-  String get location => '${super.location}/id/$id?tab=done';
+  String get paths => '${super.paths}/id/$id';
+  
+  @override
+  String get querys => '';
+}
+
+class EditPath extends IdPath {
+  EditPath(String id, int tabIndex) : super(id, tabIndex);
+
+  @override
+  String get paths => '${super.paths}/edit';
+  @override
+  String get querys => '';
 }
 
 class MyPagePath extends HomePath {
   @override
-  String get location => '${super.location}/mypage';
+  String get location => '${super.paths}/mypage';
+  @override
+  String get querys => '';
 
   @override
   int get index => 1;
@@ -95,4 +132,3 @@ class TodoTabPathFactory {
     }
   }
 }
-

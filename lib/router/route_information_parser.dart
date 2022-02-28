@@ -37,7 +37,13 @@ class RouteInformationParserImpl extends RouteInformationParser<BasePath> {
                 final fourthPath = paths.length >= 4 ? paths[3] : null;
                 switch (fourthPath.runtimeType) {
                   case String:
-                    return IdPath(fourthPath, tabIndex);
+                    final fifthPath = paths.length >= 5 ? paths[4] : null;
+                    switch (fifthPath) {
+                      case 'edit':
+                        return EditPath(fourthPath, tabIndex);
+                      default:
+                        return IdPath(fourthPath, tabIndex);
+                    }
                   default:
                     return UnknownPath();
                 }

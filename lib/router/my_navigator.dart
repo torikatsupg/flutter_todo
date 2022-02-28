@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/pages/home/home.dart';
+import 'package:flutter_todo/pages/home/todo/id/edit/edit.dart';
 import 'package:flutter_todo/pages/home/todo/id/id.dart';
 import 'package:flutter_todo/pages/signin/signin.dart';
 import 'package:flutter_todo/pages/signup/signup.dart';
@@ -23,6 +24,7 @@ class MyNavigator extends ConsumerWidget {
         else if (route is HomePath) ...[
           createHomePage(),
           if (route is IdPath) createIdPage(),
+          if (route is EditPath) createEditPage(),
         ] else if (route is UnknownPath)
           createUnknownPage(),
       ],

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_todo/router/todo_path.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,7 +19,11 @@ class RouteNotifier extends StateNotifier<BasePath> {
   bool pop() {
     final path = state;
     if (path is IdPath) {
-      set(HomePathFactory.fromIndex(path.index, path.tabIndex));
+      if (path is EditPath) {
+        set(IdPath(path.id, path.tabIndex));
+      } else {
+        set(HomePathFactory.fromIndex(path.index, path.tabIndex));
+      }
       return false;
     }
     return false;

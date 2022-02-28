@@ -11,6 +11,10 @@ class NavigateButtons extends ConsumerWidget {
     return Column(
       children: [
         ElevatedButton(
+          onPressed: () => ref.read(routeProvider.notifier).set(EditPath('some_id', 0)),
+          child: const Text('edit'),
+        ),
+        ElevatedButton(
           onPressed: () => ref.read(routeProvider.notifier).set(IdPath('some_id', 0)),
           child: const Text('id'),
         ),
