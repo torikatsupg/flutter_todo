@@ -13,15 +13,10 @@ class MyRouter extends ConsumerStatefulWidget {
 class _MyRouterState extends ConsumerState<MyRouter> {
   _MyRouterState();
 
-  late final RouteInformationParserImpl _routeInformationParser;
-  late final RouterDelegateImpl _routerDelegate;
-
-  @override
-  void initState() {
-    _routeInformationParser = RouteInformationParserImpl();
-    _routerDelegate = RouterDelegateImpl((context as WidgetRef).read);
-    super.initState();
-  }
+  late final RouteInformationParserImpl _routeInformationParser =
+      RouteInformationParserImpl();
+  late final RouterDelegateImpl _routerDelegate =
+      RouterDelegateImpl((context as WidgetRef).read);
 
   @override
   Widget build(BuildContext context) {

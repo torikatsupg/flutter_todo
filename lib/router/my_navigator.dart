@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/pages/home/home.dart';
-import 'package:flutter_todo/pages/home/todo/id/edit/edit.dart';
-import 'package:flutter_todo/pages/home/todo/id/id.dart';
-import 'package:flutter_todo/pages/signin/signin.dart';
-import 'package:flutter_todo/pages/signup/signup.dart';
-import 'package:flutter_todo/pages/unknown/unknown.dart';
+import 'package:flutter_todo/component/screen.dart';
+import 'package:flutter_todo/component/tree.dart';
 import 'package:flutter_todo/router/route_provider.dart';
-import 'package:flutter_todo/router/todo_path.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MyNavigator extends ConsumerWidget {
@@ -14,21 +9,46 @@ class MyNavigator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final route = ref.watch(routeProvider);
     return Navigator(
-      pages: [
-        if (route is SigninPath)
-          createSigninPage()
-        else if (route is SignupPath)
-          createSignupPage()
-        else if (route is HomePath) ...[
-          createHomePage(),
-          if (route is IdPath) createIdPage(),
-          if (route is EditPath) createEditPage(),
-        ] else if (route is UnknownPath)
-          createUnknownPage(),
-      ],
-      onPopPage: (route, result) => ref.read(routeProvider.notifier).pop(),
+      pages: Node(
+        path: 'A',
+        page: const MaterialPage(child: Screen(name: 'A')),
+        children: [
+          Node(
+            path: 'B',
+            page: const MaterialPage(child: Screen(name: 'B')),
+          ),
+          Node(
+            path: 'C',
+            page: const MaterialPage(child: Screen(name: 'C')),
+            children: [
+              Node(
+                path: 'D',
+                page: const MaterialPage(child: Screen(name: 'D')),
+                children: [
+                  Node(
+                    path: 'G',
+                    page: const MaterialPage(child: Screen(name: 'G')),
+                  ),
+                ],
+              ),
+              Node(
+                path: 'E',
+                page: const MaterialPage(child: Screen(name: 'E')),
+              ),
+              Node(
+                path: 'F',
+                page: const MaterialPage(child: Screen(name: 'F')),
+              ),
+            ],
+          ),
+        ],
+      ).build(ref.watch(routeProvider)),
+      onPopPage: (route, result) {
+        print(route);
+        print(result);
+        return ref.read(routeProvider.notifier).pop();
+      },
     );
   }
 }

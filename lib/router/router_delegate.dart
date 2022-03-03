@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/router/my_navigator.dart';
 import 'package:flutter_todo/router/route_provider.dart';
-import 'package:flutter_todo/router/todo_path.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RouterDelegateImpl extends RouterDelegate<BasePath> with ChangeNotifier {
+class RouterDelegateImpl extends RouterDelegate<Uri> with ChangeNotifier {
   RouterDelegateImpl(this.read) {
     _currentConfiguration = read(routeProvider);
     read(routeProvider.notifier).addListener((state) {
@@ -15,22 +14,22 @@ class RouterDelegateImpl extends RouterDelegate<BasePath> with ChangeNotifier {
   }
 
   final Reader read;
-  late BasePath _currentConfiguration;
+  late Uri _currentConfiguration;
 
   @override
   Widget build(BuildContext context) => const MyNavigator();
 
   @override
-  Future<void> setInitialRoutePath(BasePath configuration) =>
+  Future<void> setInitialRoutePath(Uri configuration) =>
       SynchronousFuture(read(routeProvider.notifier).set(configuration));
 
   @override
-  Future<void> setNewRoutePath(BasePath configuration) =>
+  Future<void> setNewRoutePath(Uri configuration) =>
       SynchronousFuture(read(routeProvider.notifier).set(configuration));
 
   @override
   Future<bool> popRoute() => SynchronousFuture(false);
 
   @override
-  BasePath get currentConfiguration => _currentConfiguration;
+  Uri get currentConfiguration => _currentConfiguration;
 }

@@ -1,37 +1,18 @@
-import 'package:flutter_todo/router/todo_path.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-typedef RouteProvider = StateNotifierProvider<RouteNotifier, BasePath>;
+typedef RouteProvider = StateNotifierProvider<RouteNotifier, Uri>;
 
 final routeProvider =
-    StateNotifierProvider<RouteNotifier, BasePath>((_) => RouteNotifier());
+    StateNotifierProvider<RouteNotifier, Uri>((_) => RouteNotifier());
 
-class RouteNotifier extends StateNotifier<BasePath> {
-  RouteNotifier() : super(TodoTabPath());
+class RouteNotifier extends StateNotifier<Uri> {
+  RouteNotifier() : super(Uri());
 
-  void set(BasePath path) => state = path;
-
-  void setIndex(int index) => state = HomePathFactory.fromIndex(index, 0);
-
-  void setTabIndex(int tabIndex) =>
-      state = TodoTabPathFactory.fromIndex(tabIndex);
+  void set(Uri uri) => state = uri;
 
   bool pop() {
-    final path = state;
-    if (path is IdPath) {
-      if (path is EditPath) {
-        set(IdPath(path.id, path.tabIndex));
-      } else {
-        set(HomePathFactory.fromIndex(path.index, path.tabIndex));
-      }
-      return false;
-    }
-    return false;
+    final nextPaths = state.path.split("/")..removeLast();
+    state = Uri(path: nextPaths.join("/"));
+    return true;
   }
 }
-
-// =======
-
-final homeRouteProvider = Provider<HomePath>((_) => throw UnimplementedError());
-
-final todoRouteProvider = Provider<TodoPath>((_) => throw UnimplementedError());
