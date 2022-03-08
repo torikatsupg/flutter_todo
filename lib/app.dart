@@ -6,7 +6,5 @@ class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const MyRouter();
-  }
+  Widget build(BuildContext context, WidgetRef ref) => MyRouter();
 }

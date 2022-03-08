@@ -10,6 +10,7 @@ targets:
           include: 
             - 'lib/model/**.dart'
             - 'lib/request/**.dart'
+            - 'lib/component/**.dart'
         options:
           build_extensions:
             '^lib/{{}}.dart': 'lib/generated/{{}}.freezed.dart'
