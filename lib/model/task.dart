@@ -2,9 +2,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/model/task.freezed.dart';
 
-@freezed
-class Task with _$Task {
-  factory Task({required String id}) = _Task;
+abstract class Task {
+  abstract final String id;
+  abstract final String name;
+}
 
-  Task._();
+@freezed
+class TodoTask with _$TodoTask {
+  @Implements<Task>()
+  factory TodoTask({required String id, required String name}) = _TodoTask;
+  TodoTask._();
+}
+
+@freezed
+class DoneTask with _$DoneTask {
+  @Implements<Task>()
+  factory DoneTask({required String id, required String name}) = _DoneTask;
+  DoneTask._();
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/path_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Id extends StatelessWidget {
   const Id({Key? key}) : super(key: key);
@@ -11,9 +13,13 @@ class Id extends StatelessWidget {
         title: const Text('id'),
       ),
       body: Center(
-        child: TextButton(
-          child: const Text('to edit'),
-          onPressed: () => context.go('/home/todo/id/edit'),
+        child: Consumer(
+          builder: (context, ref, __) => TextButton(
+            child: const Text('to edit'),
+            onPressed: () => context.go(
+              '/home/todo/${ref.read(goRouterStateProvider).params['id']}/edit',
+            ),
+          ),
         ),
       ),
     );

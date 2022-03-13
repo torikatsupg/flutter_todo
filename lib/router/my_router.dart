@@ -8,6 +8,7 @@ import 'package:flutter_todo/page/notfound.dart';
 import 'package:flutter_todo/page/home/mypage/setting.dart';
 import 'package:flutter_todo/page/signin.dart';
 import 'package:flutter_todo/page/signup.dart';
+import 'package:flutter_todo/router/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 
 class MyRouter extends StatelessWidget {
@@ -15,49 +16,49 @@ class MyRouter extends StatelessWidget {
 
   final _router = GoRouter(
     routes: [
-      GoRoute(
+      MyGoRoute(
         path: '/',
         redirect: (state) => '/home/todo',
       ),
-      GoRoute(
+      MyGoRoute(
         path: '/home',
         redirect: (_) => '/home/todo',
       ),
-      GoRoute(
+      MyGoRoute(
         path: '/notfound',
         builder: (_, __) => const NotFound(),
       ),
-      GoRoute(
+      MyGoRoute(
         path: '/signin',
         builder: (_, __) => const Signin(),
       ),
-      GoRoute(
+      MyGoRoute(
         path: '/signup',
         builder: (_, __) => const Signup(),
       ),
-      GoRoute(
+      MyGoRoute(
         path: '/home/:tab',
-        builder: (context, state) => Home(navQuery: state.params['tab']),
+        builder: (context, state) => Home(tab: state.params['tab']),
         routes: [
-          GoRoute(
+          MyGoRoute(
             path: 'create',
             redirect: (state) =>
                 state.params['tab'] == 'todo' ? null : '/notfound',
-            builder: (context, state) => const Create(),
+            builder: (context, state) => const CreatePage(),
           ),
-          GoRoute(
+          MyGoRoute(
             path: 'setting',
             redirect: (state) =>
                 state.params['tab'] == 'mypage' ? null : '/notfound',
             builder: (context, state) => const Setting(),
           ),
-          GoRoute(
+          MyGoRoute(
             path: ':id',
             redirect: (state) =>
                 state.params['tab'] == 'todo' ? null : '/notfound',
             builder: (context, state) => const Id(),
             routes: [
-              GoRoute(
+              MyGoRoute(
                 path: 'edit',
                 builder: (context, state) => const Edit(),
               ),
@@ -66,7 +67,7 @@ class MyRouter extends StatelessWidget {
         ],
       ),
     ],
-    // errorBuilder: (context, state) => const ErrorPage(),
+    errorBuilder: (context, state) => const ErrorPage(),
     urlPathStrategy: UrlPathStrategy.path,
     debugLogDiagnostics: true,
   );
