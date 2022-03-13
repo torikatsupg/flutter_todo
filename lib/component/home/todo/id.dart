@@ -13,7 +13,7 @@ class Id extends StatelessWidget {
       body: Center(
         child: TextButton(
           child: const Text('to edit'),
-          onPressed: () => context.go('edit'),
+          onPressed: () => context.go('/home/todo/id/edit'),
         ),
       ),
     );

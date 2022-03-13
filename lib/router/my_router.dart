@@ -40,18 +40,6 @@ class MyRouter extends StatelessWidget {
         builder: (context, state) => Home(navQuery: state.params['tab']),
         routes: [
           GoRoute(
-            path: ':id',
-            redirect: (state) =>
-                state.params['tab'] == 'todo' ? null : '/notfound',
-            builder: (context, state) => const Id(),
-            routes: [
-              GoRoute(
-                path: 'edit',
-                builder: (context, state) => const Edit(),
-              ),
-            ],
-          ),
-          GoRoute(
             path: 'create',
             redirect: (state) =>
                 state.params['tab'] == 'todo' ? null : '/notfound',
@@ -62,6 +50,18 @@ class MyRouter extends StatelessWidget {
             redirect: (state) =>
                 state.params['tab'] == 'mypage' ? null : '/notfound',
             builder: (context, state) => const Setting(),
+          ),
+          GoRoute(
+            path: ':id',
+            redirect: (state) =>
+                state.params['tab'] == 'todo' ? null : '/notfound',
+            builder: (context, state) => const Id(),
+            routes: [
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) => const Edit(),
+              ),
+            ],
           ),
         ],
       ),

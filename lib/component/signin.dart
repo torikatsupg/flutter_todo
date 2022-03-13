@@ -16,6 +16,10 @@ class Signin extends StatelessWidget {
             onPressed: () => context.go('/signup'),
             child: const Text('to signup'),
           ),
+          TextButton(
+            onPressed: () => context.go('/home'),
+            child: const Text('home'),
+          ),
         ],
       ),
     );

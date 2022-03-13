@@ -12,9 +12,21 @@ class MyPageScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          TextButton(
-            child: const Text('setting'),
-            onPressed: () => context.go('/home/mypage/setting'),
+          Column(
+            children: [
+              TextButton(
+                child: const Text('setting'),
+                onPressed: () => context.go('/home/mypage/setting'),
+              ),
+              TextButton(
+                child: const Text('signin'),
+                onPressed: () => context.go('/signin'),
+              ),
+              TextButton(
+                child: const Text('signup'),
+                onPressed: () => context.go('/signup'),
+              ),
+            ],
           ),
         ],
       ),
