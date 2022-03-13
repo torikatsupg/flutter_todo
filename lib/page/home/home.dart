@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/component/home/mypage_screen%20copy.dart';
-import 'package:flutter_todo/component/home/todo_screen.dart';
+import 'package:flutter_todo/page/home/mypage_screen%20copy.dart';
+import 'package:flutter_todo/page/home/todo_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class Home extends StatelessWidget {

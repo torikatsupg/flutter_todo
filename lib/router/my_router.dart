@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/component/error.dart';
-import 'package:flutter_todo/component/home/home.dart';
-import 'package:flutter_todo/component/home/todo/create.dart';
-import 'package:flutter_todo/component/home/todo/edit.dart';
-import 'package:flutter_todo/component/home/todo/id.dart';
-import 'package:flutter_todo/component/notfound.dart';
-import 'package:flutter_todo/component/home/mypage/setting.dart';
-import 'package:flutter_todo/component/signin.dart';
-import 'package:flutter_todo/component/signup.dart';
+import 'package:flutter_todo/page/error.dart';
+import 'package:flutter_todo/page/home/home.dart';
+import 'package:flutter_todo/page/home/todo/create.dart';
+import 'package:flutter_todo/page/home/todo/edit.dart';
+import 'package:flutter_todo/page/home/todo/id.dart';
+import 'package:flutter_todo/page/notfound.dart';
+import 'package:flutter_todo/page/home/mypage/setting.dart';
+import 'package:flutter_todo/page/signin.dart';
+import 'package:flutter_todo/page/signup.dart';
 import 'package:go_router/go_router.dart';
 
 class MyRouter extends StatelessWidget {
