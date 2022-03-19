@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/page/home/mypage_screen%20copy.dart';
-import 'package:flutter_todo/page/home/todo_screen.dart';
-import 'package:flutter_todo/provider/cached_provider.dart';
-import 'package:flutter_todo/router/route_provider.dart';
+import 'package:flutter_todo/page/home/mypage_screen.dart';
+import 'package:flutter_todo/page/home/task_screen.dart';
+import 'package:flutter_todo/provider/route_provider.dart';
+import 'package:flutter_todo/provider/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Home extends ConsumerWidget {
-  const Home({Key? key}) : super(key: key);
+class HomePage extends ConsumerWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(context, ref) {
@@ -14,7 +14,7 @@ class Home extends ConsumerWidget {
     return Scaffold(
       body: IndexedStack(
         children: const [
-          TodoScreen(),
+          TaskScreen(),
           MyPageScreen(),
         ],
         index: TabIndex.toIndex(tab),

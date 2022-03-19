@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/component/error_view.dart';
 import 'package:flutter_todo/component/loading_view.dart';
 import 'package:flutter_todo/provider/task_provider.dart';
-import 'package:flutter_todo/router/route_provider.dart';
+import 'package:flutter_todo/provider/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class TodoScreen extends ConsumerStatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
+class TaskScreen extends ConsumerStatefulWidget {
+  const TaskScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TodoScreenState();
 }
 
-class _TodoScreenState extends ConsumerState<TodoScreen>
+class _TodoScreenState extends ConsumerState<TaskScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final TabController _controller;
   late final ScrollController _todoController;

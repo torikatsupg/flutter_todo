@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class Signin extends StatelessWidget {
-  const Signin({Key? key}) : super(key: key);
+class SigninPage extends StatelessWidget {
+  const SigninPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

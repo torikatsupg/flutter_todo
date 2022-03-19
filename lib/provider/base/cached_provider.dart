@@ -1,26 +1,4 @@
-import 'package:flutter_todo/router/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final tabProvider = cachedProvider<String, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).tab!,
-  provider: routeProvider,
-  shouldUpdate: (next) => next.tab != null,
-  toState: (next) => next.tab!,
-);
-
-final idProvider = cachedProvider<String, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).id!,
-  provider: routeProvider,
-  shouldUpdate: (next) => next.id != null,
-  toState: (next) => next.id!,
-);
-
-final todoProvider = cachedProvider<String?, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).todo,
-  provider: routeProvider,
-  shouldUpdate: (next) => next.todo != null,
-  toState: (next) => next.todo,
-);
 
 AutoDisposeStateNotifierProvider<StateNotifier<State>, State>
     cachedProvider<State, ProviderState>({
