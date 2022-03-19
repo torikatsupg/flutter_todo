@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/component/error_view.dart';
 import 'package:flutter_todo/component/loading_view.dart';
-import 'package:flutter_todo/provider/path_provider.dart';
 import 'package:flutter_todo/provider/task_provider.dart';
+import 'package:flutter_todo/router/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,9 +22,7 @@ class _TodoScreenState extends ConsumerState<TodoScreen>
     _controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: toIndex(
-        ref.read(goRouterStateProvider).queryParams['todo'],
-      ),
+      initialIndex: toIndex(ref.read(routeProvider)),
     );
     super.initState();
   }
@@ -105,7 +103,8 @@ String fromIndex(int index) {
   }
 }
 
-int toIndex(String? query) {
+int toIndex(Uri uri) {
+  final query = uri.queryParameters['tab'];
   switch (query) {
     case 'todo':
       return 0;
