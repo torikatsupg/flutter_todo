@@ -10,21 +10,14 @@ import 'package:flutter_todo/page/home/mypage/setting.dart';
 import 'package:flutter_todo/page/signin.dart';
 import 'package:flutter_todo/page/signup.dart';
 
-typedef RouteProvider = StateNotifierProvider<RouteNotifier, Uri>;
+typedef RouteProvider = StateNotifierProvider<RouteNotifier, RouteState>;
 
-final routeProvider = StateNotifierProvider<RouteNotifier, Uri>(
-  (ref) => RouteNotifier(ref.watch(routerProvider)),
-);
+final routeProvider = StateNotifierProvider<RouteNotifier, RouteState>(
+    (ref) => RouteNotifier(ref.watch(routerProvider)));
 
-class RouteNotifier extends StateNotifier<Uri> {
-  RouteNotifier(GoRouter router)
-      : super(router.routerDelegate.currentConfiguration) {
-    router.routerDelegate.addListener(
-      () {
-        print("change: ${router.routerDelegate.currentConfiguration}\n");
-        state = router.routerDelegate.currentConfiguration;
-      },
-    );
+class RouteNotifier extends StateNotifier<RouteState> {
+  RouteNotifier(GoRouter router) : super(calcState(router)) {
+    router.routerDelegate.addListener(() => state = calcState(router));
   }
 }
 
@@ -87,3 +80,35 @@ final routerProvider = Provider(
     debugLogDiagnostics: true,
   ),
 );
+
+RouteState calcState(GoRouter router) {
+  // ignore: invalid_use_of_visible_for_testing_member
+  final matches = router.routerDelegate.matches;
+  assert(matches.isNotEmpty);
+  var params = <String, String>{};
+  var queryParams = <String, String>{};
+  String? name;
+  for (final match in matches) {
+    params.addAll(match.decodedParams);
+    queryParams.addAll(match.queryParams);
+    name = match.route.name;
+  }
+  return RouteState(
+    params,
+    queryParams,
+    name, // nameがnullはあり得ない
+    router.routerDelegate.currentConfiguration,
+  );
+}
+
+class RouteState {
+  RouteState(this.params, this.queryParams, this.name, this.uri);
+  final Map<String, String> params;
+  final Map<String, String> queryParams;
+  final String? name;
+  final Uri uri;
+
+  String? get id => params['id'];
+  String? get tab => params['tab'];
+  String? get todo => queryParams['todo'];
+}

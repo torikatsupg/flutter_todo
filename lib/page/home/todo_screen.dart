@@ -14,21 +14,26 @@ class TodoScreen extends ConsumerStatefulWidget {
 }
 
 class _TodoScreenState extends ConsumerState<TodoScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final TabController _controller;
+  late final ScrollController _todoController;
+  late final ScrollController _doneController;
 
   @override
   void initState() {
     _controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: toIndex(ref.read(routeProvider)),
+      initialIndex: toIndex(ref.read(routeProvider).queryParams['tab']),
     );
+    _todoController = ScrollController();
+    _doneController = ScrollController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('todo'),
@@ -52,44 +57,45 @@ class _TodoScreenState extends ConsumerState<TodoScreen>
       body: TabBarView(
         controller: _controller,
         children: [
-          Consumer(
-            builder: (_, ref, __) => ref.watch(todoTaskProvider).map(
-                  data: (tasks) => ListView.builder(
-                    itemCount: tasks.value.length,
-                    itemBuilder: (context, index) {
-                      final task = tasks.value[index];
-                      return ListTile(
-                        leading: Text(task.id),
-                        title: Text(task.name),
-                        onTap: () => context.go('/home/todo/${task.id}'),
-                      );
-                    },
-                  ),
-                  error: (_) => const ErrorView(),
-                  loading: (_) => const LoadingView(),
+          ref.watch(todoTaskProvider).map(
+                data: (tasks) => ListView.builder(
+                  controller: _todoController,
+                  itemCount: tasks.value.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks.value[index];
+                    return ListTile(
+                      leading: Text(task.id),
+                      title: Text(task.name),
+                      onTap: () => context.go('/home/todo/${task.id}'),
+                    );
+                  },
                 ),
-          ),
-          Consumer(
-            builder: (_, ref, __) => ref.watch(todoTaskProvider).map(
-                  data: (tasks) => ListView.builder(
-                    itemCount: tasks.value.length,
-                    itemBuilder: (context, index) {
-                      final task = tasks.value[index];
-                      return ListTile(
-                        leading: Text(task.id),
-                        title: Text(task.name),
-                        onTap: () => context.go('/home/todo/${task.id}'),
-                      );
-                    },
-                  ),
-                  error: (_) => const ErrorView(),
-                  loading: (_) => const LoadingView(),
+                error: (_) => const ErrorView(),
+                loading: (_) => const LoadingView(),
+              ),
+          ref.watch(doneTaskProvider).map(
+                data: (tasks) => ListView.builder(
+                  controller: _doneController,
+                  itemCount: tasks.value.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks.value[index];
+                    return ListTile(
+                      leading: Text(task.id),
+                      title: Text(task.name),
+                      onTap: () => context.go('/home/todo/${task.id}'),
+                    );
+                  },
                 ),
-          ),
+                error: (_) => const ErrorView(),
+                loading: (_) => const LoadingView(),
+              ),
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 String fromIndex(int index) {
@@ -103,8 +109,7 @@ String fromIndex(int index) {
   }
 }
 
-int toIndex(Uri uri) {
-  final query = uri.queryParameters['tab'];
+int toIndex(String? query) {
   switch (query) {
     case 'todo':
       return 0;
