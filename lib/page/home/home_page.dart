@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/component/lazy_indexed_stack.dart';
 import 'package:flutter_todo/page/home/mypage_screen.dart';
 import 'package:flutter_todo/page/home/task_screen.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
@@ -12,10 +13,10 @@ class HomePage extends ConsumerWidget {
   Widget build(context, ref) {
     final tab = ref.watch(tabProvider);
     return Scaffold(
-      body: IndexedStack(
-        children: const [
-          TaskScreen(),
-          MyPageScreen(),
+      body: LazyIndexedStack(
+        builders: [
+          (context) => const TaskScreen(),
+          (context) => const MyPageScreen(),
         ],
         index: TabIndex.toIndex(tab),
       ),
