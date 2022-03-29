@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/page/home/mypage_screen.dart';
 import 'package:flutter_todo/page/home/task_screen.dart';
-import 'package:flutter_todo/provider/route_provider.dart';
-import 'package:flutter_todo/provider/router_provider.dart';
+import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
