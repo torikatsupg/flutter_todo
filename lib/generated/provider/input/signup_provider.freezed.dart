@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of '../../../provider/input/signup_input_provider.dart';
+part of '../../../provider/input/signup_provider.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,8 +15,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$_SignupInputStateTearOff {
-  const _$_SignupInputStateTearOff();
+class _$_SignupStateTearOff {
+  const _$_SignupStateTearOff();
 
   __SignupInputState call({String? email, String? password}) {
     return __SignupInputState(
@@ -27,34 +27,33 @@ class _$_SignupInputStateTearOff {
 }
 
 /// @nodoc
-const _$SignupInputState = _$_SignupInputStateTearOff();
+const _$SignupState = _$_SignupStateTearOff();
 
 /// @nodoc
-mixin _$_SignupInputState {
+mixin _$_SignupState {
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  _$SignupInputStateCopyWith<_SignupInputState> get copyWith =>
+  _$SignupStateCopyWith<_SignupState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SignupInputStateCopyWith<$Res> {
-  factory _$SignupInputStateCopyWith(
-          _SignupInputState value, $Res Function(_SignupInputState) then) =
-      __$SignupInputStateCopyWithImpl<$Res>;
+abstract class _$SignupStateCopyWith<$Res> {
+  factory _$SignupStateCopyWith(
+          _SignupState value, $Res Function(_SignupState) then) =
+      __$SignupStateCopyWithImpl<$Res>;
   $Res call({String? email, String? password});
 }
 
 /// @nodoc
-class __$SignupInputStateCopyWithImpl<$Res>
-    implements _$SignupInputStateCopyWith<$Res> {
-  __$SignupInputStateCopyWithImpl(this._value, this._then);
+class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
+  __$SignupStateCopyWithImpl(this._value, this._then);
 
-  final _SignupInputState _value;
+  final _SignupState _value;
   // ignore: unused_field
-  final $Res Function(_SignupInputState) _then;
+  final $Res Function(_SignupState) _then;
 
   @override
   $Res call({
@@ -76,7 +75,7 @@ class __$SignupInputStateCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$_SignupInputStateCopyWith<$Res>
-    implements _$SignupInputStateCopyWith<$Res> {
+    implements _$SignupStateCopyWith<$Res> {
   factory _$_SignupInputStateCopyWith(
           __SignupInputState value, $Res Function(__SignupInputState) then) =
       __$_SignupInputStateCopyWithImpl<$Res>;
@@ -86,7 +85,7 @@ abstract class _$_SignupInputStateCopyWith<$Res>
 
 /// @nodoc
 class __$_SignupInputStateCopyWithImpl<$Res>
-    extends __$SignupInputStateCopyWithImpl<$Res>
+    extends __$SignupStateCopyWithImpl<$Res>
     implements _$_SignupInputStateCopyWith<$Res> {
   __$_SignupInputStateCopyWithImpl(
       __SignupInputState _value, $Res Function(__SignupInputState) _then)
@@ -125,7 +124,7 @@ class _$__SignupInputState extends __SignupInputState {
 
   @override
   String toString() {
-    return '_SignupInputState(email: $email, password: $password)';
+    return '_SignupState(email: $email, password: $password)';
   }
 
   @override
@@ -149,7 +148,7 @@ class _$__SignupInputState extends __SignupInputState {
       __$_SignupInputStateCopyWithImpl<__SignupInputState>(this, _$identity);
 }
 
-abstract class __SignupInputState extends _SignupInputState {
+abstract class __SignupInputState extends _SignupState {
   factory __SignupInputState({String? email, String? password}) =
       _$__SignupInputState;
   __SignupInputState._() : super._();

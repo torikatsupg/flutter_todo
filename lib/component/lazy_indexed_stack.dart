@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LazyIndexedStack extends StatefulWidget {
-  const LazyIndexedStack({required this.builders, required this.index, Key? key})
+  const LazyIndexedStack(
+      {required this.builders, required this.index, Key? key})
       : super(key: key);
 
   final List<WidgetBuilder> builders;
