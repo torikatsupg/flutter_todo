@@ -1,8 +1,10 @@
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+    todo: ignore
 include: package:flutter_lints/flutter.yaml
 exclude: 
   - "**/*.g.dart"
   - "**/*.freezed.dart"
 linter:
   rules:
-errors:
-  invalid_annotation_target: ignore
