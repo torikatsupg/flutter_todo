@@ -19,27 +19,10 @@ class _$_SignupStateTearOff {
   const _$_SignupStateTearOff();
 
   __SignupInputState call(
-      {required TextEditingController emailController,
-      required TextEditingController passwordController,
-      required FocusNode emailFocusNode,
-      required FocusNode passwordFocusNode,
-      String email = '',
-      String password = '',
-      bool hasEditEmail = false,
-      bool hasEditPassword = false,
-      bool isFocusingEmail = false,
-      bool isFocusingPassword = false}) {
+      {required FormModel email, required FormModel password}) {
     return __SignupInputState(
-      emailController: emailController,
-      passwordController: passwordController,
-      emailFocusNode: emailFocusNode,
-      passwordFocusNode: passwordFocusNode,
       email: email,
       password: password,
-      hasEditEmail: hasEditEmail,
-      hasEditPassword: hasEditPassword,
-      isFocusingEmail: isFocusingEmail,
-      isFocusingPassword: isFocusingPassword,
     );
   }
 }
@@ -49,18 +32,8 @@ const _$SignupState = _$_SignupStateTearOff();
 
 /// @nodoc
 mixin _$_SignupState {
-  TextEditingController get emailController =>
-      throw _privateConstructorUsedError;
-  TextEditingController get passwordController =>
-      throw _privateConstructorUsedError;
-  FocusNode get emailFocusNode => throw _privateConstructorUsedError;
-  FocusNode get passwordFocusNode => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  bool get hasEditEmail => throw _privateConstructorUsedError;
-  bool get hasEditPassword => throw _privateConstructorUsedError;
-  bool get isFocusingEmail => throw _privateConstructorUsedError;
-  bool get isFocusingPassword => throw _privateConstructorUsedError;
+  FormModel get email => throw _privateConstructorUsedError;
+  FormModel get password => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$SignupStateCopyWith<_SignupState> get copyWith =>
@@ -72,17 +45,10 @@ abstract class _$SignupStateCopyWith<$Res> {
   factory _$SignupStateCopyWith(
           _SignupState value, $Res Function(_SignupState) then) =
       __$SignupStateCopyWithImpl<$Res>;
-  $Res call(
-      {TextEditingController emailController,
-      TextEditingController passwordController,
-      FocusNode emailFocusNode,
-      FocusNode passwordFocusNode,
-      String email,
-      String password,
-      bool hasEditEmail,
-      bool hasEditPassword,
-      bool isFocusingEmail,
-      bool isFocusingPassword});
+  $Res call({FormModel email, FormModel password});
+
+  $FormModelCopyWith<$Res> get email;
+  $FormModelCopyWith<$Res> get password;
 }
 
 /// @nodoc
@@ -95,59 +61,33 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? emailController = freezed,
-    Object? passwordController = freezed,
-    Object? emailFocusNode = freezed,
-    Object? passwordFocusNode = freezed,
     Object? email = freezed,
     Object? password = freezed,
-    Object? hasEditEmail = freezed,
-    Object? hasEditPassword = freezed,
-    Object? isFocusingEmail = freezed,
-    Object? isFocusingPassword = freezed,
   }) {
     return _then(_value.copyWith(
-      emailController: emailController == freezed
-          ? _value.emailController
-          : emailController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
-      passwordController: passwordController == freezed
-          ? _value.passwordController
-          : passwordController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
-      emailFocusNode: emailFocusNode == freezed
-          ? _value.emailFocusNode
-          : emailFocusNode // ignore: cast_nullable_to_non_nullable
-              as FocusNode,
-      passwordFocusNode: passwordFocusNode == freezed
-          ? _value.passwordFocusNode
-          : passwordFocusNode // ignore: cast_nullable_to_non_nullable
-              as FocusNode,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as FormModel,
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      hasEditEmail: hasEditEmail == freezed
-          ? _value.hasEditEmail
-          : hasEditEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasEditPassword: hasEditPassword == freezed
-          ? _value.hasEditPassword
-          : hasEditPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocusingEmail: isFocusingEmail == freezed
-          ? _value.isFocusingEmail
-          : isFocusingEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocusingPassword: isFocusingPassword == freezed
-          ? _value.isFocusingPassword
-          : isFocusingPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as FormModel,
     ));
+  }
+
+  @override
+  $FormModelCopyWith<$Res> get email {
+    return $FormModelCopyWith<$Res>(_value.email, (value) {
+      return _then(_value.copyWith(email: value));
+    });
+  }
+
+  @override
+  $FormModelCopyWith<$Res> get password {
+    return $FormModelCopyWith<$Res>(_value.password, (value) {
+      return _then(_value.copyWith(password: value));
+    });
   }
 }
 
@@ -158,17 +98,12 @@ abstract class _$_SignupInputStateCopyWith<$Res>
           __SignupInputState value, $Res Function(__SignupInputState) then) =
       __$_SignupInputStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {TextEditingController emailController,
-      TextEditingController passwordController,
-      FocusNode emailFocusNode,
-      FocusNode passwordFocusNode,
-      String email,
-      String password,
-      bool hasEditEmail,
-      bool hasEditPassword,
-      bool isFocusingEmail,
-      bool isFocusingPassword});
+  $Res call({FormModel email, FormModel password});
+
+  @override
+  $FormModelCopyWith<$Res> get email;
+  @override
+  $FormModelCopyWith<$Res> get password;
 }
 
 /// @nodoc
@@ -184,58 +119,18 @@ class __$_SignupInputStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? emailController = freezed,
-    Object? passwordController = freezed,
-    Object? emailFocusNode = freezed,
-    Object? passwordFocusNode = freezed,
     Object? email = freezed,
     Object? password = freezed,
-    Object? hasEditEmail = freezed,
-    Object? hasEditPassword = freezed,
-    Object? isFocusingEmail = freezed,
-    Object? isFocusingPassword = freezed,
   }) {
     return _then(__SignupInputState(
-      emailController: emailController == freezed
-          ? _value.emailController
-          : emailController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
-      passwordController: passwordController == freezed
-          ? _value.passwordController
-          : passwordController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
-      emailFocusNode: emailFocusNode == freezed
-          ? _value.emailFocusNode
-          : emailFocusNode // ignore: cast_nullable_to_non_nullable
-              as FocusNode,
-      passwordFocusNode: passwordFocusNode == freezed
-          ? _value.passwordFocusNode
-          : passwordFocusNode // ignore: cast_nullable_to_non_nullable
-              as FocusNode,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as FormModel,
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      hasEditEmail: hasEditEmail == freezed
-          ? _value.hasEditEmail
-          : hasEditEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasEditPassword: hasEditPassword == freezed
-          ? _value.hasEditPassword
-          : hasEditPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocusingEmail: isFocusingEmail == freezed
-          ? _value.isFocusingEmail
-          : isFocusingEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocusingPassword: isFocusingPassword == freezed
-          ? _value.isFocusingPassword
-          : isFocusingPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as FormModel,
     ));
   }
 }
@@ -243,49 +138,17 @@ class __$_SignupInputStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$__SignupInputState extends __SignupInputState {
-  _$__SignupInputState(
-      {required this.emailController,
-      required this.passwordController,
-      required this.emailFocusNode,
-      required this.passwordFocusNode,
-      this.email = '',
-      this.password = '',
-      this.hasEditEmail = false,
-      this.hasEditPassword = false,
-      this.isFocusingEmail = false,
-      this.isFocusingPassword = false})
+  _$__SignupInputState({required this.email, required this.password})
       : super._();
 
   @override
-  final TextEditingController emailController;
+  final FormModel email;
   @override
-  final TextEditingController passwordController;
-  @override
-  final FocusNode emailFocusNode;
-  @override
-  final FocusNode passwordFocusNode;
-  @JsonKey()
-  @override
-  final String email;
-  @JsonKey()
-  @override
-  final String password;
-  @JsonKey()
-  @override
-  final bool hasEditEmail;
-  @JsonKey()
-  @override
-  final bool hasEditPassword;
-  @JsonKey()
-  @override
-  final bool isFocusingEmail;
-  @JsonKey()
-  @override
-  final bool isFocusingPassword;
+  final FormModel password;
 
   @override
   String toString() {
-    return '_SignupState(emailController: $emailController, passwordController: $passwordController, emailFocusNode: $emailFocusNode, passwordFocusNode: $passwordFocusNode, email: $email, password: $password, hasEditEmail: $hasEditEmail, hasEditPassword: $hasEditPassword, isFocusingEmail: $isFocusingEmail, isFocusingPassword: $isFocusingPassword)';
+    return '_SignupState(email: $email, password: $password)';
   }
 
   @override
@@ -293,39 +156,15 @@ class _$__SignupInputState extends __SignupInputState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is __SignupInputState &&
-            const DeepCollectionEquality()
-                .equals(other.emailController, emailController) &&
-            const DeepCollectionEquality()
-                .equals(other.passwordController, passwordController) &&
-            const DeepCollectionEquality()
-                .equals(other.emailFocusNode, emailFocusNode) &&
-            const DeepCollectionEquality()
-                .equals(other.passwordFocusNode, passwordFocusNode) &&
             const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality()
-                .equals(other.hasEditEmail, hasEditEmail) &&
-            const DeepCollectionEquality()
-                .equals(other.hasEditPassword, hasEditPassword) &&
-            const DeepCollectionEquality()
-                .equals(other.isFocusingEmail, isFocusingEmail) &&
-            const DeepCollectionEquality()
-                .equals(other.isFocusingPassword, isFocusingPassword));
+            const DeepCollectionEquality().equals(other.password, password));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(emailController),
-      const DeepCollectionEquality().hash(passwordController),
-      const DeepCollectionEquality().hash(emailFocusNode),
-      const DeepCollectionEquality().hash(passwordFocusNode),
       const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(hasEditEmail),
-      const DeepCollectionEquality().hash(hasEditPassword),
-      const DeepCollectionEquality().hash(isFocusingEmail),
-      const DeepCollectionEquality().hash(isFocusingPassword));
+      const DeepCollectionEquality().hash(password));
 
   @JsonKey(ignore: true)
   @override
@@ -335,38 +174,14 @@ class _$__SignupInputState extends __SignupInputState {
 
 abstract class __SignupInputState extends _SignupState {
   factory __SignupInputState(
-      {required TextEditingController emailController,
-      required TextEditingController passwordController,
-      required FocusNode emailFocusNode,
-      required FocusNode passwordFocusNode,
-      String email,
-      String password,
-      bool hasEditEmail,
-      bool hasEditPassword,
-      bool isFocusingEmail,
-      bool isFocusingPassword}) = _$__SignupInputState;
+      {required FormModel email,
+      required FormModel password}) = _$__SignupInputState;
   __SignupInputState._() : super._();
 
   @override
-  TextEditingController get emailController;
+  FormModel get email;
   @override
-  TextEditingController get passwordController;
-  @override
-  FocusNode get emailFocusNode;
-  @override
-  FocusNode get passwordFocusNode;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  bool get hasEditEmail;
-  @override
-  bool get hasEditPassword;
-  @override
-  bool get isFocusingEmail;
-  @override
-  bool get isFocusingPassword;
+  FormModel get password;
   @override
   @JsonKey(ignore: true)
   _$_SignupInputStateCopyWith<__SignupInputState> get copyWith =>

@@ -24,22 +24,22 @@ class SignupPage extends HookConsumerWidget {
           Column(
             children: [
               TextField(
-                controller: state.emailController,
-                focusNode: state.emailFocusNode,
+                controller: state.email.controller,
+                focusNode: state.email.focusNode,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  errorText: state.emailError,
+                  errorText: state.email.error,
                   hintText: 'xxxx@example.com',
                   helperText: 'xxxx@example.com',
                   label: const Text('email'),
                 ),
               ),
               TextField(
-                controller: state.passwordController,
-                focusNode: state.passwordFocusNode,
+                controller: state.password.controller,
+                focusNode: state.password.focusNode,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
-                  errorText: state.passwordError,
+                  errorText: state.password.error,
                   hintText: 'more than 8 characters',
                   helperText: 'more than 8 characters',
                   label: const Text('password'),
