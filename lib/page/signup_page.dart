@@ -28,7 +28,7 @@ class SignupPage extends HookConsumerWidget {
                 focusNode: state.email.focusNode,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  errorText: state.email.error,
+                  errorText: state.email.errors,
                   hintText: 'xxxx@example.com',
                   helperText: 'xxxx@example.com',
                   label: const Text('email'),
@@ -39,7 +39,7 @@ class SignupPage extends HookConsumerWidget {
                 focusNode: state.password.focusNode,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
-                  errorText: state.password.error,
+                  errorText: state.password.errors,
                   hintText: 'more than 8 characters',
                   helperText: 'more than 8 characters',
                   label: const Text('password'),

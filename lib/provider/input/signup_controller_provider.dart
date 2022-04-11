@@ -1,6 +1,8 @@
 import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
+import 'package:flutter_todo/provider/input/authenticator_provider.dart';
 import 'package:flutter_todo/provider/input/loading_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -17,16 +19,20 @@ class SignupNotifier extends StateNotifier<_SignupState> {
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
         )) {
-    state.email.setListeners(onChangedText, onFocusChangeEmail);
-    state.password.setListeners(onChangedText, onFocusChangePassword);
+    state.email.setListeners(onChangedEmail, onFocusChangeEmail);
+    state.password.setListeners(onChangedPassword, onFocusChangePassword);
   }
 
   final Reader _reader;
 
-  void onFocusChangeEmail() => state = state.copyWith.email(hasEdit: true);
+  void onFocusChangeEmail() =>
+      state = state.copyWith(email: state.email.onFocusChange());
   void onFocusChangePassword() =>
-      state = state.copyWith.password(hasEdit: true);
-  void onChangedText() => state = state.copyWith();
+      state = state.copyWith(password: state.password.onFocusChange());
+  void onChangedEmail() =>
+      state = state.copyWith(email: state.email.onChangeText());
+  void onChangedPassword() =>
+      state = state.copyWith(password: state.password.onChangeText());
 
   Future<void> submit() async => _reader(loadingProvider.notifier).run(
         () async {
@@ -38,14 +44,24 @@ class SignupNotifier extends StateNotifier<_SignupState> {
           state.email.focusNode.unfocus();
           state.password.focusNode.unfocus();
 
-          if (state.isValidAll) {
-            await Future.delayed(Duration(seconds: 1));
-            print(state.email.controller.text);
-            print(state.password.controller.text);
-            // TODO(torikatsu): signup
-          } else {}
+          if (!state.isValidAll) {
+            return;
+          }
+
+          final result = await _reader(authenticatorProvider).signup(
+            email: state.email.text,
+            password: state.password.text,
+          );
+
+          result.when(
+            ok: (_) => _reader(routerProvider).go('/home'),
+            err: (e) => state =
+                state.copyWith.email(serverErrors: [e.toDisplayMessage]),
+          );
         },
       );
+
+  void onErr(SignupError e) {}
 
   @override
   void dispose() {
@@ -57,9 +73,10 @@ class SignupNotifier extends StateNotifier<_SignupState> {
 
 @freezed
 class _SignupState with _$_SignupState {
-  factory _SignupState(
-      {required FormModel email,
-      required FormModel password}) = __SignupInputState;
+  factory _SignupState({
+    required FormModel email,
+    required FormModel password,
+  }) = __SignupInputState;
 
   late final isValidAll = email.isValid && password.isValid;
 

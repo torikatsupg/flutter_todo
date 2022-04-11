@@ -12,15 +12,25 @@ class FormModel with _$FormModel {
     required TextEditingController controller,
     required FocusNode focusNode,
     @Default(false) bool hasEdit,
+    @Default([]) List<String> serverErrors,
   }) = _FormModel;
 
   FormModel._();
 
-  late final error = _canDisplayError ? _error : null;
-  late final isValid = _error == null;
+  late final errors = _canDisplayError ? _errors.join('\n') : null;
+  late final isValid = _errors.isEmpty;
+  late final text = controller.text;
 
-  late final _canDisplayError = !focusNode.hasFocus && hasEdit;
-  late final _error = validator(controller.text);
+  late final _canDisplayError =
+      !focusNode.hasFocus && hasEdit && _errors.isNotEmpty;
+
+  List<String> get _errors {
+    final validationError = validator(controller.text);
+    return [
+      if (validationError != null) validationError,
+      ...serverErrors,
+    ];
+  }
 
   void setListeners(
     VoidCallback onChangeText,
@@ -29,6 +39,9 @@ class FormModel with _$FormModel {
     controller.addListener(onChangeText);
     focusNode.addListener(onFocusChange);
   }
+
+  FormModel onChangeText() => this;
+  FormModel onFocusChange() => copyWith(hasEdit: true, serverErrors: []);
 
   void dispose() {
     controller.dispose();
