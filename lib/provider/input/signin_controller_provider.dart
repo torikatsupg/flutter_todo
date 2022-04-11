@@ -34,6 +34,9 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
+  void hideNetworkErrorDialog() =>
+      state = state.copyWith(showNetworkError: false);
+
   Future<void> submit() async => _reader(loadingProvider.notifier).run(
         () async {
           state = state.onSubmit();
@@ -67,7 +70,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
                       password: state.password.addServerError('パスワードが違います'));
                   break;
                 case SigninError.network:
-                  // TODO(torikatsu): handle network error
+                  state = state.copyWith(showNetworkError: true);
                   break;
               }
             },
@@ -88,6 +91,7 @@ class _SigninState with _$_SigninState {
   factory _SigninState({
     required FormModel email,
     required FormModel password,
+    @Default(false) bool showNetworkError,
   }) = __SigninInputState;
 
   late final isValidAll = email.isValid && password.isValid;

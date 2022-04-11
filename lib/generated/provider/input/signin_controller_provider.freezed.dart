@@ -19,10 +19,13 @@ class _$_SigninStateTearOff {
   const _$_SigninStateTearOff();
 
   __SigninInputState call(
-      {required FormModel email, required FormModel password}) {
+      {required FormModel email,
+      required FormModel password,
+      bool showNetworkError = false}) {
     return __SigninInputState(
       email: email,
       password: password,
+      showNetworkError: showNetworkError,
     );
   }
 }
@@ -34,6 +37,7 @@ const _$SigninState = _$_SigninStateTearOff();
 mixin _$_SigninState {
   FormModel get email => throw _privateConstructorUsedError;
   FormModel get password => throw _privateConstructorUsedError;
+  bool get showNetworkError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$SigninStateCopyWith<_SigninState> get copyWith =>
@@ -45,7 +49,7 @@ abstract class _$SigninStateCopyWith<$Res> {
   factory _$SigninStateCopyWith(
           _SigninState value, $Res Function(_SigninState) then) =
       __$SigninStateCopyWithImpl<$Res>;
-  $Res call({FormModel email, FormModel password});
+  $Res call({FormModel email, FormModel password, bool showNetworkError});
 
   $FormModelCopyWith<$Res> get email;
   $FormModelCopyWith<$Res> get password;
@@ -63,6 +67,7 @@ class __$SigninStateCopyWithImpl<$Res> implements _$SigninStateCopyWith<$Res> {
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
+    Object? showNetworkError = freezed,
   }) {
     return _then(_value.copyWith(
       email: email == freezed
@@ -73,6 +78,10 @@ class __$SigninStateCopyWithImpl<$Res> implements _$SigninStateCopyWith<$Res> {
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as FormModel,
+      showNetworkError: showNetworkError == freezed
+          ? _value.showNetworkError
+          : showNetworkError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -98,7 +107,7 @@ abstract class _$_SigninInputStateCopyWith<$Res>
           __SigninInputState value, $Res Function(__SigninInputState) then) =
       __$_SigninInputStateCopyWithImpl<$Res>;
   @override
-  $Res call({FormModel email, FormModel password});
+  $Res call({FormModel email, FormModel password, bool showNetworkError});
 
   @override
   $FormModelCopyWith<$Res> get email;
@@ -121,6 +130,7 @@ class __$_SigninInputStateCopyWithImpl<$Res>
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
+    Object? showNetworkError = freezed,
   }) {
     return _then(__SigninInputState(
       email: email == freezed
@@ -131,6 +141,10 @@ class __$_SigninInputStateCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as FormModel,
+      showNetworkError: showNetworkError == freezed
+          ? _value.showNetworkError
+          : showNetworkError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -138,17 +152,23 @@ class __$_SigninInputStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$__SigninInputState extends __SigninInputState {
-  _$__SigninInputState({required this.email, required this.password})
+  _$__SigninInputState(
+      {required this.email,
+      required this.password,
+      this.showNetworkError = false})
       : super._();
 
   @override
   final FormModel email;
   @override
   final FormModel password;
+  @JsonKey()
+  @override
+  final bool showNetworkError;
 
   @override
   String toString() {
-    return '_SigninState(email: $email, password: $password)';
+    return '_SigninState(email: $email, password: $password, showNetworkError: $showNetworkError)';
   }
 
   @override
@@ -157,14 +177,17 @@ class _$__SigninInputState extends __SigninInputState {
         (other.runtimeType == runtimeType &&
             other is __SigninInputState &&
             const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password));
+            const DeepCollectionEquality().equals(other.password, password) &&
+            const DeepCollectionEquality()
+                .equals(other.showNetworkError, showNetworkError));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password));
+      const DeepCollectionEquality().hash(password),
+      const DeepCollectionEquality().hash(showNetworkError));
 
   @JsonKey(ignore: true)
   @override
@@ -175,13 +198,16 @@ class _$__SigninInputState extends __SigninInputState {
 abstract class __SigninInputState extends _SigninState {
   factory __SigninInputState(
       {required FormModel email,
-      required FormModel password}) = _$__SigninInputState;
+      required FormModel password,
+      bool showNetworkError}) = _$__SigninInputState;
   __SigninInputState._() : super._();
 
   @override
   FormModel get email;
   @override
   FormModel get password;
+  @override
+  bool get showNetworkError;
   @override
   @JsonKey(ignore: true)
   _$_SigninInputStateCopyWith<__SigninInputState> get copyWith =>

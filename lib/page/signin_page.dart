@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/component/dialog_overlay.dart';
 import 'package:flutter_todo/provider/input/signin_controller_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,38 +16,51 @@ class SigninPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('signin'),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          TextButton(
-            onPressed: () => ref.read(routerProvider).go('/signup'),
-            child: const Text('to signup'),
+          Column(
+            children: [
+              TextButton(
+                onPressed: () => ref.read(routerProvider).go('/signup'),
+                child: const Text('to signup'),
+              ),
+              TextField(
+                controller: state.email.controller,
+                focusNode: state.email.focusNode,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  errorText: state.email.errors,
+                  hintText: 'xxxx@example.com',
+                  helperText: 'xxxx@example.com',
+                  label: const Text('email'),
+                ),
+              ),
+              TextField(
+                controller: state.password.controller,
+                focusNode: state.password.focusNode,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  errorText: state.password.errors,
+                  hintText: 'more than 8 characters',
+                  helperText: 'more than 8 characters',
+                  label: const Text('password'),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: controller.submit,
+                child: const Text('signin'),
+              ),
+            ],
           ),
-          TextField(
-            controller: state.email.controller,
-            focusNode: state.email.focusNode,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              errorText: state.email.errors,
-              hintText: 'xxxx@example.com',
-              helperText: 'xxxx@example.com',
-              label: const Text('email'),
+          if (state.showNetworkError)
+            // TODO(torikatsu): animation
+            DialogOverlay(
+              onTap: controller.hideNetworkErrorDialog,
+              child: const AlertDialog(
+                title: Text('ネットワークエラー'),
+                content: Text('通信に失敗しました。時間をあけてお試しください'),
+              ),
             ),
-          ),
-          TextField(
-            controller: state.password.controller,
-            focusNode: state.password.focusNode,
-            textInputAction: TextInputAction.done,
-            decoration: InputDecoration(
-              errorText: state.password.errors,
-              hintText: 'more than 8 characters',
-              helperText: 'more than 8 characters',
-              label: const Text('password'),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: controller.submit,
-            child: const Text('signin'),
-          ),
         ],
       ),
     );
