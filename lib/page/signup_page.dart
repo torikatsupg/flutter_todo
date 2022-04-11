@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/input/signup_controller_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignupPage extends HookConsumerWidget {
+class SignupPage extends ConsumerWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
