@@ -41,7 +41,11 @@ class FormModel with _$FormModel {
   }
 
   FormModel onChangeText() => this;
+
   FormModel onFocusChange() => copyWith(hasEdit: true, serverErrors: []);
+
+  FormModel addServerError(String e) =>
+      copyWith(serverErrors: [...serverErrors, e]);
 
   void dispose() {
     controller.dispose();

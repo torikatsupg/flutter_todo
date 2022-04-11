@@ -6,16 +6,16 @@ import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/provider/input/signup_controller_provider.freezed.dart';
+part '../../generated/provider/input/signin_controller_provider.freezed.dart';
 
-final signupControllerProvider =
-    StateNotifierProvider.autoDispose<SignupNotifier, _SignupState>(
-  (ref) => SignupNotifier(ref.read),
+final signinControllerProvider =
+    StateNotifierProvider.autoDispose<SigninNotifier, _SigninState>(
+  (ref) => SigninNotifier(ref.read),
 );
 
-class SignupNotifier extends StateNotifier<_SignupState> {
-  SignupNotifier(this._reader)
-      : super(_SignupState(
+class SigninNotifier extends StateNotifier<_SigninState> {
+  SigninNotifier(this._reader)
+      : super(_SigninState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
         )) {
@@ -27,22 +27,16 @@ class SignupNotifier extends StateNotifier<_SignupState> {
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
-
   void onFocusChangePassword() =>
       state = state.copyWith(password: state.password.onFocusChange());
-
   void onChangedEmail() =>
       state = state.copyWith(email: state.email.onChangeText());
-
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
   Future<void> submit() async => _reader(loadingProvider.notifier).run(
         () async {
-          state = state.copyWith(
-            email: state.email.copyWith(hasEdit: true),
-            password: state.password.copyWith(hasEdit: true),
-          );
+          state = state.onSubmit();
           // change focus process implicitly
           state.email.focusNode.unfocus();
           state.password.focusNode.unfocus();
@@ -51,7 +45,7 @@ class SignupNotifier extends StateNotifier<_SignupState> {
             return;
           }
 
-          final result = await _reader(authenticatorProvider).signup(
+          final result = await _reader(authenticatorProvider).signin(
             email: state.email.text,
             password: state.password.text,
           );
@@ -60,15 +54,19 @@ class SignupNotifier extends StateNotifier<_SignupState> {
             ok: (_) => _reader(routerProvider).go('/home'),
             err: (e) {
               switch (e) {
-                case SignupError.emailAlreadyInUse:
+                case SigninError.userDisabled:
                   state = state.copyWith(
-                      email: state.email.addServerError('既に登録されたメールアドレスです'));
+                      email: state.email.addServerError('アカウントが無効です'));
                   break;
-                case SignupError.invalidEmail:
+                case SigninError.userNotFound:
                   state = state.copyWith(
-                      email: state.email.addServerError('不正なメールアドレスです'));
+                      email: state.email.addServerError('アカウントが存在しません'));
                   break;
-                case SignupError.network:
+                case SigninError.wrongPassword:
+                  state = state.copyWith(
+                      password: state.password.addServerError('パスワードが違います'));
+                  break;
+                case SigninError.network:
                   // TODO(torikatsu): handle network error
                   break;
               }
@@ -86,13 +84,18 @@ class SignupNotifier extends StateNotifier<_SignupState> {
 }
 
 @freezed
-class _SignupState with _$_SignupState {
-  factory _SignupState({
+class _SigninState with _$_SigninState {
+  factory _SigninState({
     required FormModel email,
     required FormModel password,
-  }) = __SignupInputState;
+  }) = __SigninInputState;
 
   late final isValidAll = email.isValid && password.isValid;
 
-  _SignupState._();
+  _SigninState onSubmit() => copyWith(
+        email: email.copyWith(hasEdit: true),
+        password: password.copyWith(hasEdit: true),
+      );
+
+  _SigninState._();
 }
