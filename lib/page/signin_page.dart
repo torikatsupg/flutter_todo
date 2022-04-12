@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/component/dialog_overlay.dart';
+import 'package:flutter_todo/component/custom_modal_barriere.dart';
 import 'package:flutter_todo/provider/input/signin_controller_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,13 +12,13 @@ class SigninPage extends ConsumerWidget {
     final state = ref.watch(signinControllerProvider);
     final controller = ref.read(signinControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('signin'),
-      ),
-      body: Stack(
-        children: [
-          Column(
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('signin'),
+          ),
+          body: Column(
             children: [
               TextButton(
                 onPressed: () => ref.read(routerProvider).go('/signup'),
@@ -52,17 +52,22 @@ class SigninPage extends ConsumerWidget {
               ),
             ],
           ),
-          if (state.showNetworkError)
-            // TODO(torikatsu): animation
-            DialogOverlay(
-              onTap: controller.hideNetworkErrorDialog,
-              child: const AlertDialog(
-                title: Text('ネットワークエラー'),
-                content: Text('通信に失敗しました。時間をあけてお試しください'),
+        ),
+        CustomModalBarriere(
+          show: state.showNetworkError,
+          onTap: controller.hideNetworkErrorDialog,
+          child: AlertDialog(
+            title: const Text('ネットワークエラー'),
+            content: const Text('通信に失敗しました。時間をあけてお試しください'),
+            actions: [
+              TextButton(
+                onPressed: controller.hideNetworkErrorDialog,
+                child: const Text('ok'),
               ),
-            ),
-        ],
-      ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
