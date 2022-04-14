@@ -2,6 +2,7 @@ import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/firebase/authenticator_provider.dart';
 import 'package:flutter_todo/provider/input/loading_provider.dart';
+import 'package:flutter_todo/provider/input/network_dialog_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -69,7 +70,7 @@ class SignupNotifier extends StateNotifier<_SignupState> {
                       email: state.email.addServerError('不正なメールアドレスです'));
                   break;
                 case SignupError.network:
-                  // TODO(torikatsu): handle network error
+                  _reader(networkDialogProvider.notifier).show();
                   break;
               }
             },

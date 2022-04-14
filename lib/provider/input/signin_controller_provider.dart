@@ -2,6 +2,7 @@ import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/firebase/authenticator_provider.dart';
 import 'package:flutter_todo/provider/input/loading_provider.dart';
+import 'package:flutter_todo/provider/input/network_dialog_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -33,9 +34,6 @@ class SigninNotifier extends StateNotifier<_SigninState> {
       state = state.copyWith(email: state.email.onChangeText());
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
-
-  void hideNetworkErrorDialog() =>
-      state = state.copyWith(showNetworkError: false);
 
   Future<void> submit() async => _reader(loadingProvider.notifier).run(
         () async {
@@ -70,7 +68,8 @@ class SigninNotifier extends StateNotifier<_SigninState> {
                       password: state.password.addServerError('パスワードが違います'));
                   break;
                 case SigninError.network:
-                  state = state.copyWith(showNetworkError: true);
+                  _reader(networkDialogProvider.notifier).show();
+
                   break;
               }
             },
@@ -91,7 +90,6 @@ class _SigninState with _$_SigninState {
   factory _SigninState({
     required FormModel email,
     required FormModel password,
-    @Default(false) bool showNetworkError,
   }) = __SigninInputState;
 
   late final isValidAll = email.isValid && password.isValid;
