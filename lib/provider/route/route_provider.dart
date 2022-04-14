@@ -26,8 +26,10 @@ class RouteNotifier extends StateNotifier<RouteState> {
         ? (state.queryParams..addAll(queryParameters))
         : queryParameters;
 
-    final queryStr =
-        nextQuery.map((key, value) => MapEntry(key, '$key=$value')).values;
+    final queryStr = nextQuery
+        .map((key, value) => MapEntry(key, '$key=$value'))
+        .values
+        .join('&');
 
     if (queryStr.isEmpty) {
       _read(goRouterProvider).go(path);
@@ -35,6 +37,8 @@ class RouteNotifier extends StateNotifier<RouteState> {
       _read(goRouterProvider).go('$path?$queryStr');
     }
   }
+
+  void pop() => _read(goRouterProvider).routerDelegate.pop();
 }
 
 final tabProvider = cachedProvider<String, RouteState>(
