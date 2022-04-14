@@ -5,14 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final authenticatorProvider = Provider((_) => Authenticator());
 
 class Authenticator {
-  Future<Result<void, SignupError>> signup({
+  Future<Result<User, SignupError>> signup({
     required String email,
     required String password,
   }) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      return Result.ok();
+      return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
@@ -31,7 +31,7 @@ class Authenticator {
     }
   }
 
-  Future<Result<void, SigninError>> signin({
+  Future<Result<User, SigninError>> signin({
     required String email,
     required String password,
   }) async {
@@ -39,7 +39,7 @@ class Authenticator {
       // TODO(torikatsu): credentialsが必要な場面ってあるのかを調べる
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      return Result.ok();
+      return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-disabled':
@@ -52,6 +52,20 @@ class Authenticator {
           return Result.err(SigninError.network);
         case 'invalid-email':
           rethrow;
+        default:
+          rethrow;
+      }
+    }
+  }
+
+  Future<Result<void, SignOutError>> signout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return Result.ok();
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'network-request-failed':
+          return Result.err(SignOutError.network);
         default:
           rethrow;
       }
@@ -70,3 +84,5 @@ enum SigninError {
   userNotFound,
   network,
 }
+
+enum SignOutError { network }

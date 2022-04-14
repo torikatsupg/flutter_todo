@@ -35,7 +35,7 @@ class SigninPage extends ConsumerWidget {
           TextField(
             controller: state.password.controller,
             focusNode: state.password.focusNode,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               errorText: state.password.errors,
               hintText: 'more than 8 characters',
