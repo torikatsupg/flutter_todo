@@ -24,67 +24,66 @@ class RouteState {
 
 final routerProvider = Provider(
   (ref) => GoRouter(
-      routes: [
-        MyGoRoute(
-          path: '/',
-          // redirect: (_) => authGuard(ref, () => 'home/todo'),
-          redirect:  (_) => 'home/todo',
-        ),
-        MyGoRoute(
-          path: '/home',
-          // redirect: (_) => authGuard(ref, () => '/home/todo'),
-          redirect: (_) => '/home/todo',
-        ),
-        MyGoRoute(
-          path: '/notfound',
-          builder: (_, __) => const NotFoundPage(),
-        ),
-        MyGoRoute(
-          path: '/signin',
-          redirect: (_) => noAuthGuard(ref),
-          builder: (_, __) => const SigninPage(),
-        ),
-        MyGoRoute(
-          path: '/signup',
-          redirect: (_) => noAuthGuard(ref),
-          builder: (_, __) => const SignupPage(),
-        ),
-        MyGoRoute(
-          path: '/home/:tab',
-          redirect: (_) => authGuard(ref),
-          builder: (context, state) => const HomePage(),
-          routes: [
-            MyGoRoute(
-              path: 'create',
-              redirect: (state) => authGuard(ref,
-                  () => state.params['tab'] != 'todo' ? '/notfound' : null),
-              builder: (context, state) => const CreatePage(),
+    routes: [
+      MyGoRoute(
+        path: '/',
+        redirect: (_) => 'home/todo',
+      ),
+      MyGoRoute(
+        path: '/home',
+        redirect: (_) => '/home/todo',
+      ),
+      MyGoRoute(
+        path: '/notfound',
+        builder: (_, __) => const NotFoundPage(),
+      ),
+      MyGoRoute(
+        path: '/signin',
+        redirect: (_) => noAuthGuard(ref),
+        builder: (_, __) => const SigninPage(),
+      ),
+      MyGoRoute(
+        path: '/signup',
+        redirect: (_) => noAuthGuard(ref),
+        builder: (_, __) => const SignupPage(),
+      ),
+      MyGoRoute(
+        path: '/home/:tab',
+        redirect: (_) => authGuard(ref),
+        builder: (context, state) => const HomePage(),
+        routes: [
+          MyGoRoute(
+            path: 'create',
+            redirect: (state) => authGuard(
+                ref, () => state.params['tab'] != 'todo' ? '/notfound' : null),
+            builder: (context, state) => const CreatePage(),
+          ),
+          MyGoRoute(
+            path: 'setting',
+            redirect: (state) => authGuard(
+              ref,
+              () => state.params['tab'] != 'mypage' ? '/notfound' : null,
             ),
-            MyGoRoute(
-              path: 'setting',
-              redirect: (state) => authGuard(
-                ref,
-                () => state.params['tab'] != 'mypage' ? '/notfound' : null,
-              ),
-              builder: (context, state) => const SettingPage(),
-            ),
-            // MyGoRoute(
-            //   path: ':id',
-            //   redirect: (state) =>
-            //       state.params['tab'] == 'todo' ? null : '/notfound',
-            //   builder: (context, state) => const TaskDetailPage(),
-            //   routes: [
-            //     MyGoRoute(
-            //       path: 'edit',
-            //       builder: (context, state) => const EditTaskPage(),
-            //     ),
-            //   ],
-            // ),
-          ],
-        ),
-      ],
-      errorBuilder: (context, state) => const ErrorPage(),
-      urlPathStrategy: UrlPathStrategy.path,
-      debugLogDiagnostics: true,
-      initialLocation: '/signin'),
+            builder: (context, state) => const SettingPage(),
+          ),
+          // MyGoRoute(
+          //   path: ':id',
+          //   redirect: (state) =>
+          //       state.params['tab'] == 'todo' ? null : '/notfound',
+          //   builder: (context, state) => const TaskDetailPage(),
+          //   routes: [
+          //     MyGoRoute(
+          //       path: 'edit',
+          //       builder: (context, state) => const EditTaskPage(),
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
+    ],
+    errorBuilder: (context, state) => const ErrorPage(),
+    urlPathStrategy: UrlPathStrategy.path,
+    debugLogDiagnostics: true,
+    initialLocation: '/signin',
+  ),
 );

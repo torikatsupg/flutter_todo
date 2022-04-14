@@ -36,7 +36,6 @@ class Authenticator {
     required String password,
   }) async {
     try {
-      // TODO(torikatsu): credentialsが必要な場面ってあるのかを調べる
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       return Result.ok(FirebaseAuth.instance.currentUser);
