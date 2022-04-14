@@ -25,11 +25,6 @@ class _CustomModalBarriereState extends State<CustomModalBarriere>
   bool show = false;
 
   @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-  }
-
-  @override
   void initState() {
     super.initState();
     _controller = AnimationController(
@@ -47,9 +42,9 @@ class _CustomModalBarriereState extends State<CustomModalBarriere>
       _controller.forward();
       show = true;
     } else {
-      _controller.reverse().whenCompleteOrCancel(() {
-        show = false;
-      });
+      _controller.reverse().whenCompleteOrCancel(
+            () => setState(() => show = false),
+          );
     }
   }
 
