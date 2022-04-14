@@ -12,9 +12,16 @@ dependencies:
   hooks_riverpod: ^2.0.0-dev.0
   freezed_annotation: ^1.1.0
   json_annotation: ^4.4.0
-  go_router: ^3.0.3
+  go_router: # ^3.0.3
+    git:
+      url: https://github.com/torikatsupg/packages.git
+      ref: 81178f8
+      path: packages/go_router
+
   firebase_core: ^1.13.1
   firebase_auth: ^3.3.11
+  # TODO(torikatsu): configure podfile to speed up for building ios
+  cloud_firestore: ^3.1.12
 
 dev_dependencies:
   flutter_test:
