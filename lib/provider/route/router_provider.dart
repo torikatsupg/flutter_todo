@@ -1,10 +1,9 @@
+import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/page/error_page.dart';
 import 'package:flutter_todo/page/home/home_page.dart';
 import 'package:flutter_todo/page/home/task/create_task_page.dart';
-import 'package:flutter_todo/page/home/task/edit_task_page.dart';
-import 'package:flutter_todo/page/home/task/task_detail_page.dart';
 import 'package:flutter_todo/page/notfound_page.dart';
 import 'package:flutter_todo/page/home/mypage/setting_page.dart';
 import 'package:flutter_todo/page/signin_page.dart';
@@ -25,55 +24,55 @@ class RouteState {
 final routerProvider = Provider(
   (_) => GoRouter(
       routes: [
-        GoRoute(
+        MyGoRoute(
           path: '/',
           redirect: (state) => '/home/todo',
         ),
-        GoRoute(
+        MyGoRoute(
           path: '/home',
           redirect: (_) => '/home/todo',
         ),
-        GoRoute(
+        MyGoRoute(
           path: '/notfound',
           builder: (_, __) => const NotFoundPage(),
         ),
-        GoRoute(
+        MyGoRoute(
           path: '/signin',
           builder: (_, __) => const SigninPage(),
         ),
-        GoRoute(
+        MyGoRoute(
           path: '/signup',
           builder: (_, __) => SignupPage(),
         ),
-        GoRoute(
+        MyGoRoute(
           path: '/home/:tab',
           builder: (context, state) => const HomePage(),
           routes: [
-            GoRoute(
+            MyGoRoute(
               path: 'create',
               redirect: (state) =>
                   state.params['tab'] == 'todo' ? null : '/notfound',
               builder: (context, state) => const CreatePage(),
             ),
-            GoRoute(
+            MyGoRoute(
               path: 'setting',
               redirect: (state) =>
                   state.params['tab'] == 'mypage' ? null : '/notfound',
               builder: (context, state) => const SettingPage(),
               routes: [
-                GoRoute(
+                MyGoRoute(
                   path: 'test',
                   builder: (context, state) => SignupPage(),
                 ),
               ],
             ),
-            // GoRoute(
+            // MyGoRoute(
             //   path: ':id',
             //   redirect: (state) =>
             //       state.params['tab'] == 'todo' ? null : '/notfound',
             //   builder: (context, state) => const TaskDetailPage(),
             //   routes: [
-            //     GoRoute(
+            //     MyGoRoute(
             //       path: 'edit',
             //       builder: (context, state) => const EditTaskPage(),
             //     ),
