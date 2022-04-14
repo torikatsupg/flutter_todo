@@ -23,3 +23,41 @@ String? noAuthGuard(ProviderRef<GoRouter> ref, [RouteGuard? guard]) {
     return null;
   }
 }
+
+String? todoGuard(
+  ProviderRef<GoRouter> ref,
+  GoRouterState state, [
+  RouteGuard? guard,
+]) {
+  return authGuard(
+    ref,
+    () {
+      if (state.params['tab'] != 'todo') {
+        return '/notfound';
+      } else if (guard != null) {
+        return guard();
+      } else {
+        return null;
+      }
+    },
+  );
+}
+
+String? myPageGuard(
+  ProviderRef<GoRouter> ref,
+  GoRouterState state, [
+  RouteGuard? guard,
+]) {
+  return authGuard(
+    ref,
+    () {
+      if (state.params['tab'] != 'mypage') {
+        return '/notfound';
+      } else if (guard != null) {
+        return guard();
+      } else {
+        return null;
+      }
+    },
+  );
+}

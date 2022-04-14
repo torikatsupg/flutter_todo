@@ -1,3 +1,5 @@
+import 'package:flutter_todo/page/home/task/edit_task_page.dart';
+import 'package:flutter_todo/page/home/task/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
 import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
@@ -54,30 +56,30 @@ final routerProvider = Provider(
         routes: [
           MyGoRoute(
             path: 'create',
-            redirect: (state) => authGuard(
-                ref, () => state.params['tab'] != 'todo' ? '/notfound' : null),
+            redirect: (state) => todoGuard(ref, state),
             builder: (context, state) => const CreatePage(),
           ),
           MyGoRoute(
             path: 'setting',
-            redirect: (state) => authGuard(
-              ref,
-              () => state.params['tab'] != 'mypage' ? '/notfound' : null,
-            ),
+            redirect: (state) => myPageGuard(ref, state),
             builder: (context, state) => const SettingPage(),
           ),
-          // MyGoRoute(
-          //   path: ':id',
-          //   redirect: (state) =>
-          //       state.params['tab'] == 'todo' ? null : '/notfound',
-          //   builder: (context, state) => const TaskDetailPage(),
-          //   routes: [
-          //     MyGoRoute(
-          //       path: 'edit',
-          //       builder: (context, state) => const EditTaskPage(),
-          //     ),
-          //   ],
-          // ),
+          MyGoRoute(
+            path: ':id',
+            redirect: (state) => todoGuard(
+              ref,
+              state,
+              () => state.params['id'] == null ? '/notfound' : null,
+            ),
+            builder: (context, state) => const TaskDetailPage(),
+            routes: [
+              MyGoRoute(
+                path: 'edit',
+                redirect: (state) => todoGuard(ref, state),
+                builder: (context, state) => const EditTaskPage(),
+              ),
+            ],
+          ),
         ],
       ),
     ],
