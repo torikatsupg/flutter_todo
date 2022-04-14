@@ -24,7 +24,7 @@ class RouteState {
   String? get todo => queryParams['todo'];
 }
 
-final routerProvider = Provider(
+final goRouterProvider = Provider(
   (ref) => GoRouter(
     routes: [
       MyGoRoute(

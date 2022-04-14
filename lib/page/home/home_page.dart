@@ -3,7 +3,6 @@ import 'package:flutter_todo/component/lazy_indexed_stack.dart';
 import 'package:flutter_todo/page/home/mypage_screen.dart';
 import 'package:flutter_todo/page/home/task_screen.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
-import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
@@ -27,7 +26,7 @@ class HomePage extends ConsumerWidget {
         ],
         currentIndex: TabIndex.toIndex(tab),
         onTap: (value) =>
-            ref.read(routerProvider).go('/home/${TabIndex.toParam(value)}'),
+            ref.read(routerProvider.notifier).go('/home/${TabIndex.toParam(value)}'),
       ),
     );
   }

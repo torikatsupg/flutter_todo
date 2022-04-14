@@ -4,7 +4,7 @@ import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/firebase/authenticator_provider.dart';
 import 'package:flutter_todo/provider/input/loading_provider.dart';
 import 'package:flutter_todo/provider/input/network_dialog_provider.dart';
-import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -56,7 +56,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
         result.when(
           ok: (user) {
             _reader(authProvider.notifier).setUser(user);
-            _reader(routerProvider).go('/home');
+            _reader(routerProvider.notifier).go('/home');
           },
           err: (e) {
             switch (e) {

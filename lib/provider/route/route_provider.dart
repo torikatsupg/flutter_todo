@@ -1,40 +1,60 @@
 import 'package:flutter_todo/provider/base/cached_provider.dart';
-import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef RouteProvider = StateNotifierProvider<RouteNotifier, RouteState>;
 
-final routeProvider = StateNotifierProvider<RouteNotifier, RouteState>(
-    (ref) => RouteNotifier(ref.watch(routerProvider)));
+final routerProvider = StateNotifierProvider<RouteNotifier, RouteState>(
+    (ref) => RouteNotifier(ref.watch(goRouterProvider), ref.read));
+
+const _emptyQuery = <String, String>{};
 
 class RouteNotifier extends StateNotifier<RouteState> {
-  RouteNotifier(GoRouter router) : super(calcState(router)) {
+  RouteNotifier(GoRouter router, this._read) : super(calcState(router)) {
     router.routerDelegate.addListener(() => state = calcState(router));
+  }
+
+  final Reader _read;
+
+  void go(
+    String path, {
+    Map<String, String> queryParameters = _emptyQuery,
+    bool isMaintainQuery = true,
+  }) {
+    final nextQuery = isMaintainQuery
+        ? (state.queryParams..addAll(queryParameters))
+        : queryParameters;
+
+    final queryStr = nextQuery
+        .map((key, value) => MapEntry(key, '$key=$value'))
+        .values
+        .join("&");
+
+    _read(goRouterProvider).go('$path?$queryStr');
   }
 }
 
 final tabProvider = cachedProvider<String, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).tab!,
-  provider: routeProvider,
+  initializer: (ref) => ref.read(routerProvider).tab!,
+  provider: routerProvider,
   shouldUpdate: (next) => next.tab != null,
   toState: (next) => next.tab!,
 );
 
 final idProvider = cachedProvider<String, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).id!,
-  provider: routeProvider,
+  initializer: (ref) => ref.read(routerProvider).id!,
+  provider: routerProvider,
   shouldUpdate: (next) => next.id != null,
   toState: (next) => next.id!,
 );
 
 final todoProvider = cachedProvider<String?, RouteState>(
-  initializer: (ref) => ref.read(routeProvider).todo,
-  provider: routeProvider,
+  initializer: (ref) => ref.read(routerProvider).todo,
+  provider: routerProvider,
   shouldUpdate: (next) => next.todo != null,
   toState: (next) => next.todo,
 );
-
 
 RouteState calcState(GoRouter router) {
   // ignore: invalid_use_of_visible_for_testing_member

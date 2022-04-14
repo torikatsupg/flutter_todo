@@ -4,7 +4,6 @@ import 'package:flutter_todo/component/loading_view.dart';
 import 'package:flutter_todo/provider/fetch/task_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class TaskScreen extends ConsumerStatefulWidget {
   const TaskScreen({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
     _controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: toIndex(ref.read(routeProvider).queryParams['tab']),
+      initialIndex: toIndex(ref.read(routerProvider).queryParams['tab']),
     );
     _todoController = ScrollController();
     _doneController = ScrollController();
@@ -40,7 +39,9 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
         bottom: TabBar(
           controller: _controller,
           onTap: (value) {
-            context.go('/home/todo?todo=${fromIndex(value)}');
+            ref
+                .read(routerProvider.notifier)
+                .go('/home/todo?todo=${fromIndex(value)}');
           },
           tabs: const [
             Tab(
@@ -66,7 +67,9 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
                     return ListTile(
                       leading: Text(task.id),
                       title: Text(task.name),
-                      onTap: () => context.go('/home/todo/${task.id}'),
+                      onTap: () => ref
+                          .read(routerProvider.notifier)
+                          .go('/home/todo/${task.id}'),
                     );
                   },
                 ),
@@ -82,7 +85,9 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
                     return ListTile(
                       leading: Text(task.id),
                       title: Text(task.name),
-                      onTap: () => context.go('/home/todo/${task.id}'),
+                      onTap: () => ref
+                          .read(routerProvider.notifier)
+                          .go('/home/todo/${task.id}'),
                     );
                   },
                 ),

@@ -7,7 +7,7 @@ class EditTaskPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final id = ref.watch(routeProvider).params['id']!;
+    final id = ref.watch(routerProvider).params['id']!;
     return Scaffold(
       appBar: AppBar(
         title: Text('edit $id'),
