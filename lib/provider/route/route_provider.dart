@@ -26,12 +26,14 @@ class RouteNotifier extends StateNotifier<RouteState> {
         ? (state.queryParams..addAll(queryParameters))
         : queryParameters;
 
-    final queryStr = nextQuery
-        .map((key, value) => MapEntry(key, '$key=$value'))
-        .values
-        .join("&");
+    final queryStr =
+        nextQuery.map((key, value) => MapEntry(key, '$key=$value')).values;
 
-    _read(goRouterProvider).go('$path?$queryStr');
+    if (queryStr.isEmpty) {
+      _read(goRouterProvider).go(path);
+    } else {
+      _read(goRouterProvider).go('$path?$queryStr');
+    }
   }
 }
 

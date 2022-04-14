@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final authProvider = StateNotifierProvider((_) => AuthStateNotifier());
+final authProvider = StateNotifierProvider<AuthStateNotifier, User?>((_) => AuthStateNotifier());
 
 class AuthStateNotifier extends StateNotifier<User?> {
   AuthStateNotifier() : super(FirebaseAuth.instance.currentUser) {

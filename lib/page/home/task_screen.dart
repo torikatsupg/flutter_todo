@@ -34,9 +34,12 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
         bottom: TabBar(
           controller: _controller,
           onTap: (value) {
-            ref
-                .read(routerProvider.notifier)
-                .go('/home/todo?todo=${fromIndex(value)}');
+            ref.read(routerProvider.notifier).go(
+              '/home/todo',
+              queryParameters: {
+                'todo': fromIndex(value),
+              },
+            );
           },
           tabs: const [
             Tab(
@@ -56,6 +59,11 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
           TodoTab(),
           DoneTab(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () =>
+            ref.read(routerProvider.notifier).go('/home/todo/create'),
       ),
     );
   }
