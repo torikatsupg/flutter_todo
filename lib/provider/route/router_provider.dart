@@ -1,3 +1,4 @@
+import 'package:flutter_todo/provider/route/guard.dart';
 import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,14 +23,16 @@ class RouteState {
 }
 
 final routerProvider = Provider(
-  (_) => GoRouter(
+  (ref) => GoRouter(
       routes: [
         MyGoRoute(
           path: '/',
-          redirect: (state) => '/home/todo',
+          // redirect: (_) => authGuard(ref, () => 'home/todo'),
+          redirect:  (_) => 'home/todo',
         ),
         MyGoRoute(
           path: '/home',
+          // redirect: (_) => authGuard(ref, () => '/home/todo'),
           redirect: (_) => '/home/todo',
         ),
         MyGoRoute(
@@ -38,33 +41,32 @@ final routerProvider = Provider(
         ),
         MyGoRoute(
           path: '/signin',
+          redirect: (_) => noAuthGuard(ref),
           builder: (_, __) => const SigninPage(),
         ),
         MyGoRoute(
           path: '/signup',
-          builder: (_, __) => SignupPage(),
+          redirect: (_) => noAuthGuard(ref),
+          builder: (_, __) => const SignupPage(),
         ),
         MyGoRoute(
           path: '/home/:tab',
+          redirect: (_) => authGuard(ref),
           builder: (context, state) => const HomePage(),
           routes: [
             MyGoRoute(
               path: 'create',
-              redirect: (state) =>
-                  state.params['tab'] == 'todo' ? null : '/notfound',
+              redirect: (state) => authGuard(ref,
+                  () => state.params['tab'] != 'todo' ? '/notfound' : null),
               builder: (context, state) => const CreatePage(),
             ),
             MyGoRoute(
               path: 'setting',
-              redirect: (state) =>
-                  state.params['tab'] == 'mypage' ? null : '/notfound',
+              redirect: (state) => authGuard(
+                ref,
+                () => state.params['tab'] != 'mypage' ? '/notfound' : null,
+              ),
               builder: (context, state) => const SettingPage(),
-              routes: [
-                MyGoRoute(
-                  path: 'test',
-                  builder: (context, state) => SignupPage(),
-                ),
-              ],
             ),
             // MyGoRoute(
             //   path: ':id',
