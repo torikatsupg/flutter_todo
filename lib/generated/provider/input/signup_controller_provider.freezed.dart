@@ -19,10 +19,13 @@ class _$_SignupStateTearOff {
   const _$_SignupStateTearOff();
 
   __SignupInputState call(
-      {required FormModel email, required FormModel password}) {
+      {required FormModel email,
+      required FormModel password,
+      required FormModel confirmPassword}) {
     return __SignupInputState(
       email: email,
       password: password,
+      confirmPassword: confirmPassword,
     );
   }
 }
@@ -34,6 +37,7 @@ const _$SignupState = _$_SignupStateTearOff();
 mixin _$_SignupState {
   FormModel get email => throw _privateConstructorUsedError;
   FormModel get password => throw _privateConstructorUsedError;
+  FormModel get confirmPassword => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$SignupStateCopyWith<_SignupState> get copyWith =>
@@ -45,10 +49,11 @@ abstract class _$SignupStateCopyWith<$Res> {
   factory _$SignupStateCopyWith(
           _SignupState value, $Res Function(_SignupState) then) =
       __$SignupStateCopyWithImpl<$Res>;
-  $Res call({FormModel email, FormModel password});
+  $Res call({FormModel email, FormModel password, FormModel confirmPassword});
 
   $FormModelCopyWith<$Res> get email;
   $FormModelCopyWith<$Res> get password;
+  $FormModelCopyWith<$Res> get confirmPassword;
 }
 
 /// @nodoc
@@ -63,6 +68,7 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
+    Object? confirmPassword = freezed,
   }) {
     return _then(_value.copyWith(
       email: email == freezed
@@ -72,6 +78,10 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as FormModel,
+      confirmPassword: confirmPassword == freezed
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
               as FormModel,
     ));
   }
@@ -89,6 +99,13 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
       return _then(_value.copyWith(password: value));
     });
   }
+
+  @override
+  $FormModelCopyWith<$Res> get confirmPassword {
+    return $FormModelCopyWith<$Res>(_value.confirmPassword, (value) {
+      return _then(_value.copyWith(confirmPassword: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -98,12 +115,14 @@ abstract class _$_SignupInputStateCopyWith<$Res>
           __SignupInputState value, $Res Function(__SignupInputState) then) =
       __$_SignupInputStateCopyWithImpl<$Res>;
   @override
-  $Res call({FormModel email, FormModel password});
+  $Res call({FormModel email, FormModel password, FormModel confirmPassword});
 
   @override
   $FormModelCopyWith<$Res> get email;
   @override
   $FormModelCopyWith<$Res> get password;
+  @override
+  $FormModelCopyWith<$Res> get confirmPassword;
 }
 
 /// @nodoc
@@ -121,6 +140,7 @@ class __$_SignupInputStateCopyWithImpl<$Res>
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
+    Object? confirmPassword = freezed,
   }) {
     return _then(__SignupInputState(
       email: email == freezed
@@ -131,6 +151,10 @@ class __$_SignupInputStateCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as FormModel,
+      confirmPassword: confirmPassword == freezed
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as FormModel,
     ));
   }
 }
@@ -138,17 +162,22 @@ class __$_SignupInputStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$__SignupInputState extends __SignupInputState {
-  _$__SignupInputState({required this.email, required this.password})
+  _$__SignupInputState(
+      {required this.email,
+      required this.password,
+      required this.confirmPassword})
       : super._();
 
   @override
   final FormModel email;
   @override
   final FormModel password;
+  @override
+  final FormModel confirmPassword;
 
   @override
   String toString() {
-    return '_SignupState(email: $email, password: $password)';
+    return '_SignupState(email: $email, password: $password, confirmPassword: $confirmPassword)';
   }
 
   @override
@@ -157,14 +186,17 @@ class _$__SignupInputState extends __SignupInputState {
         (other.runtimeType == runtimeType &&
             other is __SignupInputState &&
             const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password));
+            const DeepCollectionEquality().equals(other.password, password) &&
+            const DeepCollectionEquality()
+                .equals(other.confirmPassword, confirmPassword));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password));
+      const DeepCollectionEquality().hash(password),
+      const DeepCollectionEquality().hash(confirmPassword));
 
   @JsonKey(ignore: true)
   @override
@@ -175,13 +207,16 @@ class _$__SignupInputState extends __SignupInputState {
 abstract class __SignupInputState extends _SignupState {
   factory __SignupInputState(
       {required FormModel email,
-      required FormModel password}) = _$__SignupInputState;
+      required FormModel password,
+      required FormModel confirmPassword}) = _$__SignupInputState;
   __SignupInputState._() : super._();
 
   @override
   FormModel get email;
   @override
   FormModel get password;
+  @override
+  FormModel get confirmPassword;
   @override
   @JsonKey(ignore: true)
   _$_SignupInputStateCopyWith<__SignupInputState> get copyWith =>

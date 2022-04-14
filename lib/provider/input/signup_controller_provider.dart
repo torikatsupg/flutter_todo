@@ -19,9 +19,12 @@ class SignupNotifier extends StateNotifier<_SignupState> {
       : super(_SignupState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
+          confirmPassword: createFormModel(mandatoryValidator),
         )) {
     state.email.setListeners(onChangedEmail, onFocusChangeEmail);
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
+    state.confirmPassword
+        .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
   }
 
   final Reader _reader;
@@ -32,53 +35,47 @@ class SignupNotifier extends StateNotifier<_SignupState> {
   void onFocusChangePassword() =>
       state = state.copyWith(password: state.password.onFocusChange());
 
+  void onFocusChangeConfirmPassword() => state =
+      state.copyWith(confirmPassword: state.confirmPassword.onFocusChange());
+
   void onChangedEmail() =>
       state = state.copyWith(email: state.email.onChangeText());
 
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  Future<void> submit() async => _reader(loadingProvider.notifier).run(
-        () async {
-          state = state.copyWith(
-            email: state.email.copyWith(hasEdit: true),
-            password: state.password.copyWith(hasEdit: true),
-          );
-          // change focus process implicitly
-          state.email.focusNode.unfocus();
-          state.password.focusNode.unfocus();
+  void onChangedConfirmPassword() => state =
+      state.copyWith(confirmPassword: state.confirmPassword.onChangeText());
 
-          if (!state.isValidAll) {
-            return;
-          }
+  Future<void> submit() async {
+    return _reader(loadingProvider.notifier).run(
+      () async {
+        state = state.onSubmit();
+        if (!state.isValidAll) {
+          return;
+        }
 
-          final result = await _reader(authenticatorProvider).signup(
-            email: state.email.text,
-            password: state.password.text,
-          );
+        final result = await _reader(authenticatorProvider).signup(
+          email: state.email.text,
+          password: state.password.text,
+        );
 
-          result.when(
-            ok: (_) => _reader(routerProvider).go('/home'),
-            err: (e) {
-              switch (e) {
-                case SignupError.emailAlreadyInUse:
-                  state = state.copyWith(
-                      email: state.email.addServerError('既に登録されたメールアドレスです'));
-                  break;
-                case SignupError.network:
-                  _reader(networkDialogProvider.notifier).show();
-                  break;
-              }
-            },
-          );
-        },
-      );
-
-  @override
-  void dispose() {
-    state.email.dispose();
-    state.password.dispose();
-    super.dispose();
+        result.when(
+          ok: (_) => _reader(routerProvider).go('/home'),
+          err: (e) {
+            switch (e) {
+              case SignupError.emailAlreadyInUse:
+                state = state.copyWith(
+                    email: state.email.addServerError('既に登録されたメールアドレスです'));
+                break;
+              case SignupError.network:
+                _reader(networkDialogProvider.notifier).show();
+                break;
+            }
+          },
+        );
+      },
+    );
   }
 }
 
@@ -87,9 +84,32 @@ class _SignupState with _$_SignupState {
   factory _SignupState({
     required FormModel email,
     required FormModel password,
+    required FormModel confirmPassword,
   }) = __SignupInputState;
 
-  late final isValidAll = email.isValid && password.isValid;
+  late final isValidAll =
+      email.isValid && password.isValid && isValidConrirmPassword;
+
+  late final isValidConrirmPassword = _confirmPasswordError == null;
+
+  late final confirmPasswordError =
+      confirmPassword.canDisplayError ? _confirmPasswordError : null;
+
+  _SignupState onSubmit() => copyWith(
+        email: email.onSubmit(),
+        password: password.onSubmit(),
+        confirmPassword: confirmPassword.onSubmit(),
+      );
+
+  String? get _confirmPasswordError {
+    if (confirmPassword.errors != null) {
+      return confirmPassword.errors;
+    } else if (confirmPassword.controller.text != password.controller.text) {
+      return 'パスワードと確認用パスワードが一致しません';
+    } else {
+      return null;
+    }
+  }
 
   _SignupState._();
 }

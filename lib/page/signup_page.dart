@@ -35,12 +35,23 @@ class SignupPage extends ConsumerWidget {
           TextField(
             controller: state.password.controller,
             focusNode: state.password.focusNode,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               errorText: state.password.errors,
               hintText: 'more than 8 characters',
               helperText: 'more than 8 characters',
               label: const Text('password'),
+            ),
+          ),
+          TextField(
+            controller: state.confirmPassword.controller,
+            focusNode: state.confirmPassword.focusNode,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(
+              errorText: state.confirmPasswordError,
+              hintText: '',
+              helperText: '',
+              label: const Text('confirm password'),
             ),
           ),
           ElevatedButton(

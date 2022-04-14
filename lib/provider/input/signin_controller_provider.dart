@@ -35,53 +35,48 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  Future<void> submit() async => _reader(loadingProvider.notifier).run(
-        () async {
-          state = state.onSubmit();
-          // change focus process implicitly
-          state.email.focusNode.unfocus();
-          state.password.focusNode.unfocus();
+  Future<void> submit() async {
+    _reader(loadingProvider.notifier).run(
+      () async {
+        state = state.onSubmit();
+        // change focus process implicitly
+        state.email.focusNode.unfocus();
+        state.password.focusNode.unfocus();
 
-          if (!state.isValidAll) {
-            return;
-          }
+        if (!state.isValidAll) {
+          return;
+        }
 
-          final result = await _reader(authenticatorProvider).signin(
-            email: state.email.text,
-            password: state.password.text,
-          );
+        final result = await _reader(authenticatorProvider).signin(
+          email: state.email.text,
+          password: state.password.text,
+        );
 
-          result.when(
-            ok: (_) => _reader(routerProvider).go('/home'),
-            err: (e) {
-              switch (e) {
-                case SigninError.userDisabled:
-                  state = state.copyWith(
-                      email: state.email.addServerError('アカウントが無効です'));
-                  break;
-                case SigninError.userNotFound:
-                  state = state.copyWith(
-                      email: state.email.addServerError('アカウントが存在しません'));
-                  break;
-                case SigninError.wrongPassword:
-                  state = state.copyWith(
-                      password: state.password.addServerError('パスワードが違います'));
-                  break;
-                case SigninError.network:
-                  _reader(networkDialogProvider.notifier).show();
+        result.when(
+          ok: (_) => _reader(routerProvider).go('/home'),
+          err: (e) {
+            switch (e) {
+              case SigninError.userDisabled:
+                state = state.copyWith(
+                    email: state.email.addServerError('アカウントが無効です'));
+                break;
+              case SigninError.userNotFound:
+                state = state.copyWith(
+                    email: state.email.addServerError('アカウントが存在しません'));
+                break;
+              case SigninError.wrongPassword:
+                state = state.copyWith(
+                    password: state.password.addServerError('パスワードが違います'));
+                break;
+              case SigninError.network:
+                _reader(networkDialogProvider.notifier).show();
 
-                  break;
-              }
-            },
-          );
-        },
-      );
-
-  @override
-  void dispose() {
-    state.email.dispose();
-    state.password.dispose();
-    super.dispose();
+                break;
+            }
+          },
+        );
+      },
+    );
   }
 }
 
@@ -95,8 +90,8 @@ class _SigninState with _$_SigninState {
   late final isValidAll = email.isValid && password.isValid;
 
   _SigninState onSubmit() => copyWith(
-        email: email.copyWith(hasEdit: true),
-        password: password.copyWith(hasEdit: true),
+        email: email.onSubmit(),
+        password: password.onSubmit(),
       );
 
   _SigninState._();

@@ -17,12 +17,20 @@ class FormModel with _$FormModel {
 
   FormModel._();
 
-  late final errors = _canDisplayError ? _errors.join('\n') : null;
+  String? get errors {
+    if (!canDisplayError) {
+      return null;
+    } else if (_errors.isEmpty) {
+      return null;
+    } else {
+      return _errors.join('\n');
+    }
+  }
+
   late final isValid = _errors.isEmpty;
   late final text = controller.text;
 
-  late final _canDisplayError =
-      !focusNode.hasFocus && hasEdit && _errors.isNotEmpty;
+  late final canDisplayError = !focusNode.hasFocus && hasEdit;
 
   List<String> get _errors {
     final validationError = validator(controller.text);
@@ -46,6 +54,11 @@ class FormModel with _$FormModel {
 
   FormModel addServerError(String e) =>
       copyWith(serverErrors: [...serverErrors, e]);
+
+  FormModel onSubmit() {
+    focusNode.unfocus();
+    return copyWith(hasEdit: true);
+  }
 
   void dispose() {
     controller.dispose();
