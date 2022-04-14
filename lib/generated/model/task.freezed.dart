@@ -15,49 +15,58 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$TodoTaskTearOff {
-  const _$TodoTaskTearOff();
+class _$TaskTearOff {
+  const _$TaskTearOff();
 
-  _TodoTask call({required String id, required String name}) {
-    return _TodoTask(
+  _Task call(
+      {required String id,
+      required String name,
+      required DateTime createdAt,
+      required bool isDone}) {
+    return _Task(
       id: id,
       name: name,
+      createdAt: createdAt,
+      isDone: isDone,
     );
   }
 }
 
 /// @nodoc
-const $TodoTask = _$TodoTaskTearOff();
+const $Task = _$TaskTearOff();
 
 /// @nodoc
-mixin _$TodoTask {
+mixin _$Task {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  bool get isDone => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TodoTaskCopyWith<TodoTask> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TodoTaskCopyWith<$Res> {
-  factory $TodoTaskCopyWith(TodoTask value, $Res Function(TodoTask) then) =
-      _$TodoTaskCopyWithImpl<$Res>;
-  $Res call({String id, String name});
+abstract class $TaskCopyWith<$Res> {
+  factory $TaskCopyWith(Task value, $Res Function(Task) then) =
+      _$TaskCopyWithImpl<$Res>;
+  $Res call({String id, String name, DateTime createdAt, bool isDone});
 }
 
 /// @nodoc
-class _$TodoTaskCopyWithImpl<$Res> implements $TodoTaskCopyWith<$Res> {
-  _$TodoTaskCopyWithImpl(this._value, this._then);
+class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
+  _$TaskCopyWithImpl(this._value, this._then);
 
-  final TodoTask _value;
+  final Task _value;
   // ignore: unused_field
-  final $Res Function(TodoTask) _then;
+  final $Res Function(Task) _then;
 
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? createdAt = freezed,
+    Object? isDone = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -68,33 +77,43 @@ class _$TodoTaskCopyWithImpl<$Res> implements $TodoTaskCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isDone: isDone == freezed
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$TodoTaskCopyWith<$Res> implements $TodoTaskCopyWith<$Res> {
-  factory _$TodoTaskCopyWith(_TodoTask value, $Res Function(_TodoTask) then) =
-      __$TodoTaskCopyWithImpl<$Res>;
+abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
+  factory _$TaskCopyWith(_Task value, $Res Function(_Task) then) =
+      __$TaskCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name});
+  $Res call({String id, String name, DateTime createdAt, bool isDone});
 }
 
 /// @nodoc
-class __$TodoTaskCopyWithImpl<$Res> extends _$TodoTaskCopyWithImpl<$Res>
-    implements _$TodoTaskCopyWith<$Res> {
-  __$TodoTaskCopyWithImpl(_TodoTask _value, $Res Function(_TodoTask) _then)
-      : super(_value, (v) => _then(v as _TodoTask));
+class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
+    implements _$TaskCopyWith<$Res> {
+  __$TaskCopyWithImpl(_Task _value, $Res Function(_Task) _then)
+      : super(_value, (v) => _then(v as _Task));
 
   @override
-  _TodoTask get _value => super._value as _TodoTask;
+  _Task get _value => super._value as _Task;
 
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? createdAt = freezed,
+    Object? isDone = freezed,
   }) {
-    return _then(_TodoTask(
+    return _then(_Task(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -103,201 +122,84 @@ class __$TodoTaskCopyWithImpl<$Res> extends _$TodoTaskCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isDone: isDone == freezed
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-@Implements<Task>()
-class _$_TodoTask extends _TodoTask {
-  _$_TodoTask({required this.id, required this.name}) : super._();
+class _$_Task extends _Task {
+  _$_Task(
+      {required this.id,
+      required this.name,
+      required this.createdAt,
+      required this.isDone})
+      : super._();
 
   @override
   final String id;
   @override
   final String name;
+  @override
+  final DateTime createdAt;
+  @override
+  final bool isDone;
 
   @override
   String toString() {
-    return 'TodoTask(id: $id, name: $name)';
+    return 'Task(id: $id, name: $name, createdAt: $createdAt, isDone: $isDone)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TodoTask &&
+            other is _Task &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.isDone, isDone));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(isDone));
 
   @JsonKey(ignore: true)
   @override
-  _$TodoTaskCopyWith<_TodoTask> get copyWith =>
-      __$TodoTaskCopyWithImpl<_TodoTask>(this, _$identity);
+  _$TaskCopyWith<_Task> get copyWith =>
+      __$TaskCopyWithImpl<_Task>(this, _$identity);
 }
 
-abstract class _TodoTask extends TodoTask implements Task {
-  factory _TodoTask({required String id, required String name}) = _$_TodoTask;
-  _TodoTask._() : super._();
+abstract class _Task extends Task {
+  factory _Task(
+      {required String id,
+      required String name,
+      required DateTime createdAt,
+      required bool isDone}) = _$_Task;
+  _Task._() : super._();
 
   @override
   String get id;
   @override
   String get name;
   @override
-  @JsonKey(ignore: true)
-  _$TodoTaskCopyWith<_TodoTask> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-class _$DoneTaskTearOff {
-  const _$DoneTaskTearOff();
-
-  _DoneTask call({required String id, required String name}) {
-    return _DoneTask(
-      id: id,
-      name: name,
-    );
-  }
-}
-
-/// @nodoc
-const $DoneTask = _$DoneTaskTearOff();
-
-/// @nodoc
-mixin _$DoneTask {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $DoneTaskCopyWith<DoneTask> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DoneTaskCopyWith<$Res> {
-  factory $DoneTaskCopyWith(DoneTask value, $Res Function(DoneTask) then) =
-      _$DoneTaskCopyWithImpl<$Res>;
-  $Res call({String id, String name});
-}
-
-/// @nodoc
-class _$DoneTaskCopyWithImpl<$Res> implements $DoneTaskCopyWith<$Res> {
-  _$DoneTaskCopyWithImpl(this._value, this._then);
-
-  final DoneTask _value;
-  // ignore: unused_field
-  final $Res Function(DoneTask) _then;
-
+  DateTime get createdAt;
   @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$DoneTaskCopyWith<$Res> implements $DoneTaskCopyWith<$Res> {
-  factory _$DoneTaskCopyWith(_DoneTask value, $Res Function(_DoneTask) then) =
-      __$DoneTaskCopyWithImpl<$Res>;
-  @override
-  $Res call({String id, String name});
-}
-
-/// @nodoc
-class __$DoneTaskCopyWithImpl<$Res> extends _$DoneTaskCopyWithImpl<$Res>
-    implements _$DoneTaskCopyWith<$Res> {
-  __$DoneTaskCopyWithImpl(_DoneTask _value, $Res Function(_DoneTask) _then)
-      : super(_value, (v) => _then(v as _DoneTask));
-
-  @override
-  _DoneTask get _value => super._value as _DoneTask;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-  }) {
-    return _then(_DoneTask(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-@Implements<Task>()
-class _$_DoneTask extends _DoneTask {
-  _$_DoneTask({required this.id, required this.name}) : super._();
-
-  @override
-  final String id;
-  @override
-  final String name;
-
-  @override
-  String toString() {
-    return 'DoneTask(id: $id, name: $name)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _DoneTask &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
-
-  @JsonKey(ignore: true)
-  @override
-  _$DoneTaskCopyWith<_DoneTask> get copyWith =>
-      __$DoneTaskCopyWithImpl<_DoneTask>(this, _$identity);
-}
-
-abstract class _DoneTask extends DoneTask implements Task {
-  factory _DoneTask({required String id, required String name}) = _$_DoneTask;
-  _DoneTask._() : super._();
-
-  @override
-  String get id;
-  @override
-  String get name;
+  bool get isDone;
   @override
   @JsonKey(ignore: true)
-  _$DoneTaskCopyWith<_DoneTask> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$TaskCopyWith<_Task> get copyWith => throw _privateConstructorUsedError;
 }

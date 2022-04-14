@@ -2,21 +2,24 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/model/task.freezed.dart';
 
-abstract class Task {
-  abstract final String id;
-  abstract final String name;
+@freezed
+class Task with _$Task {
+  factory Task({
+    required String id,
+    required String name,
+    required DateTime createdAt,
+    required bool isDone,
+  }) = _Task;
+
+  Task._();
+
+  Task done() => copyWith(isDone: true);
 }
 
-@freezed
-class TodoTask with _$TodoTask {
-  @Implements<Task>()
-  factory TodoTask({required String id, required String name}) = _TodoTask;
-  TodoTask._();
-}
-
-@freezed
-class DoneTask with _$DoneTask {
-  @Implements<Task>()
-  factory DoneTask({required String id, required String name}) = _DoneTask;
-  DoneTask._();
+abstract class TaskRepository {
+  Future<List<Task>> findAllTodo();
+  Future<List<Task>> findAllDone();
+  Future<Task> findById(String id);
+  Future<void> insert({required String name});
+  Future<void> update(Task task);
 }
