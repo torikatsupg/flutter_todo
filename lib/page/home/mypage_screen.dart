@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/input/mypage_controller_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MyPageScreen extends StatelessWidget {
+class MyPageScreen extends ConsumerWidget {
   const MyPageScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final controller = ref.read(myPageControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('mypage'),
@@ -19,12 +22,8 @@ class MyPageScreen extends StatelessWidget {
                 onPressed: () => context.go('/home/mypage/setting'),
               ),
               TextButton(
-                child: const Text('signin'),
-                onPressed: () => context.go('/signin'),
-              ),
-              TextButton(
-                child: const Text('signup'),
-                onPressed: () => context.go('/signup'),
+                child: const Text('signout'),
+                onPressed: controller.signOut,
               ),
             ],
           ),
