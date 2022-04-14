@@ -14,11 +14,19 @@ class Authenticator {
           .createUserWithEmailAndPassword(email: email, password: password);
       return Result.ok();
     } on FirebaseAuthException catch (e) {
-      final error = _SignupErrorExt.from(e.message);
-      if (error != null) {
-        return Result.err(error);
-      } else {
-        rethrow;
+      switch (e.code) {
+        case 'email-already-in-use':
+          return Result.err(SignupError.emailAlreadyInUse);
+        case 'network-request-failed':
+          return Result.err(SignupError.network);
+        case 'invalid-email':
+          rethrow;
+        case 'operation-not-allowed':
+          rethrow;
+        case 'weak-password':
+          rethrow;
+        default:
+          rethrow;
       }
     }
   }
@@ -33,47 +41,27 @@ class Authenticator {
           .signInWithEmailAndPassword(email: email, password: password);
       return Result.ok();
     } on FirebaseAuthException catch (e) {
-      final error = _SigninErrorExt.from(e.message);
-      if (error != null) {
-        return Result.err(error);
-      } else {
-        rethrow;
+      switch (e.code) {
+        case 'user-disabled':
+          return Result.err(SigninError.userDisabled);
+        case 'user-not-found':
+          return Result.err(SigninError.userNotFound);
+        case 'wrong-password':
+          return Result.err(SigninError.wrongPassword);
+        case 'network-request-failed':
+          return Result.err(SigninError.network);
+        case 'invalid-email':
+          rethrow;
+        default:
+          rethrow;
       }
     }
   }
 }
 
-//     SignupError.emailAlreadyinUse: "既に登録済みのメールアドレスです",
-//     SignupError.invalidEmail: "不正なメールアドレスです",
-
-const _networkErrorMessage =
-    'Network error (such as timeout, interrupted connection or unreachable host) has occurred.';
-
-extension _SignupErrorExt on SignupError {
-  static const _map = {
-    '**email-already-in-use**': SignupError.emailAlreadyInUse,
-    '**invalid-email**': SignupError.invalidEmail,
-    _networkErrorMessage: SignupError.network,
-  };
-
-  static SignupError? from(String? message) => _map[message];
-}
-
 enum SignupError {
   emailAlreadyInUse,
-  invalidEmail,
   network,
-}
-
-extension _SigninErrorExt on SigninError {
-  static const _map = {
-    '**wrong-password**': SigninError.wrongPassword,
-    '**user-disabled**': SigninError.userDisabled,
-    '**user-not-found**': SigninError.userNotFound,
-    _networkErrorMessage: SigninError.network,
-  };
-
-  static SigninError? from(String? message) => _map[message];
 }
 
 enum SigninError {

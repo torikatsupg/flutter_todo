@@ -65,10 +65,6 @@ class SignupNotifier extends StateNotifier<_SignupState> {
                   state = state.copyWith(
                       email: state.email.addServerError('既に登録されたメールアドレスです'));
                   break;
-                case SignupError.invalidEmail:
-                  state = state.copyWith(
-                      email: state.email.addServerError('不正なメールアドレスです'));
-                  break;
                 case SignupError.network:
                   _reader(networkDialogProvider.notifier).show();
                   break;
