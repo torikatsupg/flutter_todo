@@ -14,6 +14,8 @@ class Task with _$Task {
   Task._();
 
   Task done() => copyWith(isDone: true);
+
+  Task updateName(String name) => copyWith(name: name);
 }
 
 abstract class TaskRepository {
