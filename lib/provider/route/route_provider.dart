@@ -1,3 +1,4 @@
+import 'package:flutter_todo/model/app_error.dart';
 import 'package:flutter_todo/provider/base/cached_provider.dart';
 import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:go_router/go_router.dart';
@@ -42,14 +43,24 @@ class RouteNotifier extends StateNotifier<RouteState> {
 }
 
 final tabProvider = cachedProvider<String, RouteState>(
+  // TODO(torikatsu): nullの握りつぶしやめる
   initializer: (ref) => ref.read(routerProvider).tab!,
   provider: routerProvider,
   shouldUpdate: (next) => next.tab != null,
   toState: (next) => next.tab!,
 );
 
-final idProvider = cachedProvider<String, RouteState>(
-  initializer: (ref) => ref.read(routerProvider).id!,
+final idProvider = Provider.autoDispose<String>((ref) {
+  final id = ref.watch(maybeIdProvider);
+  if (id == null) {
+    throw AppError.illigalUrl();
+  } else {
+    return id;
+  }
+});
+
+final maybeIdProvider = cachedProvider<String?, RouteState>(
+  initializer: (ref) => ref.read(routerProvider).id,
   provider: routerProvider,
   shouldUpdate: (next) => next.id != null,
   toState: (next) => next.id!,

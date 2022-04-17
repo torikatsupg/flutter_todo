@@ -1,4 +1,5 @@
 import 'package:flutter_todo/firebase/auth_provider.dart';
+import 'package:flutter_todo/model/app_error.dart';
 import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/firebase/authenticator_provider.dart';
@@ -16,7 +17,7 @@ final signupControllerProvider =
 );
 
 class SignupNotifier extends StateNotifier<_SignupState> {
-  SignupNotifier(this._reader)
+  SignupNotifier(this._read)
       : super(_SignupState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
@@ -28,7 +29,7 @@ class SignupNotifier extends StateNotifier<_SignupState> {
         .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
   }
 
-  final Reader _reader;
+  final Reader _read;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
@@ -49,22 +50,26 @@ class SignupNotifier extends StateNotifier<_SignupState> {
       state.copyWith(confirmPassword: state.confirmPassword.onChangeText());
 
   Future<void> submit() async {
-    return _reader(loadingProvider.notifier).run(
+    return _read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
         if (!state.isValidAll) {
           return;
         }
 
-        final result = await _reader(authenticatorProvider).signup(
+        final result = await _read(authenticatorProvider).signup(
           email: state.email.text,
           password: state.password.text,
         );
 
         result.when(
-          ok: (user) {
-            _reader(authProvider.notifier).setUser(user);
-            _reader(routerProvider.notifier).go('/home');
+          ok: (_) async {
+            final user = await _read(authStreamProvider.future);
+            if (user == null) {
+              throw AppError.unknown();
+            } else {
+              _read(routerProvider.notifier).go('/home');
+            }
           },
           err: (e) {
             switch (e) {
@@ -73,7 +78,7 @@ class SignupNotifier extends StateNotifier<_SignupState> {
                     email: state.email.addServerError('既に登録されたメールアドレスです'));
                 break;
               case SignupError.network:
-                _reader(networkDialogProvider.notifier).show();
+                _read(networkDialogProvider.notifier).show();
                 break;
             }
           },

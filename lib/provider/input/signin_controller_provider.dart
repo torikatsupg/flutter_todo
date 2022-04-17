@@ -1,4 +1,5 @@
 import 'package:flutter_todo/firebase/auth_provider.dart';
+import 'package:flutter_todo/model/app_error.dart';
 import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/firebase/authenticator_provider.dart';
@@ -12,11 +13,10 @@ part '../../generated/provider/input/signin_controller_provider.freezed.dart';
 
 final signinControllerProvider =
     StateNotifierProvider.autoDispose<SigninNotifier, _SigninState>(
-  (ref) => SigninNotifier(ref.read),
-);
+        (ref) => SigninNotifier(ref));
 
 class SigninNotifier extends StateNotifier<_SigninState> {
-  SigninNotifier(this._reader)
+  SigninNotifier(this._ref)
       : super(_SigninState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
@@ -25,7 +25,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
   }
 
-  final Reader _reader;
+  final Ref _ref;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
@@ -37,7 +37,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
       state = state.copyWith(password: state.password.onChangeText());
 
   Future<void> submit() async {
-    _reader(loadingProvider.notifier).run(
+    _ref.read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
         // change focus process implicitly
@@ -48,15 +48,19 @@ class SigninNotifier extends StateNotifier<_SigninState> {
           return;
         }
 
-        final result = await _reader(authenticatorProvider).signin(
-          email: state.email.text,
-          password: state.password.text,
-        );
+        final user = _ref.read(authStreamProvider.stream).first;
+        final result = await _ref.read(authenticatorProvider).signin(
+              email: state.email.text,
+              password: state.password.text,
+            );
 
-        result.when(
-          ok: (user) {
-            _reader(authProvider.notifier).setUser(user);
-            _reader(routerProvider.notifier).go('/home');
+        await result.when(
+          ok: (_) async {
+            if (await user == null) {
+              throw AppError.unknown();
+            } else {
+              _ref.read(routerProvider.notifier).go('/home');
+            }
           },
           err: (e) {
             switch (e) {
@@ -73,8 +77,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
                     password: state.password.addServerError('パスワードが違います'));
                 break;
               case SigninError.network:
-                _reader(networkDialogProvider.notifier).show();
-
+                _ref.read(networkDialogProvider.notifier).show();
                 break;
             }
           },
