@@ -6,16 +6,14 @@ const _createdAt = 'createdAt';
 const _isDone = 'isDone';
 
 class TaskRepositoryImpl implements TaskRepository {
-  TaskRepositoryImpl(this.currentUid);
+  TaskRepositoryImpl(this.uid);
 
-  final String currentUid;
+  final String uid;
 
-  CollectionReference get _ref {
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUid)
-        .collection('tasks');
-  }
+  CollectionReference get _ref => FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('tasks');
 
   @override
   Future<List<Task>> findAllTodo() async {
