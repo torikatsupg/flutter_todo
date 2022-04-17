@@ -11,37 +11,35 @@ class TaskDetailPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final maybeTask = ref.watch(currentTaskProvider);
-    final id = ref.watch(idProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(id),
+        title: Text(ref.watch(idProvider)),
       ),
-      body: maybeTask.map(
-        data: (data) {
-          final task = maybeTask.value;
-          if (task == null) {
-            return const NotFoundView();
-          } else {
-            return Column(
-              children: [
-                Text(task.id),
-                Text(task.name),
-                Text(task.createdAt.toIso8601String()),
-                Text(task.isDone.toString()),
-                TextButton(
-                  child: const Text('to edit'),
-                  onPressed: () => ref
-                      .read(routerProvider.notifier)
-                      .go('/home/todo/$id/edit'),
-                ),
-              ],
-            );
-          }
-        },
-        error: (_) => const ErrorView(),
-        loading: (_) => const LoadingView(),
-      ),
+      body: ref.watch(taskProvider).map(
+            data: (data) {
+              final task = data.value;
+              if (task == null) {
+                return const NotFoundView();
+              } else {
+                return Column(
+                  children: [
+                    Text(task.id),
+                    Text(task.name),
+                    Text(task.createdAt.toIso8601String()),
+                    Text(task.isDone.toString()),
+                    TextButton(
+                      child: const Text('to edit'),
+                      onPressed: () => ref
+                          .read(routerProvider.notifier)
+                          .go('/home/todo/${task.id}/edit'),
+                    ),
+                  ],
+                );
+              }
+            },
+            error: (_) => const ErrorView(),
+            loading: (_) => const LoadingView(),
+          ),
     );
   }
 }
