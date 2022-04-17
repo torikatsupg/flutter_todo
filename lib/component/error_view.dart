@@ -5,6 +5,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO(torikatsu): handle AppError
     return const Center(
       child: Text('error has occured'),
     );
