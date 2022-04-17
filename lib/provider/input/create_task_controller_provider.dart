@@ -1,3 +1,4 @@
+import 'package:flutter_todo/firebase/auth_provider.dart';
 import 'package:flutter_todo/firebase/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
@@ -30,13 +31,22 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
     if (!state.isValidAll) {
       return;
     }
-    _ref.read(loadingProvider.notifier).run(() async {
-      _ref
-          .read(taskRepositoryProvider)
-          .insert(name: state.name.text)
-          .then((_) => _ref.refresh(todoTaskProvider));
-      _ref.read(routerProvider.notifier).pop();
-    });
+    final uid = _ref.read(authStreamProvider).value?.uid;
+    if (uid == null) {
+      state = state.copyWith(
+        name: state.name.addServerError('エラーが発生しました。'),
+      );
+    } else {
+      await _ref.read(loadingProvider.notifier).run(
+        () async {
+          await _ref
+              .read(taskRepositoryFamily(uid))
+              .insert(name: state.name.text);
+          _ref.refresh(todoTasksProvider);
+          _ref.read(routerProvider.notifier).pop();
+        },
+      );
+    }
   }
 }
 
