@@ -17,11 +17,14 @@ dependencies:
       url: https://github.com/torikatsupg/packages.git
       ref: 81178f8
       path: packages/go_router
-
-  firebase_core: ^1.13.1
-  firebase_auth: ^3.3.11
-  # TODO(torikatsu): configure podfile to speed up for building ios
+  firebase_core: ^1.14.1
+  firebase_auth: ^3.3.14
   cloud_firestore: ^3.1.12
+
+  # firebase_core: ^1.13.1
+  # firebase_auth: ^3.3.11
+  # TODO(torikatsu): configure podfile to speed up for building ios
+  # cloud_firestore: ^3.1.12
 
 dev_dependencies:
   flutter_test:
