@@ -17,21 +17,24 @@ class _TodoTabState extends ConsumerState {
 
   @override
   Widget build(context) {
-    return ref.watch(todoTaskProvider).map(
-          data: (tasks) => ListView.builder(
-            controller: _controller,
-            itemCount: tasks.value.length,
-            itemBuilder: (context, index) {
-              final task = tasks.value[index];
-              return ListTile(
-                leading: Text(task.id),
-                title: Text(task.name),
-                onTap: () => ref
-                    .read(routerProvider.notifier)
-                    .go('/home/todo/${task.id}'),
-              );
-            },
-          ),
+    return ref.watch(todoTasksProvider).map(
+          data: (data) {
+            final tasks = data.value;
+            return ListView.builder(
+              controller: _controller,
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                final task = tasks[index];
+                return ListTile(
+                  leading: Text(task.id),
+                  title: Text(task.name),
+                  onTap: () => ref
+                      .read(routerProvider.notifier)
+                      .go('/home/todo/${task.id}'),
+                );
+              },
+            );
+          },
           error: (_) => const ErrorView(),
           loading: (_) => const LoadingView(),
         );
