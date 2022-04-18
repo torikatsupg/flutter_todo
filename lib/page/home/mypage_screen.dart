@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/input/mypage_controller_provider.dart';
+import 'package:flutter_todo/provider/controller/mypage_controller_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

@@ -1,15 +1,15 @@
-import 'package:flutter_todo/firebase/auth_provider.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/model/app_error.dart';
-import 'package:flutter_todo/model/form_model/form_model.dart';
+import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
-import 'package:flutter_todo/firebase/authenticator_provider.dart';
-import 'package:flutter_todo/provider/input/loading_provider.dart';
-import 'package:flutter_todo/provider/input/network_dialog_provider.dart';
+import 'package:flutter_todo/infrastructure/authenticator_provider.dart';
+import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
+import 'package:flutter_todo/provider/global_controller/network_dialog_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/provider/input/signin_controller_provider.freezed.dart';
+part '../../generated/provider/controller/signin_controller_provider.freezed.dart';
 
 final signinControllerProvider =
     StateNotifierProvider.autoDispose<SigninNotifier, _SigninState>(

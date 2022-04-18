@@ -1,15 +1,15 @@
-import 'package:flutter_todo/firebase/auth_provider.dart';
-import 'package:flutter_todo/firebase/task_repository_provider.dart';
-import 'package:flutter_todo/model/form_model/form_model.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/model/task_repository_provider.dart';
+import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/model/validator.dart';
-import 'package:flutter_todo/provider/fetch/task_provider.dart';
-import 'package:flutter_todo/provider/input/loading_provider.dart';
+import 'package:flutter_todo/provider/model/task_provider.dart';
+import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-part '../../generated/provider/input/task_edit_controller_provider.freezed.dart';
+part '../../generated/provider/controller/task_edit_controller_provider.freezed.dart';
 
 final taskEditControllerProvider =
     StateNotifierProvider.autoDispose<TaskEditController, _TaskEditState>(

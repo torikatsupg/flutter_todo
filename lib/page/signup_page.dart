@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/input/signup_controller_provider.dart';
+import 'package:flutter_todo/provider/controller/signup_controller_provider.dart';
 import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

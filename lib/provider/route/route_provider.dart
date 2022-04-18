@@ -1,5 +1,5 @@
 import 'package:flutter_todo/model/app_error.dart';
-import 'package:flutter_todo/provider/base/cached_provider.dart';
+import 'package:flutter_todo/util/cached_provider.dart';
 import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/component/error_view.dart';
 import 'package:flutter_todo/component/loading_view.dart';
 import 'package:flutter_todo/component/not_found_view.dart';
-import 'package:flutter_todo/provider/fetch/task_provider.dart';
+import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

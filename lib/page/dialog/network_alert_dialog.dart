@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/component/custom_modal_barriere.dart';
-import 'package:flutter_todo/provider/input/network_dialog_provider.dart';
+import 'package:flutter_todo/provider/global_controller/network_dialog_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NetworkAlertDialog extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/model/form_model/form_model.freezed.dart';
+part '../generated/model/form_model.freezed.dart';
 
 typedef Validator = String? Function(String value);
 
