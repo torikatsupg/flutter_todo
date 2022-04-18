@@ -1,26 +1,29 @@
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final todoTasksProvider = FutureProvider.autoDispose<List<Task>>(
-  (ref) {
-    final uid = ref.watch(authProvider.select((user) => user.uid));
-    return ref.watch(taskRepositoryFamily(uid)).findAllTodo();
-  },
+part '../../generated/provider/model/task_provider.freezed.dart';
+
+final todoTasksFamily = FutureProvider.autoDispose.family<List<Task>, String>(
+  (ref, uid) => ref.watch(taskRepositoryFamily(uid)).findAllTodo(),
 );
 
-final doneTasksProvider = FutureProvider.autoDispose<List<Task>>(
-  (ref) {
-    final uid = ref.watch(authProvider.select((user) => user.uid));
-    return ref.watch(taskRepositoryFamily(uid)).findAllDone();
-  },
+final doneTasksFamily = FutureProvider.autoDispose.family<List<Task>, String>(
+  (ref, uid) => ref.watch(taskRepositoryFamily(uid)).findAllDone(),
 );
 
-final taskProvider = FutureProvider.autoDispose<Task?>((ref) {
-  final uid = ref.watch(authProvider).uid;
-  final id = ref.watch(idProvider);
-  return ref.watch(taskRepositoryFamily(uid)).findById(id);
-});
+final taskFamily = FutureProvider.autoDispose.family<Task?, TaskArg>(
+  (ref, arg) => ref.watch(taskRepositoryFamily(arg.uid)).findById(arg.id),
+);
+
+@freezed
+class TaskArg with _$TaskArg {
+  factory TaskArg({
+    required String uid,
+    required String id,
+  }) = _TaskArg;
+
+  TaskArg._();
+}

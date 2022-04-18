@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/component/loading_overlay.dart';
-import 'package:flutter_todo/page/dialog/network_alert_dialog.dart';
+import 'package:flutter_todo/view/component/loading_overlay.dart';
+import 'package:flutter_todo/view/dialog/network_alert_dialog.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

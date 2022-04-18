@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/page/home/task/done_tab.dart';
-import 'package:flutter_todo/page/home/task/todo_tab.dart';
+import 'package:flutter_todo/view/page/home/task/done_tab.dart';
+import 'package:flutter_todo/view/page/home/task/todo_tab.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
