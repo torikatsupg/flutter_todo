@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/view/page/home/task/done_tab.dart';
-import 'package:flutter_todo/view/page/home/task/todo_tab.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/view/page/task_tab/done_tab.dart';
+import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TaskScreen extends ConsumerStatefulWidget {
@@ -42,23 +42,14 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
             );
           },
           tabs: const [
-            Tab(
-              text: 'todo',
-              icon: Icon(Icons.check_box_outline_blank),
-            ),
-            Tab(
-              text: 'done',
-              icon: Icon(Icons.check_box_outlined),
-            )
+            Tab(text: 'todo', icon: Icon(Icons.check_box_outline_blank)),
+            Tab(text: 'done', icon: Icon(Icons.check_box_outlined)),
           ],
         ),
       ),
       body: TabBarView(
         controller: _controller,
-        children: const [
-          TodoTab(),
-          DoneTab(),
-        ],
+        children: const [TodoTab(), DoneTab()],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

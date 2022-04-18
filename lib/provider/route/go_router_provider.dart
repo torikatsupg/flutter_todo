@@ -1,14 +1,14 @@
-import 'package:flutter_todo/view/page/home/task/edit_task_page.dart';
-import 'package:flutter_todo/view/page/home/task/task_detail_page.dart';
+import 'package:flutter_todo/view/page/edit_task_page.dart';
+import 'package:flutter_todo/view/page/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
 import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/view/page/error_page.dart';
-import 'package:flutter_todo/view/page/home/home_page.dart';
-import 'package:flutter_todo/view/page/home/task/create_task_page.dart';
+import 'package:flutter_todo/view/page/home_page.dart';
+import 'package:flutter_todo/view/page/create_task_page.dart';
 import 'package:flutter_todo/view/page/notfound_page.dart';
-import 'package:flutter_todo/view/page/home/mypage/setting_page.dart';
+import 'package:flutter_todo/view/page/setting_page.dart';
 import 'package:flutter_todo/view/page/signin_page.dart';
 import 'package:flutter_todo/view/page/signup_page.dart';
 
