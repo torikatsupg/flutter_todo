@@ -3,7 +3,6 @@ import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
-import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
