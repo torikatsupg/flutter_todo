@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/controller/home_controller_provider.dart';
 import 'package:flutter_todo/view/component/lazy_indexed_stack.dart';
-import 'package:flutter_todo/view/page/mypage_screen.dart';
-import 'package:flutter_todo/view/page/task_screen.dart';
+import 'package:flutter_todo/view/screen/mypage_screen.dart';
+import 'package:flutter_todo/view/screen/task_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {

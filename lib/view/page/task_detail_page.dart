@@ -11,35 +11,36 @@ class TaskDetailPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
+    final task = ref.watch(taskDetailControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(ref.watch(idProvider)),
       ),
-      body: ref.watch(taskDetailControllerProvider).map(
-            data: (data) {
-              final task = data.value;
-              if (task == null) {
-                return const NotFoundView();
-              } else {
-                return Column(
-                  children: [
-                    Text(task.id),
-                    Text(task.name),
-                    Text(task.createdAt.toIso8601String()),
-                    Text(task.isDone.toString()),
-                    TextButton(
-                      child: const Text('to edit'),
-                      onPressed: () => ref
-                          .read(routerProvider.notifier)
-                          .go('/home/todo/${task.id}/edit'),
-                    ),
-                  ],
-                );
-              }
-            },
-            error: (_) => const ErrorView(),
-            loading: (_) => const LoadingView(),
-          ),
+      body: task.map(
+        data: (data) {
+          final task = data.value;
+          if (task == null) {
+            return const NotFoundView();
+          } else {
+            return Column(
+              children: [
+                Text(task.id),
+                Text(task.name),
+                Text(task.createdAt.toIso8601String()),
+                Text(task.isDone.toString()),
+                TextButton(
+                  child: const Text('to edit'),
+                  onPressed: () => ref
+                      .read(routerProvider.notifier)
+                      .go('/home/todo/${task.id}/edit'),
+                ),
+              ],
+            );
+          }
+        },
+        error: (_) => const ErrorView(),
+        loading: (_) => const LoadingView(),
+      ),
     );
   }
 }
