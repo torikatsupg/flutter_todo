@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/controller/home_controller_provider.dart';
 import 'package:flutter_todo/view/component/lazy_indexed_stack.dart';
 import 'package:flutter_todo/view/page/mypage_screen.dart';
 import 'package:flutter_todo/view/page/task_screen.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
@@ -10,35 +10,24 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final tab = ref.watch(tabProvider);
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.read(homeControllerProvider.notifier);
     return Scaffold(
       body: LazyIndexedStack(
         builders: [
           (context) => const TaskScreen(),
           (context) => const MyPageScreen(),
         ],
-        index: TabIndex.toIndex(tab),
+        index: state,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'todo'),
           BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'mypage'),
         ],
-        currentIndex: TabIndex.toIndex(tab),
-        onTap: (value) =>
-            ref.read(routerProvider.notifier).go('/home/${TabIndex.toParam(value)}'),
+        currentIndex: state,
+        onTap: controller.onTapTab,
       ),
     );
-  }
-}
-
-class TabIndex {
-  static const _map = {'todo': 0, 'mypage': 1};
-
-  static int toIndex(String tab) => _map[tab]!;
-
-  // param -> indexはparamが不明だが、idnex -> paramはparamが必ずわかる
-  static String toParam(int index) {
-    return _map.keys.firstWhere((e) => _map[e] == index);
   }
 }
