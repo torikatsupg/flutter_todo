@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/controller/task_controller_provider.dart';
 import 'package:flutter_todo/view/page/task_tab/done_tab.dart';
 import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,29 +18,20 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
   @override
   void initState() {
     _controller = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex: toIndex(ref.read(routerProvider).queryParams['tab']),
-    );
+        length: 2, vsync: this, initialIndex: ref.read(taskControllerProvider));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final controller = ref.read(taskControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('task'),
         bottom: TabBar(
           controller: _controller,
-          onTap: (value) {
-            ref.read(routerProvider.notifier).go(
-              '/home/todo',
-              queryParameters: {
-                'todo': fromIndex(value),
-              },
-            );
-          },
+          onTap: controller.onTap,
           tabs: const [
             Tab(text: 'todo', icon: Icon(Icons.check_box_outline_blank)),
             Tab(text: 'done', icon: Icon(Icons.check_box_outlined)),
@@ -53,34 +44,11 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () =>
-            ref.read(routerProvider.notifier).go('/home/todo/create'),
+        onPressed: controller.onTapFab,
       ),
     );
   }
 
   @override
   bool get wantKeepAlive => true;
-}
-
-String fromIndex(int index) {
-  switch (index) {
-    case 0:
-      return 'todo';
-    case 1:
-      return 'done';
-    default:
-      throw UnimplementedError();
-  }
-}
-
-int toIndex(String? query) {
-  switch (query) {
-    case 'todo':
-      return 0;
-    case 'done':
-      return 1;
-    default:
-      return 0;
-  }
 }
