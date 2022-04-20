@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/controller/signin_controller_provider.dart';
-import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SigninPage extends ConsumerWidget {
@@ -18,7 +17,7 @@ class SigninPage extends ConsumerWidget {
       body: Column(
         children: [
           TextButton(
-            onPressed: () => ref.read(goRouterProvider).go('/signup'),
+            onPressed: controller.toSignup,
             child: const Text('to signup'),
           ),
           TextField(

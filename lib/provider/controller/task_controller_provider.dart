@@ -18,6 +18,9 @@ class TaskController extends StateNotifier<int> {
     );
   }
 
+  void toDetailPage(String id) =>
+      _read(routerProvider.notifier).go('/home/todo/$id');
+
   void onTapFab() => _read(routerProvider.notifier).go('/home/todo/create');
 }
 

@@ -13,6 +13,9 @@ class MyPageController {
 
   final Ref _ref;
 
+  void openSetting() =>
+      _ref.read(routerProvider.notifier).go('/home/mypage/setting');
+
   void signOut() async {
     await _ref.read(loadingProvider.notifier).run(() async {
       final user = _ref.read(authStreamProvider.stream).first;

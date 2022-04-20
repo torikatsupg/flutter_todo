@@ -11,7 +11,7 @@ class TaskDetailPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final task = ref.watch(taskDetailControllerProvider);
+    final task = ref.watch(prepareTaskDetailControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(ref.watch(idProvider)),
@@ -19,28 +19,41 @@ class TaskDetailPage extends ConsumerWidget {
       body: task.map(
         data: (data) {
           final task = data.value;
-          if (task == null) {
-            return const NotFoundView();
-          } else {
-            return Column(
-              children: [
-                Text(task.id),
-                Text(task.name),
-                Text(task.createdAt.toIso8601String()),
-                Text(task.isDone.toString()),
-                TextButton(
-                  child: const Text('to edit'),
-                  onPressed: () => ref
-                      .read(routerProvider.notifier)
-                      .go('/home/todo/${task.id}/edit'),
-                ),
-              ],
-            );
-          }
+          return task == null
+              ? const NotFoundView()
+              : ProviderScope(
+                  overrides: [
+                    taskDetailControllerProvider
+                        .overrideWithProvider(taskDetailControllerFamily(task))
+                  ],
+                  child: const TaskDetailView(),
+                );
         },
         error: (_) => const ErrorView(),
         loading: (_) => const LoadingView(),
       ),
+    );
+  }
+}
+
+class TaskDetailView extends ConsumerWidget {
+  const TaskDetailView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final task = ref.watch(taskDetailControllerProvider);
+    final controller = ref.read(taskDetailControllerProvider.notifier);
+    return Column(
+      children: [
+        Text(task.id),
+        Text(task.name),
+        Text(task.createdAt.toIso8601String()),
+        Text(task.isDone.toString()),
+        TextButton(
+          child: const Text('to edit'),
+          onPressed: controller.toEditPage,
+        ),
+      ],
     );
   }
 }
