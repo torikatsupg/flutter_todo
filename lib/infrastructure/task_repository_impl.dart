@@ -50,15 +50,19 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<Task> findById(String id) async {
+  Future<Task?> findById(String id) async {
     final result = await _ref.doc(id).get();
-    final data = result.data() as Map<String, dynamic>;
-    return Task(
-      id: result.id,
-      name: data[_name],
-      createdAt: (data[_createdAt] as Timestamp).toDate(),
-      isDone: data[_isDone],
-    );
+    final data = result.data() as Map<String, dynamic>?;
+    if (data == null) {
+      return null;
+    } else {
+      return Task(
+        id: result.id,
+        name: data[_name],
+        createdAt: (data[_createdAt] as Timestamp).toDate(),
+        isDone: data[_isDone],
+      );
+    }
   }
 
   @override

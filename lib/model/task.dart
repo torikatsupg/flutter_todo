@@ -21,7 +21,7 @@ class Task with _$Task {
 abstract class TaskRepository {
   Future<List<Task>> findAllTodo();
   Future<List<Task>> findAllDone();
-  Future<Task> findById(String id);
+  Future<Task?> findById(String id);
   Future<void> insert({required String name});
   Future<void> update(Task task);
 }
