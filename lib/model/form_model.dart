@@ -66,8 +66,9 @@ class FormModel with _$FormModel {
   }
 }
 
-FormModel createFormModel(Validator validator) => FormModel(
+FormModel createFormModel(Validator validator, [String initText = '']) =>
+    FormModel(
       validator: validator,
-      controller: TextEditingController(),
+      controller: TextEditingController(text: initText),
       focusNode: FocusNode(),
     );

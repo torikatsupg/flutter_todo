@@ -41,7 +41,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
   TaskEditController(this._ref, Task initTask)
       : super(_TaskEditState(
           initTask: initTask,
-          name: createFormModel(mandatoryValidator),
+          name: createFormModel(mandatoryValidator, initTask.name),
         )) {
     state.name.setListeners(onChangeText, onFocusChanged);
   }
