@@ -1,6 +1,3 @@
-import 'package:flutter_todo/provider/controller/done_tab_controller.dart';
-import 'package:flutter_todo/provider/controller/task_detail_controller_provider.dart';
-import 'package:flutter_todo/provider/controller/todo_tab_controller_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -66,13 +63,14 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
     }
     final updatedTask = state.initTask.updateName(state.name.text);
     await _ref.read(loadingProvider.notifier).run(() async {
-      final user = _ref.read(authStreamProvider).value;
-      if (user == null) {
+      final uid = _ref.read(authStreamProvider).value?.uid;
+      if (uid == null) {
         state = state.copyWith(name: state.name.addServerError('エラーが発生しました'));
       } else {
-        await _ref.read(taskRepositoryFamily(user.uid)).update(updatedTask);
-        _ref.refresh(updatedTask.isDone ? doneTabControllerProvider : todoTabControllerProvider);
-        _ref.refresh(taskDetailControllerProvider);
+        await _ref.read(taskRepositoryFamily(uid)).update(updatedTask);
+        _ref.refresh(
+            updatedTask.isDone ? doneTasksFamily(uid) : todoTasksFamily(uid));
+        _ref.refresh(taskFamily(TaskArg(uid: uid, id: state.initTask.id)));
 
         _ref.read(routerProvider.notifier).pop();
       }

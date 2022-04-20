@@ -1,5 +1,5 @@
-import 'package:flutter_todo/provider/controller/todo_tab_controller_provider.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
@@ -42,7 +42,7 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
           await _ref
               .read(taskRepositoryFamily(uid))
               .insert(name: state.name.text);
-          _ref.refresh(todoTabControllerProvider);
+          _ref.refresh(todoTasksFamily(uid));
           _ref.read(routerProvider.notifier).pop();
         },
       );
