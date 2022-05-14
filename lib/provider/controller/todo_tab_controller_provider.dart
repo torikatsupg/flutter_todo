@@ -1,27 +1,150 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
-import 'package:flutter_todo/provider/model/task_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final todoTabControllerProvider = StateNotifierProvider.autoDispose<
-    TodoTabController, AsyncValue<List<Task>>>((ref) {
-  final uid = ref.watch(authProvider).uid;
-  final tasks = ref.watch(todoTasksFamily(uid));
-  return TodoTabController(ref, uid, tasks);
-});
+part '../../generated/provider/controller/todo_tab_controller_provider.freezed.dart';
 
-class TodoTabController extends StateNotifier<AsyncValue<List<Task>>> {
-  TodoTabController(this._ref, this._uid, AsyncValue<List<Task>> state)
-      : super(state);
+final todoTabControllerProvider =
+    StateNotifierProvider.autoDispose<TodoTabController, TodoTabState>(
+        (ref) => TodoTabController(ref));
 
-  final Ref _ref;
-  final String _uid;
+const pageSize = 20;
 
-  Future<void> onRefresh() async {
-    _ref.refresh(todoTasksFamily(_uid));
+class TodoTabController extends StateNotifier<TodoTabState> {
+  TodoTabController(this._ref) : super(TodoTabState.loading()) {
+    _initialize();
   }
 
-  void toDetailPage(String id) =>
-      _ref.read(routerProvider.notifier).go('/home/todo/$id');
+  final Ref _ref;
+
+  Future<void> _initialize() async {
+    final controller = ScrollController();
+    controller.addListener(() {
+      if (controller.offset > controller.position.maxScrollExtent - 100) {
+        _loadMore();
+      }
+    });
+    try {
+      state = TodoTabState.data(
+        controller: controller,
+        items: await load(),
+        cursor: pageSize,
+      );
+    } on dynamic catch (e) {
+      state = TodoTabState.error();
+    }
+  }
+
+  Future<void> refresh() async {
+    if (state is! _Data) return;
+
+    if ((state as _Data).isRefreshing) return;
+    state = (state as _Data).copyWith(isRefreshing: true, refreshError: null);
+    final currentState = state as _Data;
+
+    try {
+      final nextItems = await load(0);
+      state = currentState.copyWith(items: nextItems, cursor: pageSize);
+    } on dynamic catch (e) {
+      state = currentState.copyWith(refreshError: e);
+    } finally {
+      state = (state as _Data).copyWith(isRefreshing: false);
+    }
+  }
+
+  Future<void> _loadMore() async {
+    if (state is! _Data) return;
+    final currentState = state as _Data;
+
+    if (currentState.isMoreLoading || currentState.hasLoadMoreError) return;
+    state = currentState.copyWith(isMoreLoading: true);
+
+    try {
+      final nextItems = await load(currentState.cursor);
+      state = currentState.copyWith(
+        items: currentState.items..addAll(nextItems),
+        cursor: currentState.cursor + pageSize,
+      );
+    } on dynamic catch (e) {
+      state = currentState.copyWith(loadMoreError: e);
+    } finally {
+      state = (state as _Data).copyWith(isMoreLoading: false);
+    }
+  }
+
+  void insert(Task item) => state = state.maybeMap(
+        data: (state) => state.copyWith(
+          items: state.items..insert(0, item),
+        ),
+        orElse: () => state,
+      );
+
+  void update(Task item) => state = state.maybeMap(
+        data: (data) => data.copyWith(
+          items: data.items.map((e) => e == item ? item : e).toList(),
+        ),
+        orElse: () => state,
+      );
+
+  void delete(Task item) => state = state.maybeMap(
+        data: (data) => data.copyWith(
+          items: data.items..remove(item),
+        ),
+        orElse: () => state,
+      );
+
+  void resolveAndLoadMore() async {
+    if (state is! _Data) return;
+    final currentState = state as _Data;
+
+    state = currentState.copyWith(loadMoreError: null);
+    await _loadMore();
+  }
+}
+
+@freezed
+class TodoTabState with _$TodoTabState {
+  factory TodoTabState.data({
+    required ScrollController controller,
+    @Default([]) List<Task> items,
+    @Default(0) int cursor,
+    @Default(false) isRefreshing,
+    @Default(false) isMoreLoading,
+    @Default(null) dynamic refreshError,
+    @Default(null) dynamic loadMoreError,
+  }) = _Data;
+  factory TodoTabState.error() = _Error;
+  factory TodoTabState.loading() = _Loading;
+
+  late final bool hasLoadMoreError = maybeMap(
+    data: (data) => data.loadMoreError != null,
+    orElse: () => false,
+  );
+
+  late final bool hasRefreshError = maybeMap(
+    data: (data) => data.refreshError != null,
+    orElse: () => false,
+  );
+
+  TodoTabState._();
+}
+
+Future<List<Task>> load([int? maybeCursor]) async {
+  await Future.delayed(const Duration(seconds: 1));
+  if ((maybeCursor ?? 0) > 30) throw 'hoge';
+  if (DateTime.now().millisecond % 10 == 0) throw 'hoge';
+  final cursor = maybeCursor ?? 0;
+  var result = <Task>[];
+  for (var i = cursor; i < cursor + pageSize; i++) {
+    result.add(
+      Task(
+        id: '$i',
+        name: 'name_$i',
+        createdAt: DateTime.now(),
+        isDone: false,
+      ),
+    );
+  }
+  return result;
 }
