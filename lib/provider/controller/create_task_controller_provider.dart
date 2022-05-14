@@ -42,7 +42,8 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
           await _ref
               .read(taskRepositoryFamily(uid))
               .insert(name: state.name.text);
-          _ref.refresh(todoTasksFamily(uid));
+          // TODO(torikatsu): refresh all todo tasks provider
+          // _ref.refresh(todoTasksFamily(uid));
           _ref.read(routerProvider.notifier).pop();
         },
       );

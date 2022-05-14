@@ -6,5 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final doneTabControllerProvider =
     FutureProvider.autoDispose<List<Task>>((ref) async {
   final uid = ref.watch(authProvider).uid;
-  return await ref.watch(doneTasksFamily(uid).future);
+  // TODO(torikatsu): pass cursor
+  return (await ref.watch(doneTasksFamily(TasksArg(uid: uid)).future)).list;
 });

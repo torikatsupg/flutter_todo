@@ -68,8 +68,9 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
         state = state.copyWith(name: state.name.addServerError('エラーが発生しました'));
       } else {
         await _ref.read(taskRepositoryFamily(uid)).update(updatedTask);
-        _ref.refresh(
-            updatedTask.isDone ? doneTasksFamily(uid) : todoTasksFamily(uid));
+        // TODO(torikatsu): refresh all provider
+        // _ref.refresh(
+        //     updatedTask.isDone ? doneTasksFamily(uid) : todoTasksFamily(uid));
         _ref.refresh(taskFamily(TaskArg(uid: uid, id: state.initTask.id)));
 
         _ref.read(routerProvider.notifier).pop();
