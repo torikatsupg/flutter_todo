@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,7 +18,7 @@ class TodoTabController extends StateNotifier<TodoTabState> {
     _initialize();
   }
 
-  final Ref _ref;
+  final AutoDisposeStateNotifierProviderRef _ref;
 
   Future<void> _initialize() async {
     final controller = ScrollController();
@@ -28,7 +30,7 @@ class TodoTabController extends StateNotifier<TodoTabState> {
     try {
       state = TodoTabState.data(
         controller: controller,
-        items: await load(),
+        items: await _ref.read(loadFamily(null)),
         cursor: pageSize,
       );
     } on dynamic catch (e) {
@@ -44,7 +46,7 @@ class TodoTabController extends StateNotifier<TodoTabState> {
     final currentState = state as _Data;
 
     try {
-      final nextItems = await load(0);
+      final nextItems = await _ref.read(loadFamily(null));
       state = currentState.copyWith(items: nextItems, cursor: pageSize);
     } on dynamic catch (e) {
       state = currentState.copyWith(refreshError: e);
@@ -61,7 +63,7 @@ class TodoTabController extends StateNotifier<TodoTabState> {
     state = currentState.copyWith(isMoreLoading: true);
 
     try {
-      final nextItems = await load(currentState.cursor);
+      final nextItems = await _ref.read(loadFamily(currentState.cursor));
       state = currentState.copyWith(
         items: currentState.items..addAll(nextItems),
         cursor: currentState.cursor + pageSize,
@@ -130,21 +132,21 @@ class TodoTabState with _$TodoTabState {
   TodoTabState._();
 }
 
-Future<List<Task>> load([int? maybeCursor]) async {
-  await Future.delayed(const Duration(seconds: 1));
-  if ((maybeCursor ?? 0) > 30) throw 'hoge';
-  if (DateTime.now().millisecond % 10 == 0) throw 'hoge';
-  final cursor = maybeCursor ?? 0;
-  var result = <Task>[];
-  for (var i = cursor; i < cursor + pageSize; i++) {
-    result.add(
-      Task(
-        id: '$i',
-        name: 'name_$i',
+final loadFamily = Provider.autoDispose.family<Future<List<Task>>, int?>(
+  (ref, maybeCursor) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (Random().nextInt(3) % 3 == 0) throw 'e';
+
+    final cursor = maybeCursor ?? 0;
+    return List.generate(
+      pageSize,
+      (index) => Task(
+        id: '${index + cursor}',
+        name: 'name_${index + cursor}',
         createdAt: DateTime.now(),
         isDone: false,
       ),
     );
-  }
-  return result;
-}
+  },
+);
