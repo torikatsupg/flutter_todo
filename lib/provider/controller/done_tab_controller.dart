@@ -7,5 +7,5 @@ final doneTabControllerProvider =
     FutureProvider.autoDispose<List<Task>>((ref) async {
   final uid = ref.watch(authProvider).uid;
   // TODO(torikatsu): pass cursor
-  return (await ref.watch(doneTasksFamily(TasksArg(uid: uid)).future)).list;
+  return (await ref.watch(doneTasksFamily(uid).future)).list;
 });
