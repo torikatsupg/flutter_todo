@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/controller/todo_tab_controller_provider.dart';
+import 'package:flutter_todo/provider/controller/todo_tab_controller.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,15 +12,15 @@ class TodoTab extends ConsumerWidget {
     final state = ref.watch(todoTabControllerProvider);
     final controller = ref.read(todoTabControllerProvider.notifier);
 
-    return state.map(
-      data: (state) => RefreshIndicator(
+    return state.list.map(
+      data: (list) => RefreshIndicator(
         // TODO(torikatsu): apply web
         onRefresh: controller.refresh,
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          controller: state.controller,
+          controller: state.scrollController,
           slivers: [
-            if (state.hasRefreshError)
+            if (list.hasRefreshError)
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 60,
@@ -33,17 +33,17 @@ class TodoTab extends ConsumerWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final task = state.items[index];
+                  final task = list.items[index];
                   return ListTile(
                     leading: Text(task.id),
                     title: Text(task.name),
                     // onTap: controller.update
                   );
                 },
-                childCount: state.items.length,
+                childCount: list.items.length,
               ),
             ),
-            if (state.isMoreLoading)
+            if (list.isMoreLoading)
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 60,
@@ -53,7 +53,7 @@ class TodoTab extends ConsumerWidget {
                   ),
                 ),
               )
-            else if (state.hasLoadMoreError)
+            else if (list.hasLoadMoreError)
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 60,
