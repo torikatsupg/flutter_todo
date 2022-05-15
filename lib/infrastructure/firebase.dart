@@ -5,14 +5,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_todo/util/env.dart';
 
 const _localhost = 'localhost';
+const firestorePort = 8080;
+const authPort = 9099;
 
 Future<void> initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   if (Env.isEmulator) {
-    FirebaseFirestore.instance.useFirestoreEmulator(_localhost, 8080);
-    await Future.wait<dynamic>(
-      [FirebaseAuth.instance.useAuthEmulator(_localhost, 9099)],
+    FirebaseFirestore.instance.useFirestoreEmulator(_localhost, firestorePort);
+    await Future.wait(
+      [FirebaseAuth.instance.useAuthEmulator(_localhost, authPort)],
     );
   }
 }
