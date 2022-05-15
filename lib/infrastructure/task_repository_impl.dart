@@ -11,7 +11,7 @@ const limit = 20;
 // TODO(torikatsu): 置き場所
 class CursorImpl extends Cursor {
   CursorImpl(this.value);
-  DocumentSnapshot value;
+  DocumentSnapshot? value;
 }
 
 class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
@@ -27,14 +27,15 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   @override
   Future<QueryList<Task, CursorImpl>> findAllTodo([CursorImpl? cursor]) async {
     final query = _ref.where(_isDone, isEqualTo: false).limit(limit);
+    final cursorDoc = cursor?.value;
     final result =
-        await (cursor == null ? query : query.startAfterDocument(cursor.value))
+        await (cursorDoc == null ? query : query.startAfterDocument(cursorDoc))
             .get();
 
     final items = result.docs.map(_toTask).toList();
     return QueryList(
       items,
-      CursorImpl(result.docs.last),
+      CursorImpl(result.docs.isEmpty ? null : result.docs.last),
       items.length == limit,
     );
   }
@@ -42,14 +43,15 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   @override
   Future<QueryList<Task, CursorImpl>> findAllDone([CursorImpl? cursor]) async {
     final query = _ref.where(_isDone, isEqualTo: true).limit(limit);
+    final cursorDoc = cursor?.value;
     final result =
-        await (cursor == null ? query : query.startAfterDocument(cursor.value))
+        await (cursorDoc == null ? query : query.startAfterDocument(cursorDoc))
             .get();
 
     final items = result.docs.map(_toTask).toList();
     return QueryList(
       items,
-      CursorImpl(result.docs.last),
+      CursorImpl(result.docs.isEmpty ? null : result.docs.last),
       items.length == limit,
     );
   }
