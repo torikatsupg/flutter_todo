@@ -1,3 +1,4 @@
+import 'package:flutter_todo/model/query_list.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/model/task.freezed.dart';
@@ -16,18 +17,6 @@ class Task with _$Task {
   Task done() => copyWith(isDone: true);
 
   Task updateName(String name) => copyWith(name: name);
-}
-
-// TODO(torikatsu): change file position
-abstract class Cursor {}
-
-// TODO(torikatsu): rename class name
-class QueryList<Item, C extends Cursor> {
-  QueryList(this.list, this.cursor, this.hasMoreData);
-
-  List<Item> list;
-  C cursor;
-  bool hasMoreData;
 }
 
 abstract class TaskRepository<C extends Cursor> {

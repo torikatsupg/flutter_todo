@@ -1,18 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_todo/infrastructure/cursor_impl.dart';
+import 'package:flutter_todo/model/query_list.dart';
 
 import 'package:flutter_todo/model/task.dart';
 
 const _name = 'name';
 const _createdAt = 'createdAt';
 const _isDone = 'isDone';
-
 const limit = 20;
 
-// TODO(torikatsu): 置き場所
-class CursorImpl extends Cursor {
-  CursorImpl(this.value);
-  DocumentSnapshot? value;
-}
 
 class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   TaskRepositoryImpl(this.uid);

@@ -1,10 +1,11 @@
-import 'package:flutter_todo/infrastructure/task_repository_impl.dart';
-import 'package:flutter_todo/model/task.dart';
+import 'package:flutter_todo/infrastructure/cursor_impl.dart';
+import 'package:flutter_todo/model/query_list.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/util/list_cache_controller.freezed.dart';
 
+// TODO(torikatsu): handle error.
 class ListCacheController<Item> extends StateNotifier<ListCacheState<Item>> {
   ListCacheController(this._fetch) : super(ListCacheState<Item>.loading());
 

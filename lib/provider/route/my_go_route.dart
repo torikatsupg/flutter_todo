@@ -38,4 +38,5 @@ class MyGoRoute extends GoRoute {
         );
 }
 
+// ignore: prefer_function_declarations_over_variables
 final RouteBuilder _builder = (context, state) => throw Error;

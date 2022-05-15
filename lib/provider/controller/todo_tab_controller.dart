@@ -36,7 +36,7 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
   TodoTabController(this._read, this._uid, scrollController)
       : super(_TodoTabState(
             list: _read(todoTasksFamily(_uid)),
-            scrollController: ScrollController())) {}
+            scrollController: ScrollController()));
 
   final Reader _read;
   final String _uid;
