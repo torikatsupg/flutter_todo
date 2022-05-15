@@ -12,23 +12,7 @@ part of '../../../provider/controller/signin_controller_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$_SigninStateTearOff {
-  const _$_SigninStateTearOff();
-
-  __SigninInputState call(
-      {required FormModel email, required FormModel password}) {
-    return __SigninInputState(
-      email: email,
-      password: password,
-    );
-  }
-}
-
-/// @nodoc
-const _$SigninState = _$_SigninStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$_SigninState {
@@ -92,11 +76,11 @@ class __$SigninStateCopyWithImpl<$Res> implements _$SigninStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$_SigninInputStateCopyWith<$Res>
+abstract class _$$__SigninInputStateCopyWith<$Res>
     implements _$SigninStateCopyWith<$Res> {
-  factory _$_SigninInputStateCopyWith(
-          __SigninInputState value, $Res Function(__SigninInputState) then) =
-      __$_SigninInputStateCopyWithImpl<$Res>;
+  factory _$$__SigninInputStateCopyWith(_$__SigninInputState value,
+          $Res Function(_$__SigninInputState) then) =
+      __$$__SigninInputStateCopyWithImpl<$Res>;
   @override
   $Res call({FormModel email, FormModel password});
 
@@ -107,22 +91,22 @@ abstract class _$_SigninInputStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$_SigninInputStateCopyWithImpl<$Res>
+class __$$__SigninInputStateCopyWithImpl<$Res>
     extends __$SigninStateCopyWithImpl<$Res>
-    implements _$_SigninInputStateCopyWith<$Res> {
-  __$_SigninInputStateCopyWithImpl(
-      __SigninInputState _value, $Res Function(__SigninInputState) _then)
-      : super(_value, (v) => _then(v as __SigninInputState));
+    implements _$$__SigninInputStateCopyWith<$Res> {
+  __$$__SigninInputStateCopyWithImpl(
+      _$__SigninInputState _value, $Res Function(_$__SigninInputState) _then)
+      : super(_value, (v) => _then(v as _$__SigninInputState));
 
   @override
-  __SigninInputState get _value => super._value as __SigninInputState;
+  _$__SigninInputState get _value => super._value as _$__SigninInputState;
 
   @override
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
   }) {
-    return _then(__SigninInputState(
+    return _then(_$__SigninInputState(
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -155,7 +139,7 @@ class _$__SigninInputState extends __SigninInputState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is __SigninInputState &&
+            other is _$__SigninInputState &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.password, password));
   }
@@ -168,22 +152,23 @@ class _$__SigninInputState extends __SigninInputState {
 
   @JsonKey(ignore: true)
   @override
-  _$_SigninInputStateCopyWith<__SigninInputState> get copyWith =>
-      __$_SigninInputStateCopyWithImpl<__SigninInputState>(this, _$identity);
+  _$$__SigninInputStateCopyWith<_$__SigninInputState> get copyWith =>
+      __$$__SigninInputStateCopyWithImpl<_$__SigninInputState>(
+          this, _$identity);
 }
 
 abstract class __SigninInputState extends _SigninState {
   factory __SigninInputState(
-      {required FormModel email,
-      required FormModel password}) = _$__SigninInputState;
+      {required final FormModel email,
+      required final FormModel password}) = _$__SigninInputState;
   __SigninInputState._() : super._();
 
   @override
-  FormModel get email;
+  FormModel get email => throw _privateConstructorUsedError;
   @override
-  FormModel get password;
+  FormModel get password => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$_SigninInputStateCopyWith<__SigninInputState> get copyWith =>
+  _$$__SigninInputStateCopyWith<_$__SigninInputState> get copyWith =>
       throw _privateConstructorUsedError;
 }

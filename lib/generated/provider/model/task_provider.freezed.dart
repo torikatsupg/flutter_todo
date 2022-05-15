@@ -12,22 +12,7 @@ part of '../../../provider/model/task_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TaskArgTearOff {
-  const _$TaskArgTearOff();
-
-  _TaskArg call({required String uid, required String id}) {
-    return _TaskArg(
-      uid: uid,
-      id: id,
-    );
-  }
-}
-
-/// @nodoc
-const $TaskArg = _$TaskArgTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TaskArg {
@@ -72,28 +57,29 @@ class _$TaskArgCopyWithImpl<$Res> implements $TaskArgCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$TaskArgCopyWith<$Res> implements $TaskArgCopyWith<$Res> {
-  factory _$TaskArgCopyWith(_TaskArg value, $Res Function(_TaskArg) then) =
-      __$TaskArgCopyWithImpl<$Res>;
+abstract class _$$_TaskArgCopyWith<$Res> implements $TaskArgCopyWith<$Res> {
+  factory _$$_TaskArgCopyWith(
+          _$_TaskArg value, $Res Function(_$_TaskArg) then) =
+      __$$_TaskArgCopyWithImpl<$Res>;
   @override
   $Res call({String uid, String id});
 }
 
 /// @nodoc
-class __$TaskArgCopyWithImpl<$Res> extends _$TaskArgCopyWithImpl<$Res>
-    implements _$TaskArgCopyWith<$Res> {
-  __$TaskArgCopyWithImpl(_TaskArg _value, $Res Function(_TaskArg) _then)
-      : super(_value, (v) => _then(v as _TaskArg));
+class __$$_TaskArgCopyWithImpl<$Res> extends _$TaskArgCopyWithImpl<$Res>
+    implements _$$_TaskArgCopyWith<$Res> {
+  __$$_TaskArgCopyWithImpl(_$_TaskArg _value, $Res Function(_$_TaskArg) _then)
+      : super(_value, (v) => _then(v as _$_TaskArg));
 
   @override
-  _TaskArg get _value => super._value as _TaskArg;
+  _$_TaskArg get _value => super._value as _$_TaskArg;
 
   @override
   $Res call({
     Object? uid = freezed,
     Object? id = freezed,
   }) {
-    return _then(_TaskArg(
+    return _then(_$_TaskArg(
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -125,7 +111,7 @@ class _$_TaskArg extends _TaskArg {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TaskArg &&
+            other is _$_TaskArg &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.id, id));
   }
@@ -138,20 +124,21 @@ class _$_TaskArg extends _TaskArg {
 
   @JsonKey(ignore: true)
   @override
-  _$TaskArgCopyWith<_TaskArg> get copyWith =>
-      __$TaskArgCopyWithImpl<_TaskArg>(this, _$identity);
+  _$$_TaskArgCopyWith<_$_TaskArg> get copyWith =>
+      __$$_TaskArgCopyWithImpl<_$_TaskArg>(this, _$identity);
 }
 
 abstract class _TaskArg extends TaskArg {
-  factory _TaskArg({required String uid, required String id}) = _$_TaskArg;
+  factory _TaskArg({required final String uid, required final String id}) =
+      _$_TaskArg;
   _TaskArg._() : super._();
 
   @override
-  String get uid;
+  String get uid => throw _privateConstructorUsedError;
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TaskArgCopyWith<_TaskArg> get copyWith =>
+  _$$_TaskArgCopyWith<_$_TaskArg> get copyWith =>
       throw _privateConstructorUsedError;
 }

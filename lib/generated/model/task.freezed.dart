@@ -12,28 +12,7 @@ part of '../../model/task.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TaskTearOff {
-  const _$TaskTearOff();
-
-  _Task call(
-      {required String id,
-      required String name,
-      required DateTime createdAt,
-      required bool isDone}) {
-    return _Task(
-      id: id,
-      name: name,
-      createdAt: createdAt,
-      isDone: isDone,
-    );
-  }
-}
-
-/// @nodoc
-const $Task = _$TaskTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Task {
@@ -90,21 +69,21 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
-  factory _$TaskCopyWith(_Task value, $Res Function(_Task) then) =
-      __$TaskCopyWithImpl<$Res>;
+abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
+  factory _$$_TaskCopyWith(_$_Task value, $Res Function(_$_Task) then) =
+      __$$_TaskCopyWithImpl<$Res>;
   @override
   $Res call({String id, String name, DateTime createdAt, bool isDone});
 }
 
 /// @nodoc
-class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
-    implements _$TaskCopyWith<$Res> {
-  __$TaskCopyWithImpl(_Task _value, $Res Function(_Task) _then)
-      : super(_value, (v) => _then(v as _Task));
+class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
+    implements _$$_TaskCopyWith<$Res> {
+  __$$_TaskCopyWithImpl(_$_Task _value, $Res Function(_$_Task) _then)
+      : super(_value, (v) => _then(v as _$_Task));
 
   @override
-  _Task get _value => super._value as _Task;
+  _$_Task get _value => super._value as _$_Task;
 
   @override
   $Res call({
@@ -113,7 +92,7 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? isDone = freezed,
   }) {
-    return _then(_Task(
+    return _then(_$_Task(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -162,7 +141,7 @@ class _$_Task extends _Task {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Task &&
+            other is _$_Task &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
@@ -179,27 +158,27 @@ class _$_Task extends _Task {
 
   @JsonKey(ignore: true)
   @override
-  _$TaskCopyWith<_Task> get copyWith =>
-      __$TaskCopyWithImpl<_Task>(this, _$identity);
+  _$$_TaskCopyWith<_$_Task> get copyWith =>
+      __$$_TaskCopyWithImpl<_$_Task>(this, _$identity);
 }
 
 abstract class _Task extends Task {
   factory _Task(
-      {required String id,
-      required String name,
-      required DateTime createdAt,
-      required bool isDone}) = _$_Task;
+      {required final String id,
+      required final String name,
+      required final DateTime createdAt,
+      required final bool isDone}) = _$_Task;
   _Task._() : super._();
 
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  DateTime get createdAt;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @override
-  bool get isDone;
+  bool get isDone => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TaskCopyWith<_Task> get copyWith => throw _privateConstructorUsedError;
+  _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;
 }

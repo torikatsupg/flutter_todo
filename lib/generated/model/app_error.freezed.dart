@@ -12,27 +12,7 @@ part of '../../model/app_error.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AppErrorTearOff {
-  const _$AppErrorTearOff();
-
-  Unknown unknown() {
-    return Unknown();
-  }
-
-  Unauthorized unauthorized() {
-    return Unauthorized();
-  }
-
-  IlligalUrl illigalUrl() {
-    return IlligalUrl();
-  }
-}
-
-/// @nodoc
-const $AppError = _$AppErrorTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AppError {
@@ -98,19 +78,19 @@ class _$AppErrorCopyWithImpl<$Res> implements $AppErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $UnknownCopyWith<$Res> {
-  factory $UnknownCopyWith(Unknown value, $Res Function(Unknown) then) =
-      _$UnknownCopyWithImpl<$Res>;
+abstract class _$$UnknownCopyWith<$Res> {
+  factory _$$UnknownCopyWith(_$Unknown value, $Res Function(_$Unknown) then) =
+      __$$UnknownCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$UnknownCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
-    implements $UnknownCopyWith<$Res> {
-  _$UnknownCopyWithImpl(Unknown _value, $Res Function(Unknown) _then)
-      : super(_value, (v) => _then(v as Unknown));
+class __$$UnknownCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
+    implements _$$UnknownCopyWith<$Res> {
+  __$$UnknownCopyWithImpl(_$Unknown _value, $Res Function(_$Unknown) _then)
+      : super(_value, (v) => _then(v as _$Unknown));
 
   @override
-  Unknown get _value => super._value as Unknown;
+  _$Unknown get _value => super._value as _$Unknown;
 }
 
 /// @nodoc
@@ -126,7 +106,7 @@ class _$Unknown extends Unknown {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Unknown);
+        (other.runtimeType == runtimeType && other is _$Unknown);
   }
 
   @override
@@ -207,21 +187,21 @@ abstract class Unknown extends AppError {
 }
 
 /// @nodoc
-abstract class $UnauthorizedCopyWith<$Res> {
-  factory $UnauthorizedCopyWith(
-          Unauthorized value, $Res Function(Unauthorized) then) =
-      _$UnauthorizedCopyWithImpl<$Res>;
+abstract class _$$UnauthorizedCopyWith<$Res> {
+  factory _$$UnauthorizedCopyWith(
+          _$Unauthorized value, $Res Function(_$Unauthorized) then) =
+      __$$UnauthorizedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$UnauthorizedCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
-    implements $UnauthorizedCopyWith<$Res> {
-  _$UnauthorizedCopyWithImpl(
-      Unauthorized _value, $Res Function(Unauthorized) _then)
-      : super(_value, (v) => _then(v as Unauthorized));
+class __$$UnauthorizedCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
+    implements _$$UnauthorizedCopyWith<$Res> {
+  __$$UnauthorizedCopyWithImpl(
+      _$Unauthorized _value, $Res Function(_$Unauthorized) _then)
+      : super(_value, (v) => _then(v as _$Unauthorized));
 
   @override
-  Unauthorized get _value => super._value as Unauthorized;
+  _$Unauthorized get _value => super._value as _$Unauthorized;
 }
 
 /// @nodoc
@@ -237,7 +217,7 @@ class _$Unauthorized extends Unauthorized {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Unauthorized);
+        (other.runtimeType == runtimeType && other is _$Unauthorized);
   }
 
   @override
@@ -318,20 +298,21 @@ abstract class Unauthorized extends AppError {
 }
 
 /// @nodoc
-abstract class $IlligalUrlCopyWith<$Res> {
-  factory $IlligalUrlCopyWith(
-          IlligalUrl value, $Res Function(IlligalUrl) then) =
-      _$IlligalUrlCopyWithImpl<$Res>;
+abstract class _$$IlligalUrlCopyWith<$Res> {
+  factory _$$IlligalUrlCopyWith(
+          _$IlligalUrl value, $Res Function(_$IlligalUrl) then) =
+      __$$IlligalUrlCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$IlligalUrlCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
-    implements $IlligalUrlCopyWith<$Res> {
-  _$IlligalUrlCopyWithImpl(IlligalUrl _value, $Res Function(IlligalUrl) _then)
-      : super(_value, (v) => _then(v as IlligalUrl));
+class __$$IlligalUrlCopyWithImpl<$Res> extends _$AppErrorCopyWithImpl<$Res>
+    implements _$$IlligalUrlCopyWith<$Res> {
+  __$$IlligalUrlCopyWithImpl(
+      _$IlligalUrl _value, $Res Function(_$IlligalUrl) _then)
+      : super(_value, (v) => _then(v as _$IlligalUrl));
 
   @override
-  IlligalUrl get _value => super._value as IlligalUrl;
+  _$IlligalUrl get _value => super._value as _$IlligalUrl;
 }
 
 /// @nodoc
@@ -347,7 +328,7 @@ class _$IlligalUrl extends IlligalUrl {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is IlligalUrl);
+        (other.runtimeType == runtimeType && other is _$IlligalUrl);
   }
 
   @override

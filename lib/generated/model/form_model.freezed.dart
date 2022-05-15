@@ -12,30 +12,7 @@ part of '../../model/form_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FormModelTearOff {
-  const _$FormModelTearOff();
-
-  _FormModel call(
-      {required Validator validator,
-      required TextEditingController controller,
-      required FocusNode focusNode,
-      bool hasEdit = false,
-      List<String> serverErrors = const []}) {
-    return _FormModel(
-      validator: validator,
-      controller: controller,
-      focusNode: focusNode,
-      hasEdit: hasEdit,
-      serverErrors: serverErrors,
-    );
-  }
-}
-
-/// @nodoc
-const $FormModel = _$FormModelTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FormModel {
@@ -104,10 +81,10 @@ class _$FormModelCopyWithImpl<$Res> implements $FormModelCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$FormModelCopyWith<$Res> implements $FormModelCopyWith<$Res> {
-  factory _$FormModelCopyWith(
-          _FormModel value, $Res Function(_FormModel) then) =
-      __$FormModelCopyWithImpl<$Res>;
+abstract class _$$_FormModelCopyWith<$Res> implements $FormModelCopyWith<$Res> {
+  factory _$$_FormModelCopyWith(
+          _$_FormModel value, $Res Function(_$_FormModel) then) =
+      __$$_FormModelCopyWithImpl<$Res>;
   @override
   $Res call(
       {Validator validator,
@@ -118,13 +95,14 @@ abstract class _$FormModelCopyWith<$Res> implements $FormModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
-    implements _$FormModelCopyWith<$Res> {
-  __$FormModelCopyWithImpl(_FormModel _value, $Res Function(_FormModel) _then)
-      : super(_value, (v) => _then(v as _FormModel));
+class __$$_FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
+    implements _$$_FormModelCopyWith<$Res> {
+  __$$_FormModelCopyWithImpl(
+      _$_FormModel _value, $Res Function(_$_FormModel) _then)
+      : super(_value, (v) => _then(v as _$_FormModel));
 
   @override
-  _FormModel get _value => super._value as _FormModel;
+  _$_FormModel get _value => super._value as _$_FormModel;
 
   @override
   $Res call({
@@ -134,7 +112,7 @@ class __$FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
     Object? hasEdit = freezed,
     Object? serverErrors = freezed,
   }) {
-    return _then(_FormModel(
+    return _then(_$_FormModel(
       validator: validator == freezed
           ? _value.validator
           : validator // ignore: cast_nullable_to_non_nullable
@@ -152,7 +130,7 @@ class __$FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
           : hasEdit // ignore: cast_nullable_to_non_nullable
               as bool,
       serverErrors: serverErrors == freezed
-          ? _value.serverErrors
+          ? _value._serverErrors
           : serverErrors // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -167,8 +145,9 @@ class _$_FormModel extends _FormModel {
       required this.controller,
       required this.focusNode,
       this.hasEdit = false,
-      this.serverErrors = const []})
-      : super._();
+      final List<String> serverErrors = const []})
+      : _serverErrors = serverErrors,
+        super._();
 
   @override
   final Validator validator;
@@ -176,12 +155,16 @@ class _$_FormModel extends _FormModel {
   final TextEditingController controller;
   @override
   final FocusNode focusNode;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool hasEdit;
-  @JsonKey()
+  final List<String> _serverErrors;
   @override
-  final List<String> serverErrors;
+  @JsonKey()
+  List<String> get serverErrors {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_serverErrors);
+  }
 
   @override
   String toString() {
@@ -192,7 +175,7 @@ class _$_FormModel extends _FormModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _FormModel &&
+            other is _$_FormModel &&
             (identical(other.validator, validator) ||
                 other.validator == validator) &&
             const DeepCollectionEquality()
@@ -200,7 +183,7 @@ class _$_FormModel extends _FormModel {
             const DeepCollectionEquality().equals(other.focusNode, focusNode) &&
             const DeepCollectionEquality().equals(other.hasEdit, hasEdit) &&
             const DeepCollectionEquality()
-                .equals(other.serverErrors, serverErrors));
+                .equals(other._serverErrors, _serverErrors));
   }
 
   @override
@@ -210,35 +193,35 @@ class _$_FormModel extends _FormModel {
       const DeepCollectionEquality().hash(controller),
       const DeepCollectionEquality().hash(focusNode),
       const DeepCollectionEquality().hash(hasEdit),
-      const DeepCollectionEquality().hash(serverErrors));
+      const DeepCollectionEquality().hash(_serverErrors));
 
   @JsonKey(ignore: true)
   @override
-  _$FormModelCopyWith<_FormModel> get copyWith =>
-      __$FormModelCopyWithImpl<_FormModel>(this, _$identity);
+  _$$_FormModelCopyWith<_$_FormModel> get copyWith =>
+      __$$_FormModelCopyWithImpl<_$_FormModel>(this, _$identity);
 }
 
 abstract class _FormModel extends FormModel {
   factory _FormModel(
-      {required Validator validator,
-      required TextEditingController controller,
-      required FocusNode focusNode,
-      bool hasEdit,
-      List<String> serverErrors}) = _$_FormModel;
+      {required final Validator validator,
+      required final TextEditingController controller,
+      required final FocusNode focusNode,
+      final bool hasEdit,
+      final List<String> serverErrors}) = _$_FormModel;
   _FormModel._() : super._();
 
   @override
-  Validator get validator;
+  Validator get validator => throw _privateConstructorUsedError;
   @override
-  TextEditingController get controller;
+  TextEditingController get controller => throw _privateConstructorUsedError;
   @override
-  FocusNode get focusNode;
+  FocusNode get focusNode => throw _privateConstructorUsedError;
   @override
-  bool get hasEdit;
+  bool get hasEdit => throw _privateConstructorUsedError;
   @override
-  List<String> get serverErrors;
+  List<String> get serverErrors => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FormModelCopyWith<_FormModel> get copyWith =>
+  _$$_FormModelCopyWith<_$_FormModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

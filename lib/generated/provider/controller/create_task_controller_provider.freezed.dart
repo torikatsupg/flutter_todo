@@ -12,21 +12,7 @@ part of '../../../provider/controller/create_task_controller_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$_CreateTaskStateTearOff {
-  const _$_CreateTaskStateTearOff();
-
-  __CreateTaskController call({required FormModel name}) {
-    return __CreateTaskController(
-      name: name,
-    );
-  }
-}
-
-/// @nodoc
-const _$CreateTaskState = _$_CreateTaskStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$_CreateTaskState {
@@ -77,11 +63,11 @@ class __$CreateTaskStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$_CreateTaskControllerCopyWith<$Res>
+abstract class _$$__CreateTaskControllerCopyWith<$Res>
     implements _$CreateTaskStateCopyWith<$Res> {
-  factory _$_CreateTaskControllerCopyWith(__CreateTaskController value,
-          $Res Function(__CreateTaskController) then) =
-      __$_CreateTaskControllerCopyWithImpl<$Res>;
+  factory _$$__CreateTaskControllerCopyWith(_$__CreateTaskController value,
+          $Res Function(_$__CreateTaskController) then) =
+      __$$__CreateTaskControllerCopyWithImpl<$Res>;
   @override
   $Res call({FormModel name});
 
@@ -90,21 +76,22 @@ abstract class _$_CreateTaskControllerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$_CreateTaskControllerCopyWithImpl<$Res>
+class __$$__CreateTaskControllerCopyWithImpl<$Res>
     extends __$CreateTaskStateCopyWithImpl<$Res>
-    implements _$_CreateTaskControllerCopyWith<$Res> {
-  __$_CreateTaskControllerCopyWithImpl(__CreateTaskController _value,
-      $Res Function(__CreateTaskController) _then)
-      : super(_value, (v) => _then(v as __CreateTaskController));
+    implements _$$__CreateTaskControllerCopyWith<$Res> {
+  __$$__CreateTaskControllerCopyWithImpl(_$__CreateTaskController _value,
+      $Res Function(_$__CreateTaskController) _then)
+      : super(_value, (v) => _then(v as _$__CreateTaskController));
 
   @override
-  __CreateTaskController get _value => super._value as __CreateTaskController;
+  _$__CreateTaskController get _value =>
+      super._value as _$__CreateTaskController;
 
   @override
   $Res call({
     Object? name = freezed,
   }) {
-    return _then(__CreateTaskController(
+    return _then(_$__CreateTaskController(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -130,7 +117,7 @@ class _$__CreateTaskController extends __CreateTaskController {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is __CreateTaskController &&
+            other is _$__CreateTaskController &&
             const DeepCollectionEquality().equals(other.name, name));
   }
 
@@ -140,20 +127,20 @@ class _$__CreateTaskController extends __CreateTaskController {
 
   @JsonKey(ignore: true)
   @override
-  _$_CreateTaskControllerCopyWith<__CreateTaskController> get copyWith =>
-      __$_CreateTaskControllerCopyWithImpl<__CreateTaskController>(
+  _$$__CreateTaskControllerCopyWith<_$__CreateTaskController> get copyWith =>
+      __$$__CreateTaskControllerCopyWithImpl<_$__CreateTaskController>(
           this, _$identity);
 }
 
 abstract class __CreateTaskController extends _CreateTaskState {
-  factory __CreateTaskController({required FormModel name}) =
+  factory __CreateTaskController({required final FormModel name}) =
       _$__CreateTaskController;
   __CreateTaskController._() : super._();
 
   @override
-  FormModel get name;
+  FormModel get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$_CreateTaskControllerCopyWith<__CreateTaskController> get copyWith =>
+  _$$__CreateTaskControllerCopyWith<_$__CreateTaskController> get copyWith =>
       throw _privateConstructorUsedError;
 }

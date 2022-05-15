@@ -12,26 +12,7 @@ part of '../../../provider/controller/signup_controller_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$_SignupStateTearOff {
-  const _$_SignupStateTearOff();
-
-  __SignupInputState call(
-      {required FormModel email,
-      required FormModel password,
-      required FormModel confirmPassword}) {
-    return __SignupInputState(
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    );
-  }
-}
-
-/// @nodoc
-const _$SignupState = _$_SignupStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$_SignupState {
@@ -109,11 +90,11 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$_SignupInputStateCopyWith<$Res>
+abstract class _$$__SignupInputStateCopyWith<$Res>
     implements _$SignupStateCopyWith<$Res> {
-  factory _$_SignupInputStateCopyWith(
-          __SignupInputState value, $Res Function(__SignupInputState) then) =
-      __$_SignupInputStateCopyWithImpl<$Res>;
+  factory _$$__SignupInputStateCopyWith(_$__SignupInputState value,
+          $Res Function(_$__SignupInputState) then) =
+      __$$__SignupInputStateCopyWithImpl<$Res>;
   @override
   $Res call({FormModel email, FormModel password, FormModel confirmPassword});
 
@@ -126,15 +107,15 @@ abstract class _$_SignupInputStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$_SignupInputStateCopyWithImpl<$Res>
+class __$$__SignupInputStateCopyWithImpl<$Res>
     extends __$SignupStateCopyWithImpl<$Res>
-    implements _$_SignupInputStateCopyWith<$Res> {
-  __$_SignupInputStateCopyWithImpl(
-      __SignupInputState _value, $Res Function(__SignupInputState) _then)
-      : super(_value, (v) => _then(v as __SignupInputState));
+    implements _$$__SignupInputStateCopyWith<$Res> {
+  __$$__SignupInputStateCopyWithImpl(
+      _$__SignupInputState _value, $Res Function(_$__SignupInputState) _then)
+      : super(_value, (v) => _then(v as _$__SignupInputState));
 
   @override
-  __SignupInputState get _value => super._value as __SignupInputState;
+  _$__SignupInputState get _value => super._value as _$__SignupInputState;
 
   @override
   $Res call({
@@ -142,7 +123,7 @@ class __$_SignupInputStateCopyWithImpl<$Res>
     Object? password = freezed,
     Object? confirmPassword = freezed,
   }) {
-    return _then(__SignupInputState(
+    return _then(_$__SignupInputState(
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -184,7 +165,7 @@ class _$__SignupInputState extends __SignupInputState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is __SignupInputState &&
+            other is _$__SignupInputState &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.password, password) &&
             const DeepCollectionEquality()
@@ -200,25 +181,26 @@ class _$__SignupInputState extends __SignupInputState {
 
   @JsonKey(ignore: true)
   @override
-  _$_SignupInputStateCopyWith<__SignupInputState> get copyWith =>
-      __$_SignupInputStateCopyWithImpl<__SignupInputState>(this, _$identity);
+  _$$__SignupInputStateCopyWith<_$__SignupInputState> get copyWith =>
+      __$$__SignupInputStateCopyWithImpl<_$__SignupInputState>(
+          this, _$identity);
 }
 
 abstract class __SignupInputState extends _SignupState {
   factory __SignupInputState(
-      {required FormModel email,
-      required FormModel password,
-      required FormModel confirmPassword}) = _$__SignupInputState;
+      {required final FormModel email,
+      required final FormModel password,
+      required final FormModel confirmPassword}) = _$__SignupInputState;
   __SignupInputState._() : super._();
 
   @override
-  FormModel get email;
+  FormModel get email => throw _privateConstructorUsedError;
   @override
-  FormModel get password;
+  FormModel get password => throw _privateConstructorUsedError;
   @override
-  FormModel get confirmPassword;
+  FormModel get confirmPassword => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$_SignupInputStateCopyWith<__SignupInputState> get copyWith =>
+  _$$__SignupInputStateCopyWith<_$__SignupInputState> get copyWith =>
       throw _privateConstructorUsedError;
 }

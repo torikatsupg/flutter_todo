@@ -12,42 +12,7 @@ part of '../../util/list_cache_controller.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ListCacheStateTearOff {
-  const _$ListCacheStateTearOff();
-
-  _Data<Item> data<Item>(
-      {List<Item> items = const [],
-      CursorImpl? cursor,
-      dynamic isRefreshing = false,
-      dynamic isMoreLoading = false,
-      dynamic hasMoreData = true,
-      dynamic refreshError = null,
-      dynamic loadMoreError = null}) {
-    return _Data<Item>(
-      items: items,
-      cursor: cursor,
-      isRefreshing: isRefreshing,
-      isMoreLoading: isMoreLoading,
-      hasMoreData: hasMoreData,
-      refreshError: refreshError,
-      loadMoreError: loadMoreError,
-    );
-  }
-
-  _Error<Item> error<Item>() {
-    return _Error<Item>();
-  }
-
-  _Loading<Item> loading<Item>() {
-    return _Loading<Item>();
-  }
-}
-
-/// @nodoc
-const $ListCacheState = _$ListCacheStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ListCacheState<Item> {
@@ -139,9 +104,10 @@ class _$ListCacheStateCopyWithImpl<Item, $Res>
 }
 
 /// @nodoc
-abstract class _$DataCopyWith<Item, $Res> {
-  factory _$DataCopyWith(_Data<Item> value, $Res Function(_Data<Item>) then) =
-      __$DataCopyWithImpl<Item, $Res>;
+abstract class _$$_DataCopyWith<Item, $Res> {
+  factory _$$_DataCopyWith(
+          _$_Data<Item> value, $Res Function(_$_Data<Item>) then) =
+      __$$_DataCopyWithImpl<Item, $Res>;
   $Res call(
       {List<Item> items,
       CursorImpl? cursor,
@@ -153,14 +119,15 @@ abstract class _$DataCopyWith<Item, $Res> {
 }
 
 /// @nodoc
-class __$DataCopyWithImpl<Item, $Res>
+class __$$_DataCopyWithImpl<Item, $Res>
     extends _$ListCacheStateCopyWithImpl<Item, $Res>
-    implements _$DataCopyWith<Item, $Res> {
-  __$DataCopyWithImpl(_Data<Item> _value, $Res Function(_Data<Item>) _then)
-      : super(_value, (v) => _then(v as _Data<Item>));
+    implements _$$_DataCopyWith<Item, $Res> {
+  __$$_DataCopyWithImpl(
+      _$_Data<Item> _value, $Res Function(_$_Data<Item>) _then)
+      : super(_value, (v) => _then(v as _$_Data<Item>));
 
   @override
-  _Data<Item> get _value => super._value as _Data<Item>;
+  _$_Data<Item> get _value => super._value as _$_Data<Item>;
 
   @override
   $Res call({
@@ -172,9 +139,9 @@ class __$DataCopyWithImpl<Item, $Res>
     Object? refreshError = freezed,
     Object? loadMoreError = freezed,
   }) {
-    return _then(_Data<Item>(
+    return _then(_$_Data<Item>(
       items: items == freezed
-          ? _value.items
+          ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<Item>,
       cursor: cursor == freezed
@@ -202,34 +169,40 @@ class __$DataCopyWithImpl<Item, $Res>
 
 class _$_Data<Item> extends _Data<Item> {
   _$_Data(
-      {this.items = const [],
+      {final List<Item> items = const [],
       this.cursor,
       this.isRefreshing = false,
       this.isMoreLoading = false,
       this.hasMoreData = true,
       this.refreshError = null,
       this.loadMoreError = null})
-      : super._();
+      : _items = items,
+        super._();
 
-  @JsonKey()
+  final List<Item> _items;
   @override
-  final List<Item> items;
+  @JsonKey()
+  List<Item> get items {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
+
   @override
   final CursorImpl? cursor;
-  @JsonKey()
   @override
+  @JsonKey()
   final dynamic isRefreshing;
-  @JsonKey()
   @override
+  @JsonKey()
   final dynamic isMoreLoading;
-  @JsonKey()
   @override
+  @JsonKey()
   final dynamic hasMoreData;
-  @JsonKey()
   @override
+  @JsonKey()
   final dynamic refreshError;
-  @JsonKey()
   @override
+  @JsonKey()
   final dynamic loadMoreError;
 
   @override
@@ -241,8 +214,8 @@ class _$_Data<Item> extends _Data<Item> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Data<Item> &&
-            const DeepCollectionEquality().equals(other.items, items) &&
+            other is _$_Data<Item> &&
+            const DeepCollectionEquality().equals(other._items, _items) &&
             const DeepCollectionEquality().equals(other.cursor, cursor) &&
             const DeepCollectionEquality()
                 .equals(other.isRefreshing, isRefreshing) &&
@@ -259,7 +232,7 @@ class _$_Data<Item> extends _Data<Item> {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(items),
+      const DeepCollectionEquality().hash(_items),
       const DeepCollectionEquality().hash(cursor),
       const DeepCollectionEquality().hash(isRefreshing),
       const DeepCollectionEquality().hash(isMoreLoading),
@@ -269,8 +242,8 @@ class _$_Data<Item> extends _Data<Item> {
 
   @JsonKey(ignore: true)
   @override
-  _$DataCopyWith<Item, _Data<Item>> get copyWith =>
-      __$DataCopyWithImpl<Item, _Data<Item>>(this, _$identity);
+  _$$_DataCopyWith<Item, _$_Data<Item>> get copyWith =>
+      __$$_DataCopyWithImpl<Item, _$_Data<Item>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -370,43 +343,44 @@ class _$_Data<Item> extends _Data<Item> {
 
 abstract class _Data<Item> extends ListCacheState<Item> {
   factory _Data(
-      {List<Item> items,
-      CursorImpl? cursor,
-      dynamic isRefreshing,
-      dynamic isMoreLoading,
-      dynamic hasMoreData,
-      dynamic refreshError,
-      dynamic loadMoreError}) = _$_Data<Item>;
+      {final List<Item> items,
+      final CursorImpl? cursor,
+      final dynamic isRefreshing,
+      final dynamic isMoreLoading,
+      final dynamic hasMoreData,
+      final dynamic refreshError,
+      final dynamic loadMoreError}) = _$_Data<Item>;
   _Data._() : super._();
 
-  List<Item> get items;
-  CursorImpl? get cursor;
-  dynamic get isRefreshing;
-  dynamic get isMoreLoading;
-  dynamic get hasMoreData;
-  dynamic get refreshError;
-  dynamic get loadMoreError;
+  List<Item> get items => throw _privateConstructorUsedError;
+  CursorImpl? get cursor => throw _privateConstructorUsedError;
+  dynamic get isRefreshing => throw _privateConstructorUsedError;
+  dynamic get isMoreLoading => throw _privateConstructorUsedError;
+  dynamic get hasMoreData => throw _privateConstructorUsedError;
+  dynamic get refreshError => throw _privateConstructorUsedError;
+  dynamic get loadMoreError => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$DataCopyWith<Item, _Data<Item>> get copyWith =>
+  _$$_DataCopyWith<Item, _$_Data<Item>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<Item, $Res> {
-  factory _$ErrorCopyWith(
-          _Error<Item> value, $Res Function(_Error<Item>) then) =
-      __$ErrorCopyWithImpl<Item, $Res>;
+abstract class _$$_ErrorCopyWith<Item, $Res> {
+  factory _$$_ErrorCopyWith(
+          _$_Error<Item> value, $Res Function(_$_Error<Item>) then) =
+      __$$_ErrorCopyWithImpl<Item, $Res>;
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<Item, $Res>
+class __$$_ErrorCopyWithImpl<Item, $Res>
     extends _$ListCacheStateCopyWithImpl<Item, $Res>
-    implements _$ErrorCopyWith<Item, $Res> {
-  __$ErrorCopyWithImpl(_Error<Item> _value, $Res Function(_Error<Item>) _then)
-      : super(_value, (v) => _then(v as _Error<Item>));
+    implements _$$_ErrorCopyWith<Item, $Res> {
+  __$$_ErrorCopyWithImpl(
+      _$_Error<Item> _value, $Res Function(_$_Error<Item>) _then)
+      : super(_value, (v) => _then(v as _$_Error<Item>));
 
   @override
-  _Error<Item> get _value => super._value as _Error<Item>;
+  _$_Error<Item> get _value => super._value as _$_Error<Item>;
 }
 
 /// @nodoc
@@ -422,7 +396,7 @@ class _$_Error<Item> extends _Error<Item> {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Error<Item>);
+        (other.runtimeType == runtimeType && other is _$_Error<Item>);
   }
 
   @override
@@ -527,22 +501,22 @@ abstract class _Error<Item> extends ListCacheState<Item> {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<Item, $Res> {
-  factory _$LoadingCopyWith(
-          _Loading<Item> value, $Res Function(_Loading<Item>) then) =
-      __$LoadingCopyWithImpl<Item, $Res>;
+abstract class _$$_LoadingCopyWith<Item, $Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading<Item> value, $Res Function(_$_Loading<Item>) then) =
+      __$$_LoadingCopyWithImpl<Item, $Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<Item, $Res>
+class __$$_LoadingCopyWithImpl<Item, $Res>
     extends _$ListCacheStateCopyWithImpl<Item, $Res>
-    implements _$LoadingCopyWith<Item, $Res> {
-  __$LoadingCopyWithImpl(
-      _Loading<Item> _value, $Res Function(_Loading<Item>) _then)
-      : super(_value, (v) => _then(v as _Loading<Item>));
+    implements _$$_LoadingCopyWith<Item, $Res> {
+  __$$_LoadingCopyWithImpl(
+      _$_Loading<Item> _value, $Res Function(_$_Loading<Item>) _then)
+      : super(_value, (v) => _then(v as _$_Loading<Item>));
 
   @override
-  _Loading<Item> get _value => super._value as _Loading<Item>;
+  _$_Loading<Item> get _value => super._value as _$_Loading<Item>;
 }
 
 /// @nodoc
@@ -558,7 +532,7 @@ class _$_Loading<Item> extends _Loading<Item> {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading<Item>);
+        (other.runtimeType == runtimeType && other is _$_Loading<Item>);
   }
 
   @override

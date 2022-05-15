@@ -12,22 +12,7 @@ part of '../../../provider/controller/task_edit_controller_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$_TaskEditStateTearOff {
-  const _$_TaskEditStateTearOff();
-
-  __TaskEditState call({required Task initTask, required FormModel name}) {
-    return __TaskEditState(
-      initTask: initTask,
-      name: name,
-    );
-  }
-}
-
-/// @nodoc
-const _$TaskEditState = _$_TaskEditStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$_TaskEditState {
@@ -92,11 +77,11 @@ class __$TaskEditStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$_TaskEditStateCopyWith<$Res>
+abstract class _$$__TaskEditStateCopyWith<$Res>
     implements _$TaskEditStateCopyWith<$Res> {
-  factory _$_TaskEditStateCopyWith(
-          __TaskEditState value, $Res Function(__TaskEditState) then) =
-      __$_TaskEditStateCopyWithImpl<$Res>;
+  factory _$$__TaskEditStateCopyWith(
+          _$__TaskEditState value, $Res Function(_$__TaskEditState) then) =
+      __$$__TaskEditStateCopyWithImpl<$Res>;
   @override
   $Res call({Task initTask, FormModel name});
 
@@ -107,22 +92,22 @@ abstract class _$_TaskEditStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$_TaskEditStateCopyWithImpl<$Res>
+class __$$__TaskEditStateCopyWithImpl<$Res>
     extends __$TaskEditStateCopyWithImpl<$Res>
-    implements _$_TaskEditStateCopyWith<$Res> {
-  __$_TaskEditStateCopyWithImpl(
-      __TaskEditState _value, $Res Function(__TaskEditState) _then)
-      : super(_value, (v) => _then(v as __TaskEditState));
+    implements _$$__TaskEditStateCopyWith<$Res> {
+  __$$__TaskEditStateCopyWithImpl(
+      _$__TaskEditState _value, $Res Function(_$__TaskEditState) _then)
+      : super(_value, (v) => _then(v as _$__TaskEditState));
 
   @override
-  __TaskEditState get _value => super._value as __TaskEditState;
+  _$__TaskEditState get _value => super._value as _$__TaskEditState;
 
   @override
   $Res call({
     Object? initTask = freezed,
     Object? name = freezed,
   }) {
-    return _then(__TaskEditState(
+    return _then(_$__TaskEditState(
       initTask: initTask == freezed
           ? _value.initTask
           : initTask // ignore: cast_nullable_to_non_nullable
@@ -154,7 +139,7 @@ class _$__TaskEditState extends __TaskEditState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is __TaskEditState &&
+            other is _$__TaskEditState &&
             const DeepCollectionEquality().equals(other.initTask, initTask) &&
             const DeepCollectionEquality().equals(other.name, name));
   }
@@ -167,21 +152,22 @@ class _$__TaskEditState extends __TaskEditState {
 
   @JsonKey(ignore: true)
   @override
-  _$_TaskEditStateCopyWith<__TaskEditState> get copyWith =>
-      __$_TaskEditStateCopyWithImpl<__TaskEditState>(this, _$identity);
+  _$$__TaskEditStateCopyWith<_$__TaskEditState> get copyWith =>
+      __$$__TaskEditStateCopyWithImpl<_$__TaskEditState>(this, _$identity);
 }
 
 abstract class __TaskEditState extends _TaskEditState {
-  factory __TaskEditState({required Task initTask, required FormModel name}) =
-      _$__TaskEditState;
+  factory __TaskEditState(
+      {required final Task initTask,
+      required final FormModel name}) = _$__TaskEditState;
   __TaskEditState._() : super._();
 
   @override
-  Task get initTask;
+  Task get initTask => throw _privateConstructorUsedError;
   @override
-  FormModel get name;
+  FormModel get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$_TaskEditStateCopyWith<__TaskEditState> get copyWith =>
+  _$$__TaskEditStateCopyWith<_$__TaskEditState> get copyWith =>
       throw _privateConstructorUsedError;
 }

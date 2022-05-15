@@ -12,27 +12,7 @@ part of '../../model/result.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ResultTearOff {
-  const _$ResultTearOff();
-
-  Ok<Data, Error> ok<Data, Error>([Data? value]) {
-    return Ok<Data, Error>(
-      value,
-    );
-  }
-
-  Err<Data, Error> err<Data, Error>(Error value) {
-    return Err<Data, Error>(
-      value,
-    );
-  }
-}
-
-/// @nodoc
-const $Result = _$ResultTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Result<Data, Error> {
@@ -94,28 +74,29 @@ class _$ResultCopyWithImpl<Data, Error, $Res>
 }
 
 /// @nodoc
-abstract class $OkCopyWith<Data, Error, $Res> {
-  factory $OkCopyWith(
-          Ok<Data, Error> value, $Res Function(Ok<Data, Error>) then) =
-      _$OkCopyWithImpl<Data, Error, $Res>;
+abstract class _$$OkCopyWith<Data, Error, $Res> {
+  factory _$$OkCopyWith(
+          _$Ok<Data, Error> value, $Res Function(_$Ok<Data, Error>) then) =
+      __$$OkCopyWithImpl<Data, Error, $Res>;
   $Res call({Data? value});
 }
 
 /// @nodoc
-class _$OkCopyWithImpl<Data, Error, $Res>
+class __$$OkCopyWithImpl<Data, Error, $Res>
     extends _$ResultCopyWithImpl<Data, Error, $Res>
-    implements $OkCopyWith<Data, Error, $Res> {
-  _$OkCopyWithImpl(Ok<Data, Error> _value, $Res Function(Ok<Data, Error>) _then)
-      : super(_value, (v) => _then(v as Ok<Data, Error>));
+    implements _$$OkCopyWith<Data, Error, $Res> {
+  __$$OkCopyWithImpl(
+      _$Ok<Data, Error> _value, $Res Function(_$Ok<Data, Error>) _then)
+      : super(_value, (v) => _then(v as _$Ok<Data, Error>));
 
   @override
-  Ok<Data, Error> get _value => super._value as Ok<Data, Error>;
+  _$Ok<Data, Error> get _value => super._value as _$Ok<Data, Error>;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(Ok<Data, Error>(
+    return _then(_$Ok<Data, Error>(
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -141,7 +122,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Ok<Data, Error> &&
+            other is _$Ok<Data, Error> &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -151,8 +132,8 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
 
   @JsonKey(ignore: true)
   @override
-  $OkCopyWith<Data, Error, Ok<Data, Error>> get copyWith =>
-      _$OkCopyWithImpl<Data, Error, Ok<Data, Error>>(this, _$identity);
+  _$$OkCopyWith<Data, Error, _$Ok<Data, Error>> get copyWith =>
+      __$$OkCopyWithImpl<Data, Error, _$Ok<Data, Error>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -218,39 +199,39 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
 }
 
 abstract class Ok<Data, Error> extends Result<Data, Error> {
-  factory Ok([Data? value]) = _$Ok<Data, Error>;
+  factory Ok([final Data? value]) = _$Ok<Data, Error>;
   Ok._() : super._();
 
-  Data? get value;
+  Data? get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OkCopyWith<Data, Error, Ok<Data, Error>> get copyWith =>
+  _$$OkCopyWith<Data, Error, _$Ok<Data, Error>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ErrCopyWith<Data, Error, $Res> {
-  factory $ErrCopyWith(
-          Err<Data, Error> value, $Res Function(Err<Data, Error>) then) =
-      _$ErrCopyWithImpl<Data, Error, $Res>;
+abstract class _$$ErrCopyWith<Data, Error, $Res> {
+  factory _$$ErrCopyWith(
+          _$Err<Data, Error> value, $Res Function(_$Err<Data, Error>) then) =
+      __$$ErrCopyWithImpl<Data, Error, $Res>;
   $Res call({Error value});
 }
 
 /// @nodoc
-class _$ErrCopyWithImpl<Data, Error, $Res>
+class __$$ErrCopyWithImpl<Data, Error, $Res>
     extends _$ResultCopyWithImpl<Data, Error, $Res>
-    implements $ErrCopyWith<Data, Error, $Res> {
-  _$ErrCopyWithImpl(
-      Err<Data, Error> _value, $Res Function(Err<Data, Error>) _then)
-      : super(_value, (v) => _then(v as Err<Data, Error>));
+    implements _$$ErrCopyWith<Data, Error, $Res> {
+  __$$ErrCopyWithImpl(
+      _$Err<Data, Error> _value, $Res Function(_$Err<Data, Error>) _then)
+      : super(_value, (v) => _then(v as _$Err<Data, Error>));
 
   @override
-  Err<Data, Error> get _value => super._value as Err<Data, Error>;
+  _$Err<Data, Error> get _value => super._value as _$Err<Data, Error>;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(Err<Data, Error>(
+    return _then(_$Err<Data, Error>(
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -276,7 +257,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Err<Data, Error> &&
+            other is _$Err<Data, Error> &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -286,8 +267,8 @@ class _$Err<Data, Error> extends Err<Data, Error> {
 
   @JsonKey(ignore: true)
   @override
-  $ErrCopyWith<Data, Error, Err<Data, Error>> get copyWith =>
-      _$ErrCopyWithImpl<Data, Error, Err<Data, Error>>(this, _$identity);
+  _$$ErrCopyWith<Data, Error, _$Err<Data, Error>> get copyWith =>
+      __$$ErrCopyWithImpl<Data, Error, _$Err<Data, Error>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -353,11 +334,11 @@ class _$Err<Data, Error> extends Err<Data, Error> {
 }
 
 abstract class Err<Data, Error> extends Result<Data, Error> {
-  factory Err(Error value) = _$Err<Data, Error>;
+  factory Err(final Error value) = _$Err<Data, Error>;
   Err._() : super._();
 
-  Error get value;
+  Error get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ErrCopyWith<Data, Error, Err<Data, Error>> get copyWith =>
+  _$$ErrCopyWith<Data, Error, _$Err<Data, Error>> get copyWith =>
       throw _privateConstructorUsedError;
 }

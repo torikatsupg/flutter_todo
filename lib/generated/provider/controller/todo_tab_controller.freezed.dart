@@ -12,24 +12,7 @@ part of '../../../provider/controller/todo_tab_controller.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$_TodoTabStateTearOff {
-  const _$_TodoTabStateTearOff();
-
-  __TodoTabState call(
-      {required ListCacheState<Task> list,
-      required ScrollController scrollController}) {
-    return __TodoTabState(
-      list: list,
-      scrollController: scrollController,
-    );
-  }
-}
-
-/// @nodoc
-const _$TodoTabState = _$_TodoTabStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$_TodoTabState {
@@ -86,11 +69,11 @@ class __$TodoTabStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$_TodoTabStateCopyWith<$Res>
+abstract class _$$__TodoTabStateCopyWith<$Res>
     implements _$TodoTabStateCopyWith<$Res> {
-  factory _$_TodoTabStateCopyWith(
-          __TodoTabState value, $Res Function(__TodoTabState) then) =
-      __$_TodoTabStateCopyWithImpl<$Res>;
+  factory _$$__TodoTabStateCopyWith(
+          _$__TodoTabState value, $Res Function(_$__TodoTabState) then) =
+      __$$__TodoTabStateCopyWithImpl<$Res>;
   @override
   $Res call({ListCacheState<Task> list, ScrollController scrollController});
 
@@ -99,22 +82,22 @@ abstract class _$_TodoTabStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$_TodoTabStateCopyWithImpl<$Res>
+class __$$__TodoTabStateCopyWithImpl<$Res>
     extends __$TodoTabStateCopyWithImpl<$Res>
-    implements _$_TodoTabStateCopyWith<$Res> {
-  __$_TodoTabStateCopyWithImpl(
-      __TodoTabState _value, $Res Function(__TodoTabState) _then)
-      : super(_value, (v) => _then(v as __TodoTabState));
+    implements _$$__TodoTabStateCopyWith<$Res> {
+  __$$__TodoTabStateCopyWithImpl(
+      _$__TodoTabState _value, $Res Function(_$__TodoTabState) _then)
+      : super(_value, (v) => _then(v as _$__TodoTabState));
 
   @override
-  __TodoTabState get _value => super._value as __TodoTabState;
+  _$__TodoTabState get _value => super._value as _$__TodoTabState;
 
   @override
   $Res call({
     Object? list = freezed,
     Object? scrollController = freezed,
   }) {
-    return _then(__TodoTabState(
+    return _then(_$__TodoTabState(
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
@@ -147,7 +130,7 @@ class _$__TodoTabState extends __TodoTabState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is __TodoTabState &&
+            other is _$__TodoTabState &&
             const DeepCollectionEquality().equals(other.list, list) &&
             const DeepCollectionEquality()
                 .equals(other.scrollController, scrollController));
@@ -161,22 +144,22 @@ class _$__TodoTabState extends __TodoTabState {
 
   @JsonKey(ignore: true)
   @override
-  _$_TodoTabStateCopyWith<__TodoTabState> get copyWith =>
-      __$_TodoTabStateCopyWithImpl<__TodoTabState>(this, _$identity);
+  _$$__TodoTabStateCopyWith<_$__TodoTabState> get copyWith =>
+      __$$__TodoTabStateCopyWithImpl<_$__TodoTabState>(this, _$identity);
 }
 
 abstract class __TodoTabState extends _TodoTabState {
   factory __TodoTabState(
-      {required ListCacheState<Task> list,
-      required ScrollController scrollController}) = _$__TodoTabState;
+      {required final ListCacheState<Task> list,
+      required final ScrollController scrollController}) = _$__TodoTabState;
   __TodoTabState._() : super._();
 
   @override
-  ListCacheState<Task> get list;
+  ListCacheState<Task> get list => throw _privateConstructorUsedError;
   @override
-  ScrollController get scrollController;
+  ScrollController get scrollController => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$_TodoTabStateCopyWith<__TodoTabState> get copyWith =>
+  _$$__TodoTabStateCopyWith<_$__TodoTabState> get copyWith =>
       throw _privateConstructorUsedError;
 }
