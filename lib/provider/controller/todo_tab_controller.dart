@@ -12,44 +12,40 @@ final todoTabControllerProvider =
     StateNotifierProvider.autoDispose<TodoTabController, _TodoTabState>(
   (ref) {
     final uid = ref.watch(authProvider).uid;
-    final provider = todoTasksFamily(uid);
-    ref.read(provider.notifier).initialize();
     final scrollController = ScrollController();
     scrollController.addListener(() {
+      // TODO(torikatsu): fix conditions
       if (scrollController.offset >
           scrollController.position.maxScrollExtent - 100) {
-        ref.read(provider.notifier).loadMore();
+        ref.read(todoTasksFamily(uid).notifier).loadMore();
       }
     });
-    final controller = TodoTabController(
-      ref.read,
-      provider,
-      ref.read(provider),
-      scrollController,
-    );
+    final controller = TodoTabController(ref.read, uid, scrollController);
     ref.listen<ListCacheState<Task>>(
-      provider,
+      todoTasksFamily(uid),
       (_, next) => controller.onChagneList(next),
     );
+    ref.read(todoTasksFamily(uid).notifier).initialize();
     return controller;
   },
 );
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
-  TodoTabController(this._read, this.provider, ListCacheState<Task> list,
-      ScrollController scrollController)
-      : super(_TodoTabState(list: list, scrollController: ScrollController()));
+  TodoTabController(this._read, this._uid, scrollController)
+      : super(_TodoTabState(
+            list: _read(todoTasksFamily(_uid)),
+            scrollController: ScrollController()));
 
   final Reader _read;
-  final AutoDisposeStateNotifierProvider<ListCacheController<Task>,
-      ListCacheState<Task>> provider;
+  final String _uid;
 
   void onChagneList(ListCacheState<Task> list) =>
       state = state.copyWith(list: list);
 
-  Future<void> refresh() => _read(provider.notifier).refresh();
+  Future<void> refresh() => _read(todoTasksFamily(_uid).notifier).refresh();
 
-  Future<void> resolveAndLoadMore() => _read(provider.notifier).loadMore();
+  Future<void> resolveAndLoadMore() =>
+      _read(todoTasksFamily(_uid).notifier).loadMore();
 }
 
 @freezed
