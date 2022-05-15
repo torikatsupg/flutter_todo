@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_todo/view/page/debug_page.dart';
 import 'package:flutter_todo/view/page/edit_task_page.dart';
 import 'package:flutter_todo/view/page/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
@@ -82,6 +84,11 @@ final goRouterProvider = Provider(
           ),
         ],
       ),
+      if (kDebugMode)
+        MyGoRoute(
+          path: '/debug',
+          builder: (_, __) => const DebugPage(),
+        ),
     ],
     errorBuilder: (context, state) => const ErrorPage(),
     urlPathStrategy: UrlPathStrategy.path,
