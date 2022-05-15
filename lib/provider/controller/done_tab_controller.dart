@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 part '../../generated/provider/controller/done_tab_controller.freezed.dart';
 
 final doneTabControllerProvider =
-    StateNotifierProvider.autoDispose<DoneTabController, _DoneTabState>(
+    StateNotifierProvider<DoneTabController, _DoneTabState>(
   (ref) {
     final uid = ref.watch(authProvider).uid;
     final scrollController = ScrollController();
@@ -17,12 +17,12 @@ final doneTabControllerProvider =
       // TODO(torikatsu): fix conditions
       if (scrollController.offset >
           scrollController.position.maxScrollExtent - 100) {
-        ref.read(todoTasksFamily(uid).notifier).loadMore();
+        ref.read(doneTasksFamily(uid).notifier).loadMore();
       }
     });
     final controller = DoneTabController(ref.read, uid, scrollController);
     ref.listen<ListCacheState<Task>>(
-      todoTasksFamily(uid),
+      doneTasksFamily(uid),
       (_, next) => controller.onChagneList(next),
     );
     // avoid modify provider during their initialization
@@ -35,8 +35,9 @@ final doneTabControllerProvider =
 class DoneTabController extends StateNotifier<_DoneTabState> {
   DoneTabController(this._read, this._uid, scrollController)
       : super(_DoneTabState(
-            list: _read(todoTasksFamily(_uid)),
-            scrollController: ScrollController()));
+          list: _read(doneTasksFamily(_uid)),
+          scrollController: scrollController,
+        ));
 
   final Reader _read;
   final String _uid;
@@ -44,10 +45,10 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
   void onChagneList(ListCacheState<Task> list) =>
       state = state.copyWith(list: list);
 
-  Future<void> refresh() => _read(todoTasksFamily(_uid).notifier).refresh();
+  Future<void> refresh() => _read(doneTasksFamily(_uid).notifier).refresh();
 
   Future<void> resolveAndLoadMore() =>
-      _read(todoTasksFamily(_uid).notifier).loadMore();
+      _read(doneTasksFamily(_uid).notifier).loadMore();
 }
 
 @freezed

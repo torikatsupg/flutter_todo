@@ -9,7 +9,6 @@ const _createdAt = 'createdAt';
 const _isDone = 'isDone';
 const limit = 20;
 
-
 class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   TaskRepositoryImpl(this.uid);
 
@@ -22,7 +21,8 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
 
   @override
   Future<QueryList<Task, CursorImpl>> findAllTodo([CursorImpl? cursor]) async {
-    final query = _ref.where(_isDone, isEqualTo: false).limit(limit);
+    final query =
+        _ref.where(_isDone, isEqualTo: false).orderBy(_createdAt).limit(limit);
     final cursorDoc = cursor?.value;
     final result =
         await (cursorDoc == null ? query : query.startAfterDocument(cursorDoc))
@@ -38,7 +38,8 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
 
   @override
   Future<QueryList<Task, CursorImpl>> findAllDone([CursorImpl? cursor]) async {
-    final query = _ref.where(_isDone, isEqualTo: true).limit(limit);
+    final query =
+        _ref.where(_isDone, isEqualTo: true).orderBy(_createdAt).limit(limit);
     final cursorDoc = cursor?.value;
     final result =
         await (cursorDoc == null ? query : query.startAfterDocument(cursorDoc))

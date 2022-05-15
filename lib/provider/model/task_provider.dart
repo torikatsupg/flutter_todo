@@ -7,19 +7,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../../generated/provider/model/task_provider.freezed.dart';
 
-final todoTasksFamily = StateNotifierProvider.autoDispose
+final todoTasksFamily = StateNotifierProvider
     .family<ListCacheController<Task>, ListCacheState<Task>, String>(
   (ref, uid) =>
       ListCacheController(ref.watch(taskRepositoryFamily(uid)).findAllTodo),
 );
 
-final doneTasksFamily = StateNotifierProvider.autoDispose
+final doneTasksFamily = StateNotifierProvider
     .family<ListCacheController<Task>, ListCacheState<Task>, String>(
   (ref, uid) =>
       ListCacheController(ref.watch(taskRepositoryFamily(uid)).findAllDone),
 );
 
-final taskFamily = FutureProvider.autoDispose.family<Task?, TaskArg>(
+final taskFamily = FutureProvider.family<Task?, TaskArg>(
   (ref, arg) => ref.watch(taskRepositoryFamily(arg.uid)).findById(arg.id),
 );
 

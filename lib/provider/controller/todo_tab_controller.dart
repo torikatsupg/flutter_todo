@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 part '../../generated/provider/controller/todo_tab_controller.freezed.dart';
 
 final todoTabControllerProvider =
-    StateNotifierProvider.autoDispose<TodoTabController, _TodoTabState>(
+    StateNotifierProvider<TodoTabController, _TodoTabState>(
   (ref) {
     final uid = ref.watch(authProvider).uid;
     final scrollController = ScrollController();
@@ -35,8 +35,9 @@ final todoTabControllerProvider =
 class TodoTabController extends StateNotifier<_TodoTabState> {
   TodoTabController(this._read, this._uid, scrollController)
       : super(_TodoTabState(
-            list: _read(todoTasksFamily(_uid)),
-            scrollController: ScrollController()));
+          list: _read(todoTasksFamily(_uid)),
+          scrollController: scrollController,
+        ));
 
   final Reader _read;
   final String _uid;
