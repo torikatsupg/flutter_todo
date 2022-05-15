@@ -42,7 +42,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
     _ref.read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
-        // change focus process implicitly
+        // TODO(torikatsu): change focus process implicitly
         state.email.focusNode.unfocus();
         state.password.focusNode.unfocus();
 

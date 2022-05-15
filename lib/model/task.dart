@@ -34,6 +34,6 @@ abstract class TaskRepository<C extends Cursor> {
   Future<QueryList<Task, C>> findAllTodo([C? cursor]);
   Future<QueryList<Task, C>> findAllDone([C? cursor]);
   Future<Task?> findById(String id);
-  Future<void> insert({required String name});
+  Future<Task> insert({required String name});
   Future<void> update(Task task);
 }

@@ -39,11 +39,10 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
     } else {
       await _ref.read(loadingProvider.notifier).run(
         () async {
-          await _ref
+          final result = await _ref
               .read(taskRepositoryFamily(uid))
               .insert(name: state.name.text);
-          // TODO(torikatsu): refresh all todo tasks provider
-          // _ref.refresh(todoTasksFamily(uid));
+          _ref.read(todoTasksFamily(uid).notifier).insert(result);
           _ref.read(routerProvider.notifier).pop();
         },
       );
@@ -51,7 +50,6 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
   }
 }
 
-// TODO(torikatsu): make private
 @freezed
 class _CreateTaskState with _$_CreateTaskState {
   factory _CreateTaskState({

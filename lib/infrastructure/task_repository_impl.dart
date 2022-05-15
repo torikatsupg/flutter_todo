@@ -73,8 +73,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   }
 
   @override
-  Future<void> insert({required String name}) async {
-    await _ref.doc(_ref.doc().id).set(
+  Future<Task> insert({required String name}) async {
+    final id = _ref.doc().id;
+    await _ref.doc(id).set(
       {
         _name: name,
         _createdAt: Timestamp.now(),
@@ -82,6 +83,8 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
       },
       SetOptions(merge: false),
     );
+    final result = await _ref.doc(id).get();
+    return _toTask(result);
   }
 
   @override
@@ -96,7 +99,7 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
     );
   }
 
-  Task _toTask(QueryDocumentSnapshot<Object?> doc) {
+  Task _toTask(DocumentSnapshot<Object?> doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Task(
       id: doc.id,
