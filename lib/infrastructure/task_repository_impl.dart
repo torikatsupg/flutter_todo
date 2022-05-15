@@ -1,11 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter_todo/model/task.dart';
 
 const _name = 'name';
 const _createdAt = 'createdAt';
 const _isDone = 'isDone';
 
-class TaskRepositoryImpl implements TaskRepository {
+const limit = 20;
+
+// TODO(torikatsu): 置き場所
+class CursorImpl extends Cursor {
+  CursorImpl(this.value);
+  DocumentSnapshot value;
+}
+
+class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
   TaskRepositoryImpl(this.uid);
 
   final String uid;
@@ -16,37 +25,33 @@ class TaskRepositoryImpl implements TaskRepository {
       .collection('tasks');
 
   @override
-  Future<List<Task>> findAllTodo() async {
-    // TODO(torikatsu): pagenation
-    final result = await _ref.where(_isDone, isEqualTo: false).get();
-    return result.docs.map(
-      (e) {
-        final data = e.data() as Map<String, dynamic>;
-        return Task(
-          id: e.id,
-          name: data[_name],
-          createdAt: (data[_createdAt] as Timestamp).toDate(),
-          isDone: data[_isDone],
-        );
-      },
-    ).toList();
+  Future<QueryList<Task, CursorImpl>> findAllTodo([CursorImpl? cursor]) async {
+    final query = _ref.where(_isDone, isEqualTo: false).limit(limit);
+    final result =
+        await (cursor == null ? query : query.startAfterDocument(cursor.value))
+            .get();
+
+    final items = result.docs.map(_toTask).toList();
+    return QueryList(
+      items,
+      CursorImpl(result.docs.last),
+      items.length == limit,
+    );
   }
 
   @override
-  Future<List<Task>> findAllDone() async {
-    // TODO(torikatsu): pagenation
-    final result = await _ref.where(_isDone, isEqualTo: true).get();
-    return result.docs.map(
-      (e) {
-        final data = e.data() as Map<String, dynamic>;
-        return Task(
-          id: e.id,
-          name: data[_name],
-          createdAt: (data[_createdAt] as Timestamp).toDate(),
-          isDone: data[_isDone],
-        );
-      },
-    ).toList();
+  Future<QueryList<Task, CursorImpl>> findAllDone([CursorImpl? cursor]) async {
+    final query = _ref.where(_isDone, isEqualTo: true).limit(limit);
+    final result =
+        await (cursor == null ? query : query.startAfterDocument(cursor.value))
+            .get();
+
+    final items = result.docs.map(_toTask).toList();
+    return QueryList(
+      items,
+      CursorImpl(result.docs.last),
+      items.length == limit,
+    );
   }
 
   @override
@@ -86,6 +91,16 @@ class TaskRepositoryImpl implements TaskRepository {
         _isDone: task.isDone,
       },
       SetOptions(merge: true),
+    );
+  }
+
+  Task _toTask(QueryDocumentSnapshot<Object?> doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Task(
+      id: doc.id,
+      name: data[_name],
+      createdAt: (data[_createdAt] as Timestamp).toDate(),
+      isDone: data[_isDone],
     );
   }
 }
