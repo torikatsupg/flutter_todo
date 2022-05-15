@@ -21,17 +21,19 @@ class _$TodoTabStateTearOff {
   _Data data(
       {required ScrollController controller,
       List<Task> items = const [],
-      int cursor = 0,
+      List<CursorImpl> cursors = const [],
       dynamic isRefreshing = false,
       dynamic isMoreLoading = false,
+      dynamic hasMoreData = true,
       dynamic refreshError = null,
       dynamic loadMoreError = null}) {
     return _Data(
       controller: controller,
       items: items,
-      cursor: cursor,
+      cursors: cursors,
       isRefreshing: isRefreshing,
       isMoreLoading: isMoreLoading,
+      hasMoreData: hasMoreData,
       refreshError: refreshError,
       loadMoreError: loadMoreError,
     );
@@ -56,9 +58,10 @@ mixin _$TodoTabState {
     required TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)
         data,
@@ -71,9 +74,10 @@ mixin _$TodoTabState {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -86,9 +90,10 @@ mixin _$TodoTabState {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -144,9 +149,10 @@ abstract class _$DataCopyWith<$Res> {
   $Res call(
       {ScrollController controller,
       List<Task> items,
-      int cursor,
+      List<CursorImpl> cursors,
       dynamic isRefreshing,
       dynamic isMoreLoading,
+      dynamic hasMoreData,
       dynamic refreshError,
       dynamic loadMoreError});
 }
@@ -164,9 +170,10 @@ class __$DataCopyWithImpl<$Res> extends _$TodoTabStateCopyWithImpl<$Res>
   $Res call({
     Object? controller = freezed,
     Object? items = freezed,
-    Object? cursor = freezed,
+    Object? cursors = freezed,
     Object? isRefreshing = freezed,
     Object? isMoreLoading = freezed,
+    Object? hasMoreData = freezed,
     Object? refreshError = freezed,
     Object? loadMoreError = freezed,
   }) {
@@ -179,14 +186,15 @@ class __$DataCopyWithImpl<$Res> extends _$TodoTabStateCopyWithImpl<$Res>
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<Task>,
-      cursor: cursor == freezed
-          ? _value.cursor
-          : cursor // ignore: cast_nullable_to_non_nullable
-              as int,
+      cursors: cursors == freezed
+          ? _value.cursors
+          : cursors // ignore: cast_nullable_to_non_nullable
+              as List<CursorImpl>,
       isRefreshing:
           isRefreshing == freezed ? _value.isRefreshing : isRefreshing,
       isMoreLoading:
           isMoreLoading == freezed ? _value.isMoreLoading : isMoreLoading,
+      hasMoreData: hasMoreData == freezed ? _value.hasMoreData : hasMoreData,
       refreshError: refreshError == freezed
           ? _value.refreshError
           : refreshError // ignore: cast_nullable_to_non_nullable
@@ -205,9 +213,10 @@ class _$_Data extends _Data {
   _$_Data(
       {required this.controller,
       this.items = const [],
-      this.cursor = 0,
+      this.cursors = const [],
       this.isRefreshing = false,
       this.isMoreLoading = false,
+      this.hasMoreData = true,
       this.refreshError = null,
       this.loadMoreError = null})
       : super._();
@@ -219,13 +228,16 @@ class _$_Data extends _Data {
   final List<Task> items;
   @JsonKey()
   @override
-  final int cursor;
+  final List<CursorImpl> cursors;
   @JsonKey()
   @override
   final dynamic isRefreshing;
   @JsonKey()
   @override
   final dynamic isMoreLoading;
+  @JsonKey()
+  @override
+  final dynamic hasMoreData;
   @JsonKey()
   @override
   final dynamic refreshError;
@@ -235,7 +247,7 @@ class _$_Data extends _Data {
 
   @override
   String toString() {
-    return 'TodoTabState.data(controller: $controller, items: $items, cursor: $cursor, isRefreshing: $isRefreshing, isMoreLoading: $isMoreLoading, refreshError: $refreshError, loadMoreError: $loadMoreError)';
+    return 'TodoTabState.data(controller: $controller, items: $items, cursors: $cursors, isRefreshing: $isRefreshing, isMoreLoading: $isMoreLoading, hasMoreData: $hasMoreData, refreshError: $refreshError, loadMoreError: $loadMoreError)';
   }
 
   @override
@@ -246,11 +258,13 @@ class _$_Data extends _Data {
             const DeepCollectionEquality()
                 .equals(other.controller, controller) &&
             const DeepCollectionEquality().equals(other.items, items) &&
-            const DeepCollectionEquality().equals(other.cursor, cursor) &&
+            const DeepCollectionEquality().equals(other.cursors, cursors) &&
             const DeepCollectionEquality()
                 .equals(other.isRefreshing, isRefreshing) &&
             const DeepCollectionEquality()
                 .equals(other.isMoreLoading, isMoreLoading) &&
+            const DeepCollectionEquality()
+                .equals(other.hasMoreData, hasMoreData) &&
             const DeepCollectionEquality()
                 .equals(other.refreshError, refreshError) &&
             const DeepCollectionEquality()
@@ -262,9 +276,10 @@ class _$_Data extends _Data {
       runtimeType,
       const DeepCollectionEquality().hash(controller),
       const DeepCollectionEquality().hash(items),
-      const DeepCollectionEquality().hash(cursor),
+      const DeepCollectionEquality().hash(cursors),
       const DeepCollectionEquality().hash(isRefreshing),
       const DeepCollectionEquality().hash(isMoreLoading),
+      const DeepCollectionEquality().hash(hasMoreData),
       const DeepCollectionEquality().hash(refreshError),
       const DeepCollectionEquality().hash(loadMoreError));
 
@@ -279,17 +294,18 @@ class _$_Data extends _Data {
     required TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)
         data,
     required TResult Function() error,
     required TResult Function() loading,
   }) {
-    return data(controller, items, cursor, isRefreshing, isMoreLoading,
-        refreshError, loadMoreError);
+    return data(controller, items, cursors, isRefreshing, isMoreLoading,
+        hasMoreData, refreshError, loadMoreError);
   }
 
   @override
@@ -298,17 +314,18 @@ class _$_Data extends _Data {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
     TResult Function()? error,
     TResult Function()? loading,
   }) {
-    return data?.call(controller, items, cursor, isRefreshing, isMoreLoading,
-        refreshError, loadMoreError);
+    return data?.call(controller, items, cursors, isRefreshing, isMoreLoading,
+        hasMoreData, refreshError, loadMoreError);
   }
 
   @override
@@ -317,9 +334,10 @@ class _$_Data extends _Data {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -328,8 +346,8 @@ class _$_Data extends _Data {
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(controller, items, cursor, isRefreshing, isMoreLoading,
-          refreshError, loadMoreError);
+      return data(controller, items, cursors, isRefreshing, isMoreLoading,
+          hasMoreData, refreshError, loadMoreError);
     }
     return orElse();
   }
@@ -373,18 +391,20 @@ abstract class _Data extends TodoTabState {
   factory _Data(
       {required ScrollController controller,
       List<Task> items,
-      int cursor,
+      List<CursorImpl> cursors,
       dynamic isRefreshing,
       dynamic isMoreLoading,
+      dynamic hasMoreData,
       dynamic refreshError,
       dynamic loadMoreError}) = _$_Data;
   _Data._() : super._();
 
   ScrollController get controller;
   List<Task> get items;
-  int get cursor;
+  List<CursorImpl> get cursors;
   dynamic get isRefreshing;
   dynamic get isMoreLoading;
+  dynamic get hasMoreData;
   dynamic get refreshError;
   dynamic get loadMoreError;
   @JsonKey(ignore: true)
@@ -432,9 +452,10 @@ class _$_Error extends _Error {
     required TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)
         data,
@@ -450,9 +471,10 @@ class _$_Error extends _Error {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -468,9 +490,10 @@ class _$_Error extends _Error {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -565,9 +588,10 @@ class _$_Loading extends _Loading {
     required TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)
         data,
@@ -583,9 +607,10 @@ class _$_Loading extends _Loading {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,
@@ -601,9 +626,10 @@ class _$_Loading extends _Loading {
     TResult Function(
             ScrollController controller,
             List<Task> items,
-            int cursor,
+            List<CursorImpl> cursors,
             dynamic isRefreshing,
             dynamic isMoreLoading,
+            dynamic hasMoreData,
             dynamic refreshError,
             dynamic loadMoreError)?
         data,

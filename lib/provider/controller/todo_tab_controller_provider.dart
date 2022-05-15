@@ -1,7 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/infrastructure/task_repository_impl.dart';
 import 'package:flutter_todo/model/task.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,29 +10,34 @@ part '../../generated/provider/controller/todo_tab_controller_provider.freezed.d
 
 final todoTabControllerProvider =
     StateNotifierProvider.autoDispose<TodoTabController, TodoTabState>(
-        (ref) => TodoTabController(ref));
-
-const pageSize = 20;
+  (ref) {
+    final uid = ref.watch(authProvider).uid;
+    final repository = ref.watch(taskRepositoryFamily(uid));
+    return TodoTabController(repository);
+  },
+);
 
 class TodoTabController extends StateNotifier<TodoTabState> {
-  TodoTabController(this._ref) : super(TodoTabState.loading()) {
+  TodoTabController(this._repository) : super(TodoTabState.loading()) {
     _initialize();
   }
 
-  final AutoDisposeStateNotifierProviderRef _ref;
+  final TaskRepository<CursorImpl> _repository;
 
   Future<void> _initialize() async {
     final controller = ScrollController();
     controller.addListener(() {
+      // TODO(torikatsu): chack this conditions
       if (controller.offset > controller.position.maxScrollExtent - 100) {
         _loadMore();
       }
     });
     try {
+      final result = await _repository.findAllTodo();
       state = TodoTabState.data(
         controller: controller,
-        items: await _ref.read(loadFamily(null)),
-        cursor: pageSize,
+        items: result.list,
+        cursors: [result.cursor],
       );
     } on dynamic catch (e) {
       state = TodoTabState.error();
@@ -39,70 +45,65 @@ class TodoTabController extends StateNotifier<TodoTabState> {
   }
 
   Future<void> refresh() async {
-    if (state is! _Data) return;
-
-    if ((state as _Data).isRefreshing) return;
-    state = (state as _Data).copyWith(isRefreshing: true, refreshError: null);
-    final currentState = state as _Data;
-
+    if (!state.canRefresh) return;
+    state = state.whenData((data) => data.copyWith(isRefreshing: true));
     try {
-      final nextItems = await _ref.read(loadFamily(null));
-      state = currentState.copyWith(items: nextItems, cursor: pageSize);
+      final result = await _repository.findAllTodo();
+      state = state.whenData(
+        (data) => data.copyWith(
+          items: result.list,
+          cursors: [result.cursor],
+          refreshError: null,
+        ),
+      );
     } on dynamic catch (e) {
-      state = currentState.copyWith(refreshError: e);
+      state = state.whenData((data) => data.copyWith(refreshError: e));
     } finally {
-      state = (state as _Data).copyWith(isRefreshing: false);
+      state = state.whenData((data) => data.copyWith(isRefreshing: false));
     }
+  }
+
+  void resolveAndLoadMore() async {
+    state = state.whenData((data) => data.copyWith(loadMoreError: null));
+    await _loadMore();
   }
 
   Future<void> _loadMore() async {
-    if (state is! _Data) return;
-    final currentState = state as _Data;
-
-    if (currentState.isMoreLoading || currentState.hasLoadMoreError) return;
-    state = currentState.copyWith(isMoreLoading: true);
-
+    if (!state.canLoadMore) return;
+    state = state.whenData((data) => data.copyWith(isMoreLoading: true));
     try {
-      final nextItems = await _ref.read(loadFamily(currentState.cursor));
-      state = currentState.copyWith(
-        items: currentState.items..addAll(nextItems),
-        cursor: currentState.cursor + pageSize,
+      final result = await _repository.findAllTodo();
+      state = state.whenData(
+        (data) => data.copyWith(
+          items: data.items..addAll(result.list),
+          cursors: data.cursors..add(result.cursor),
+          hasMoreData: result.hasMoreData,
+        ),
       );
     } on dynamic catch (e) {
-      state = currentState.copyWith(loadMoreError: e);
+      state = state.whenData((data) => data.copyWith(loadMoreError: e));
     } finally {
-      state = (state as _Data).copyWith(isMoreLoading: false);
+      state = state.whenData((data) => data.copyWith(isMoreLoading: false));
     }
   }
 
-  void insert(Task item) => state = state.maybeMap(
-        data: (state) => state.copyWith(
+  void insert(Task item) => state = state.whenData(
+        (state) => state.copyWith(
           items: state.items..insert(0, item),
         ),
-        orElse: () => state,
       );
 
-  void update(Task item) => state = state.maybeMap(
-        data: (data) => data.copyWith(
+  void update(Task item) => state = state.whenData(
+        (data) => data.copyWith(
           items: data.items.map((e) => e == item ? item : e).toList(),
         ),
-        orElse: () => state,
       );
 
-  void delete(Task item) => state = state.maybeMap(
-        data: (data) => data.copyWith(
+  void delete(Task item) => state = state.whenData(
+        (data) => data.copyWith(
           items: data.items..remove(item),
         ),
-        orElse: () => state,
       );
-
-  void resolveAndLoadMore() async {
-    if (state is! _Data) return;
-    final currentState = state as _Data;
-
-    state = currentState.copyWith(loadMoreError: null);
-    await _loadMore();
-  }
 }
 
 @freezed
@@ -110,12 +111,14 @@ class TodoTabState with _$TodoTabState {
   factory TodoTabState.data({
     required ScrollController controller,
     @Default([]) List<Task> items,
-    @Default(0) int cursor,
+    @Default([]) List<CursorImpl> cursors,
     @Default(false) isRefreshing,
     @Default(false) isMoreLoading,
+    @Default(true) hasMoreData,
     @Default(null) dynamic refreshError,
     @Default(null) dynamic loadMoreError,
   }) = _Data;
+
   factory TodoTabState.error() = _Error;
   factory TodoTabState.loading() = _Loading;
 
@@ -129,24 +132,19 @@ class TodoTabState with _$TodoTabState {
     orElse: () => false,
   );
 
+  late final bool canLoadMore = maybeMap(
+    data: (data) =>
+        !data.isMoreLoading && !data.hasLoadMoreError && data.hasMoreData,
+    orElse: () => false,
+  );
+
+  late final bool canRefresh = maybeMap(
+    data: (data) => !data.isRefreshing,
+    orElse: () => false,
+  );
+
+  TodoTabState whenData(TodoTabState Function(_Data data) functor) =>
+      maybeMap(data: functor, orElse: () => this);
+
   TodoTabState._();
 }
-
-final loadFamily = Provider.autoDispose.family<Future<List<Task>>, int?>(
-  (ref, maybeCursor) async {
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (Random().nextInt(3) % 3 == 0) throw 'e';
-
-    final cursor = maybeCursor ?? 0;
-    return List.generate(
-      pageSize,
-      (index) => Task(
-        id: '${index + cursor}',
-        name: 'name_${index + cursor}',
-        createdAt: DateTime.now(),
-        isDone: false,
-      ),
-    );
-  },
-);
