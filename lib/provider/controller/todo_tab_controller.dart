@@ -12,34 +12,36 @@ final todoTabControllerProvider =
     StateNotifierProvider<TodoTabController, _TodoTabState>(
   (ref) {
     final uid = ref.watch(authProvider).uid;
-    final scrollController = ScrollController();
-    scrollController.addListener(() {
-      // TODO(torikatsu): fix conditions
-      if (scrollController.offset >
-          scrollController.position.maxScrollExtent - 100) {
-        ref.read(todoTasksFamily(uid).notifier).loadMore();
-      }
-    });
-    final controller = TodoTabController(ref.read, uid, scrollController);
-    ref.listen<ListCacheState<Task>>(
-      todoTasksFamily(uid),
-      (_, next) => controller.onChagneList(next),
-    );
+    final controller = TodoTabController(ref, uid);
     // avoid modify provider during their initialization
-    Future.delayed(const Duration(microseconds: 1))
-        .then((_) => ref.read(todoTasksFamily(uid).notifier).initialize());
+    Future.delayed(const Duration(microseconds: 1)).then(
+      (_) => ref.read(todoTasksFamily(uid).notifier).initialize(),
+    );
     return controller;
   },
 );
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
-  TodoTabController(this._read, this._uid, scrollController)
+  TodoTabController(Ref ref, this._uid)
       : super(_TodoTabState(
-          list: _read(todoTasksFamily(_uid)),
-          scrollController: scrollController,
-        ));
+          list: ref.read(todoTasksFamily(_uid)),
+          scrollController: ScrollController(),
+        )) {
+    _read = ref.read;
 
-  final Reader _read;
+    state.scrollController.addListener(() {
+      // TODO(torikatsu): fix conditions
+      if (state.scrollController.offset >
+          state.scrollController.position.maxScrollExtent - 100) {
+        _read(todoTasksFamily(_uid).notifier).loadMore();
+      }
+    });
+
+    ref.listen<ListCacheState<Task>>(
+        todoTasksFamily(_uid), (_, next) => onChagneList(next));
+  }
+
+  late final Reader _read;
   final String _uid;
 
   void onChagneList(ListCacheState<Task> list) =>
