@@ -23,10 +23,11 @@ abstract class Cursor {}
 
 // TODO(torikatsu): rename class name
 class QueryList<Item, C extends Cursor> {
-  QueryList(this.list, this.cursor);
+  QueryList(this.list, this.cursor, this.hasMoreData);
 
   List<Item> list;
   C cursor;
+  bool hasMoreData;
 }
 
 abstract class TaskRepository<C extends Cursor> {

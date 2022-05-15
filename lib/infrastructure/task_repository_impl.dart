@@ -6,6 +6,8 @@ const _name = 'name';
 const _createdAt = 'createdAt';
 const _isDone = 'isDone';
 
+const limit = 20;
+
 // TODO(torikatsu): 置き場所
 class CursorImpl extends Cursor {
   CursorImpl(this.value);
@@ -24,47 +26,31 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
 
   @override
   Future<QueryList<Task, CursorImpl>> findAllTodo([CursorImpl? cursor]) async {
-    final query = _ref.where(_isDone, isEqualTo: false).limit(20);
+    final query = _ref.where(_isDone, isEqualTo: false).limit(limit);
     final result =
         await (cursor == null ? query : query.startAfterDocument(cursor.value))
             .get();
 
+    final items = result.docs.map(_toTask).toList();
     return QueryList(
-      result.docs.map(
-        (e) {
-          final data = e.data() as Map<String, dynamic>;
-          return Task(
-            id: e.id,
-            name: data[_name],
-            createdAt: (data[_createdAt] as Timestamp).toDate(),
-            isDone: data[_isDone],
-          );
-        },
-      ).toList(),
+      items,
       CursorImpl(result.docs.last),
+      items.length == limit,
     );
   }
 
   @override
   Future<QueryList<Task, CursorImpl>> findAllDone([CursorImpl? cursor]) async {
-    final query = _ref.where(_isDone, isEqualTo: true).limit(20);
+    final query = _ref.where(_isDone, isEqualTo: true).limit(limit);
     final result =
         await (cursor == null ? query : query.startAfterDocument(cursor.value))
             .get();
 
+    final items = result.docs.map(_toTask).toList();
     return QueryList(
-      result.docs.map(
-        (e) {
-          final data = e.data() as Map<String, dynamic>;
-          return Task(
-            id: e.id,
-            name: data[_name],
-            createdAt: (data[_createdAt] as Timestamp).toDate(),
-            isDone: data[_isDone],
-          );
-        },
-      ).toList(),
+      items,
       CursorImpl(result.docs.last),
+      items.length == limit,
     );
   }
 
@@ -105,6 +91,16 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl> {
         _isDone: task.isDone,
       },
       SetOptions(merge: true),
+    );
+  }
+
+  Task _toTask(QueryDocumentSnapshot<Object?> doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Task(
+      id: doc.id,
+      name: data[_name],
+      createdAt: (data[_createdAt] as Timestamp).toDate(),
+      isDone: data[_isDone],
     );
   }
 }
