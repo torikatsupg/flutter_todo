@@ -69,9 +69,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
       } else {
         await _ref.read(taskRepositoryFamily(uid)).update(updatedTask);
         updatedTask.isDone
-            ? _ref.read(doneTasksFamily(uid))
-            // TODO(torikatsu): update done tasks
-            // ? _ref.read(todoTasksFamily(uid).notifier).update(updatedTask);
+            ? _ref.read(doneTasksFamily(uid).notifier).update(updatedTask)
             : _ref.read(todoTasksFamily(uid).notifier).update(updatedTask);
         _ref.refresh(taskFamily(TaskArg(uid: uid, id: state.initTask.id)));
 
