@@ -14,8 +14,8 @@ part '../../generated/provider/controller/task_edit_controller_provider.freezed.
 
 final prepareTaskEditControllerProvider =
     Provider.autoDispose<PrepareTaskEditState>((ref) {
-  final id = ref.watch(idProvider);
-  final uid = ref.watch(authProvider).uid;
+  final id = ref.read(idProvider);
+  final uid = ref.read(authProvider).uid;
   final task = ref.watch(taskFamily(TaskArg(uid: uid, id: id)));
   return PrepareTaskEditState(task: task, id: id);
 });

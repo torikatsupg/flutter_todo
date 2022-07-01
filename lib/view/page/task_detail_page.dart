@@ -14,7 +14,7 @@ class TaskDetailPage extends ConsumerWidget {
     final task = ref.watch(prepareTaskDetailControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(ref.watch(idProvider)),
+        title: Text(ref.read(idProvider)),
       ),
       body: task.map(
         data: (data) {

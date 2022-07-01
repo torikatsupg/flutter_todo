@@ -51,7 +51,7 @@ final tabProvider = cachedProvider<String, RouteState>(
 );
 
 final idProvider = Provider.autoDispose<String>((ref) {
-  final id = ref.watch(maybeIdProvider);
+  final id = ref.watch(routerProvider).id;
   if (id == null) {
     throw AppError.illigalUrl();
   } else {
@@ -59,19 +59,14 @@ final idProvider = Provider.autoDispose<String>((ref) {
   }
 });
 
-final maybeIdProvider = cachedProvider<String?, RouteState>(
-  initializer: (ref) => ref.read(routerProvider).id,
-  provider: routerProvider,
-  shouldUpdate: (next) => next.id != null,
-  toState: (next) => next.id!,
-);
-
-final todoProvider = cachedProvider<String?, RouteState>(
-  initializer: (ref) => ref.read(routerProvider).todo,
-  provider: routerProvider,
-  shouldUpdate: (next) => next.todo != null,
-  toState: (next) => next.todo,
-);
+final todoProvider = Provider.autoDispose<String>((ref) {
+  final todo = ref.watch(routerProvider).todo;
+  if (todo == null) {
+    throw AppError.illigalUrl();
+  } else {
+    return todo;
+  }
+});
 
 RouteState calcState(GoRouter router) {
   // ignore: invalid_use_of_visible_for_testing_member

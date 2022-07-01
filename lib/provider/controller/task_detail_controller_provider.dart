@@ -6,8 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final prepareTaskDetailControllerProvider =
     FutureProvider.autoDispose<Task?>((ref) async {
-  final uid = ref.watch(authProvider).uid;
-  final id = ref.watch(idProvider);
+  final uid = ref.read(authProvider).uid;
+  final id = ref.read(idProvider);
   return ref.watch(taskFamily(TaskArg(uid: uid, id: id)).future);
 });
 

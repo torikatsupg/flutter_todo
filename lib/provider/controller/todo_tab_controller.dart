@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
+import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:flutter_todo/util/list_cache_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +12,7 @@ part '../../generated/provider/controller/todo_tab_controller.freezed.dart';
 final todoTabControllerProvider =
     StateNotifierProvider<TodoTabController, _TodoTabState>(
   (ref) {
-    final uid = ref.watch(authProvider).uid;
+    final uid = ref.read(authProvider).uid;
     final controller = TodoTabController(ref, uid);
     // avoid modify provider during their initialization
     Future.delayed(const Duration(microseconds: 1)).then(
@@ -51,6 +52,9 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
 
   Future<void> resolveAndLoadMore() =>
       _read(todoTasksFamily(_uid).notifier).loadMore();
+
+  void onPressItem(String taskId) =>
+      _read(routerProvider.notifier).go('/home/todo/$taskId');
 }
 
 @freezed
