@@ -84,6 +84,5 @@ RouteState calcState(GoRouter router) {
     params,
     queryParams,
     name,
-    router.routerDelegate.currentConfiguration,
   );
 }

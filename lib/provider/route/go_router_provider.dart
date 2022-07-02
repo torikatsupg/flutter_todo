@@ -15,11 +15,10 @@ import 'package:flutter_todo/view/page/signin_page.dart';
 import 'package:flutter_todo/view/page/signup_page.dart';
 
 class RouteState {
-  RouteState(this.params, this.queryParams, this.name, this.uri);
+  RouteState(this.params, this.queryParams, this.name);
   final Map<String, String> params;
   final Map<String, String> queryParams;
   final String? name;
-  final Uri uri;
 
   String? get id => params['id'];
   String? get tab => params['tab'];

@@ -15,6 +15,7 @@ class App extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return MaterialApp.router(
+            routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );

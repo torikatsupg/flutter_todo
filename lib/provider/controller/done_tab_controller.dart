@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
-import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:flutter_todo/util/list_cache_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
