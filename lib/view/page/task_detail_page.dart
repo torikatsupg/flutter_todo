@@ -3,18 +3,19 @@ import 'package:flutter_todo/provider/controller/task_detail_controller_provider
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
 import 'package:flutter_todo/view/component/not_found_view.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TaskDetailPage extends ConsumerWidget {
-  const TaskDetailPage({Key? key}) : super(key: key);
+  const TaskDetailPage(this.id, {Key? key}) : super(key: key);
+
+  final String id;
 
   @override
   Widget build(context, ref) {
-    final task = ref.watch(prepareTaskDetailControllerProvider);
+    final task = ref.watch(prepareTaskDetailControllerProvider(id));
     return Scaffold(
       appBar: AppBar(
-        title: Text(ref.read(idProvider)),
+        title: Text(id),
       ),
       body: task.map(
         data: (data) {

@@ -5,9 +5,8 @@ import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final prepareTaskDetailControllerProvider =
-    FutureProvider.autoDispose<Task?>((ref) async {
+    FutureProvider.autoDispose.family<Task?, String>((ref, id) async {
   final uid = ref.read(authProvider).uid;
-  final id = ref.read(idProvider);
   return ref.watch(taskFamily(TaskArg(uid: uid, id: id)).future);
 });
 

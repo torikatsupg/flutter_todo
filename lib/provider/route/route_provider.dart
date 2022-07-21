@@ -1,5 +1,3 @@
-import 'package:flutter_todo/model/app_error.dart';
-import 'package:flutter_todo/util/cached_provider.dart';
 import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,31 +40,8 @@ class RouteNotifier extends StateNotifier<RouteState> {
   void pop() => _read(goRouterProvider).routerDelegate.pop();
 }
 
-final tabProvider = cachedProvider<String, RouteState>(
-  // TODO(torikatsu): nullの握りつぶしやめる
-  initializer: (ref) => ref.read(routerProvider).tab!,
-  provider: routerProvider,
-  shouldUpdate: (next) => next.tab != null,
-  toState: (next) => next.tab!,
-);
-
-final idProvider = Provider.autoDispose<String>((ref) {
-  final id = ref.watch(routerProvider).id;
-  if (id == null) {
-    throw AppError.illigalUrl();
-  } else {
-    return id;
-  }
-});
-
-final todoProvider = Provider.autoDispose<String>((ref) {
-  final todo = ref.watch(routerProvider).todo;
-  if (todo == null) {
-    throw AppError.illigalUrl();
-  } else {
-    return todo;
-  }
-});
+final todoQueryProvider = Provider.autoDispose<String>(
+    (ref) => ref.watch(routerProvider).todo ?? "todo");
 
 RouteState calcState(GoRouter router) {
   // ignore: invalid_use_of_visible_for_testing_member

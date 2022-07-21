@@ -53,7 +53,7 @@ final goRouterProvider = Provider(
       MyGoRoute(
         path: '/home/:tab',
         redirect: (_) => authGuard(ref),
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => HomePage(state.params['tab']!),
         routes: [
           MyGoRoute(
             path: 'create',
@@ -72,12 +72,13 @@ final goRouterProvider = Provider(
               state,
               () => state.params['id'] == null ? '/notfound' : null,
             ),
-            builder: (context, state) => const TaskDetailPage(),
+            // TODO(torikatsu): nullの握り潰しやめる
+            builder: (context, state) => TaskDetailPage(state.params['id']!),
             routes: [
               MyGoRoute(
                 path: 'edit',
                 redirect: (state) => todoGuard(ref, state),
-                builder: (context, state) => const EditTaskPage(),
+                builder: (context, state) => EditTaskPage(state.params['id']!),
               ),
             ],
           ),

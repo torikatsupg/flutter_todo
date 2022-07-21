@@ -1,11 +1,12 @@
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final taskControllerProvider =
-    StateNotifierProvider<TaskController, int>((ref) {
-  final query = ref.read(tabProvider);
-  return TaskController(ref.read, query);
-});
+final taskControllerProvider = StateNotifierProvider<TaskController, int>(
+  (ref) {
+    final query = ref.read(todoQueryProvider);
+    return TaskController(ref.read, query);
+  },
+);
 
 class TaskController extends StateNotifier<int> {
   TaskController(this._read, query) : super(toIndex(query));

@@ -6,11 +6,12 @@ import 'package:flutter_todo/view/screen/task_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage(this.tab, {Key? key}) : super(key: key);
+
+  final String tab;
 
   @override
   Widget build(context, ref) {
-    final state = ref.watch(homeControllerProvider);
     final controller = ref.read(homeControllerProvider.notifier);
     return Scaffold(
       body: LazyIndexedStack(
@@ -18,14 +19,14 @@ class HomePage extends ConsumerWidget {
           (context) => const TaskScreen(),
           (context) => const MyPageScreen(),
         ],
-        index: state,
+        index: controller.toIndex(tab),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'todo'),
           BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'mypage'),
         ],
-        currentIndex: state,
+        currentIndex: controller.toIndex(tab),
         onTap: controller.onTapTab,
       ),
     );

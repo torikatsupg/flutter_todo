@@ -6,11 +6,13 @@ import 'package:flutter_todo/provider/controller/task_edit_controller_provider.d
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EditTaskPage extends ConsumerWidget {
-  const EditTaskPage({Key? key}) : super(key: key);
+  const EditTaskPage(this.id, {Key? key}) : super(key: key);
+
+  final String id;
 
   @override
   Widget build(context, ref) {
-    final state = ref.watch(prepareTaskEditControllerProvider);
+    final state = ref.watch(prepareTaskEditControllerProvider(id));
     return Scaffold(
       appBar: AppBar(
         title: Text(state.id),

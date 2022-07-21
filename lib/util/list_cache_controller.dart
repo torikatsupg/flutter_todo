@@ -12,7 +12,6 @@ class ListCacheController<Item> extends StateNotifier<ListCacheState<Item>> {
   final Fetch<Item> _fetch;
 
   Future<void> initialize() async {
-    state = ListCacheState.loading();
     try {
       final result = await _fetch();
       state = ListCacheState<Item>.data(

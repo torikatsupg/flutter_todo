@@ -11,23 +11,17 @@ part '../../generated/provider/controller/done_tab_controller.freezed.dart';
 
 final doneTabControllerProvider =
     StateNotifierProvider<DoneTabController, _DoneTabState>(
-  (ref) {
-    final uid = ref.read(authProvider).uid;
-    final controller = DoneTabController(ref, uid);
-    // avoid modify provider during their initialization
-    Future.delayed(const Duration(microseconds: 1)).then(
-      (_) => ref.read(doneTasksFamily(uid).notifier).initialize(),
-    );
-    return controller;
-  },
+  (ref) => DoneTabController(ref, ref.read(authProvider).uid),
 );
 
 class DoneTabController extends StateNotifier<_DoneTabState> {
   DoneTabController(Ref ref, this._uid)
-      : super(_DoneTabState(
-          list: ref.read(doneTasksFamily(_uid)),
-          scrollController: ScrollController(),
-        )) {
+      : super(
+          _DoneTabState(
+            list: ref.read(doneTasksFamily(_uid)),
+            scrollController: ScrollController(),
+          ),
+        ) {
     _read = ref.read;
 
     state.scrollController.addListener(() {
@@ -40,6 +34,8 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
 
     ref.listen<ListCacheState<Task>>(
         doneTasksFamily(_uid), (_, next) => onChagneList(next));
+
+    ref.read(doneTasksFamily(_uid).notifier).initialize();
   }
 
   late final Reader _read;

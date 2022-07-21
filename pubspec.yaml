@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.2+1
-  hooks_riverpod: ^2.0.0-dev.0
+  hooks_riverpod: ^2.0.0-dev.9
   freezed_annotation: ^2.0.3
   json_annotation: ^4.4.0
   go_router: ^4.1.0

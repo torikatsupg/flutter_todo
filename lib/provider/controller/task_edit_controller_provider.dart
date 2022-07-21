@@ -13,8 +13,7 @@ import 'package:flutter_todo/provider/route/route_provider.dart';
 part '../../generated/provider/controller/task_edit_controller_provider.freezed.dart';
 
 final prepareTaskEditControllerProvider =
-    Provider.autoDispose<PrepareTaskEditState>((ref) {
-  final id = ref.read(idProvider);
+    Provider.autoDispose.family<PrepareTaskEditState, String>((ref, id) {
   final uid = ref.read(authProvider).uid;
   final task = ref.watch(taskFamily(TaskArg(uid: uid, id: id)));
   return PrepareTaskEditState(task: task, id: id);
