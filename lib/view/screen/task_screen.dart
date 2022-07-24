@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/config/page_storage_keys.dart';
 import 'package:flutter_todo/provider/controller/task_controller_provider.dart';
 import 'package:flutter_todo/view/page/task_tab/done_tab.dart';
 import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
@@ -40,9 +41,9 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
       ),
       body: TabBarView(
         controller: _controller,
-        children: const [
-          TodoTab(),
-          DoneTab(),
+        children: [
+          TodoTab(key: PageStorageKies.todoTab.key),
+          DoneTab(key: PageStorageKies.doneTab.key),
         ],
       ),
       floatingActionButton: FloatingActionButton(
