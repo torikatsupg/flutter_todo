@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Result<Data, Error> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Data? value) ok,
+    required TResult Function(Data value) ok,
     required TResult Function(Error value) err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
     required TResult orElse(),
   }) =>
@@ -78,7 +78,7 @@ abstract class _$$OkCopyWith<Data, Error, $Res> {
   factory _$$OkCopyWith(
           _$Ok<Data, Error> value, $Res Function(_$Ok<Data, Error>) then) =
       __$$OkCopyWithImpl<Data, Error, $Res>;
-  $Res call({Data? value});
+  $Res call({Data value});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$OkCopyWithImpl<Data, Error, $Res>
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as Data?,
+              as Data,
     ));
   }
 }
@@ -108,10 +108,10 @@ class __$$OkCopyWithImpl<Data, Error, $Res>
 /// @nodoc
 
 class _$Ok<Data, Error> extends Ok<Data, Error> {
-  _$Ok([this.value]) : super._();
+  _$Ok(this.value) : super._();
 
   @override
-  final Data? value;
+  final Data value;
 
   @override
   String toString() {
@@ -138,7 +138,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Data? value) ok,
+    required TResult Function(Data value) ok,
     required TResult Function(Error value) err,
   }) {
     return ok(value);
@@ -147,7 +147,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
   }) {
     return ok?.call(value);
@@ -156,7 +156,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
     required TResult orElse(),
   }) {
@@ -199,10 +199,10 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
 }
 
 abstract class Ok<Data, Error> extends Result<Data, Error> {
-  factory Ok([final Data? value]) = _$Ok<Data, Error>;
+  factory Ok(final Data value) = _$Ok<Data, Error>;
   Ok._() : super._();
 
-  Data? get value => throw _privateConstructorUsedError;
+  Data get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$OkCopyWith<Data, Error, _$Ok<Data, Error>> get copyWith =>
       throw _privateConstructorUsedError;
@@ -273,7 +273,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Data? value) ok,
+    required TResult Function(Data value) ok,
     required TResult Function(Error value) err,
   }) {
     return err(value);
@@ -282,7 +282,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
   }) {
     return err?.call(value);
@@ -291,7 +291,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Data? value)? ok,
+    TResult Function(Data value)? ok,
     TResult Function(Error value)? err,
     required TResult orElse(),
   }) {

@@ -18,18 +18,21 @@ class EditTaskPage extends ConsumerWidget {
         title: Text(state.id),
       ),
       body: state.task.map(
-        data: (data) {
-          final task = data.value;
-          return task != null
-              ? ProviderScope(
-                  overrides: [
-                    taskEditControllerProvider
-                        .overrideWithProvider(taskEditControllerFamily(task)),
-                  ],
-                  child: const _EditView(),
-                )
-              : const NotFoundView();
-        },
+        data: (result) => result.value.map(
+          ok: (data) {
+            final task = data.value;
+            if (task == null) return const NotFoundView();
+            return ProviderScope(
+              overrides: [
+                taskEditControllerProvider
+                    .overrideWithProvider(taskEditControllerFamily(task)),
+              ],
+              child: const _EditView(),
+            );
+          },
+          // TODO(torikatsu): エラーハンドリングがダブついてしまったため考える
+          err: (e) => const ErrorView(),
+        ),
         error: (e) => const ErrorView(),
         loading: (_) => const LoadingView(),
       ),

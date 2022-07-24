@@ -18,18 +18,20 @@ class TaskDetailPage extends ConsumerWidget {
         title: Text(id),
       ),
       body: task.map(
-        data: (data) {
-          final task = data.value;
-          return task == null
-              ? const NotFoundView()
-              : ProviderScope(
-                  overrides: [
-                    taskDetailControllerProvider
-                        .overrideWithProvider(taskDetailControllerFamily(task))
-                  ],
-                  child: const TaskDetailView(),
-                );
-        },
+        data: (result) => result.value.map(
+          ok: (data) {
+            final task = data.value;
+            if (task == null) return const NotFoundView();
+            return ProviderScope(
+              overrides: [
+                taskDetailControllerProvider
+                    .overrideWithProvider(taskDetailControllerFamily(task))
+              ],
+              child: const TaskDetailView(),
+            );
+          },
+          err: (e) => const ErrorView(),
+        ),
         error: (_) => const ErrorView(),
         loading: (_) => const LoadingView(),
       ),

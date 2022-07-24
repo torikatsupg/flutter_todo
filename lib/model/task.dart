@@ -1,4 +1,5 @@
 import 'package:flutter_todo/model/query_list.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/model/task.freezed.dart';
@@ -19,10 +20,10 @@ class Task with _$Task {
   Task updateName(String name) => copyWith(name: name);
 }
 
-abstract class TaskRepository<C extends Cursor> {
-  Future<QueryList<Task, C>> findAllTodo([C? cursor]);
-  Future<QueryList<Task, C>> findAllDone([C? cursor]);
-  Future<Task?> findById(String id);
-  Future<Task> insert({required String name});
-  Future<void> update(Task task);
+abstract class TaskRepository<C extends Cursor, Err> {
+  Future<Result<QueryList<Task, C>, Err>> findAllTodo([C? cursor]);
+  Future<Result<QueryList<Task, C>, Err>> findAllDone([C? cursor]);
+  Future<Result<Task?, Err>> findById(String id);
+  Future<Result<Task, Err>> insert({required String name});
+  Future<Result<void, Err>> update(Task task);
 }

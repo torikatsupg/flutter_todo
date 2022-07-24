@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$_DoneTabState {
-  AsyncValue<PagenatedList<Task>> get list =>
+  AsyncValue<PagenatedList<Task, FirestoreError>> get list =>
       throw _privateConstructorUsedError;
   ScrollController get scrollController => throw _privateConstructorUsedError;
 
@@ -31,7 +31,7 @@ abstract class _$DoneTabStateCopyWith<$Res> {
           _DoneTabState value, $Res Function(_DoneTabState) then) =
       __$DoneTabStateCopyWithImpl<$Res>;
   $Res call(
-      {AsyncValue<PagenatedList<Task>> list,
+      {AsyncValue<PagenatedList<Task, FirestoreError>> list,
       ScrollController scrollController});
 }
 
@@ -53,7 +53,7 @@ class __$DoneTabStateCopyWithImpl<$Res>
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<PagenatedList<Task>>,
+              as AsyncValue<PagenatedList<Task, FirestoreError>>,
       scrollController: scrollController == freezed
           ? _value.scrollController
           : scrollController // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$__DoneTabStateCopyWith<$Res>
       __$$__DoneTabStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {AsyncValue<PagenatedList<Task>> list,
+      {AsyncValue<PagenatedList<Task, FirestoreError>> list,
       ScrollController scrollController});
 }
 
@@ -94,7 +94,7 @@ class __$$__DoneTabStateCopyWithImpl<$Res>
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<PagenatedList<Task>>,
+              as AsyncValue<PagenatedList<Task, FirestoreError>>,
       scrollController: scrollController == freezed
           ? _value.scrollController
           : scrollController // ignore: cast_nullable_to_non_nullable
@@ -110,7 +110,7 @@ class _$__DoneTabState extends __DoneTabState {
       : super._();
 
   @override
-  final AsyncValue<PagenatedList<Task>> list;
+  final AsyncValue<PagenatedList<Task, FirestoreError>> list;
   @override
   final ScrollController scrollController;
 
@@ -143,12 +143,12 @@ class _$__DoneTabState extends __DoneTabState {
 
 abstract class __DoneTabState extends _DoneTabState {
   factory __DoneTabState(
-      {required final AsyncValue<PagenatedList<Task>> list,
+      {required final AsyncValue<PagenatedList<Task, FirestoreError>> list,
       required final ScrollController scrollController}) = _$__DoneTabState;
   __DoneTabState._() : super._();
 
   @override
-  AsyncValue<PagenatedList<Task>> get list =>
+  AsyncValue<PagenatedList<Task, FirestoreError>> get list =>
       throw _privateConstructorUsedError;
   @override
   ScrollController get scrollController => throw _privateConstructorUsedError;

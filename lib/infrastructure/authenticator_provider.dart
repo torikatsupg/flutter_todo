@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final authenticatorProvider = Provider((_) => Authenticator());
 
 class Authenticator {
-  Future<Result<User, SignupError>> signup({
+  Future<Result<User?, SignupError>> signup({
     required String email,
     required String password,
   }) async {
@@ -31,7 +31,7 @@ class Authenticator {
     }
   }
 
-  Future<Result<User, SigninError>> signin({
+  Future<Result<User?, SigninError>> signin({
     required String email,
     required String password,
   }) async {
@@ -60,7 +60,7 @@ class Authenticator {
   Future<Result<void, SignOutError>> signout() async {
     try {
       await FirebaseAuth.instance.signOut();
-      return Result.ok();
+      return Result.ok(null);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'network-request-failed':

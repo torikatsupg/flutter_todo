@@ -15,43 +15,43 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$PagenatedList<Item> {
+mixin _$PagenatedList<Item, Err> {
   List<Item> get list => throw _privateConstructorUsedError;
   CursorImpl? get cursor => throw _privateConstructorUsedError;
   dynamic get isRefreshing => throw _privateConstructorUsedError;
   dynamic get isMoreLoading => throw _privateConstructorUsedError;
   dynamic get hasMoreData => throw _privateConstructorUsedError;
-  dynamic get refreshError => throw _privateConstructorUsedError;
-  dynamic get loadMoreError => throw _privateConstructorUsedError;
+  Err? get refreshError => throw _privateConstructorUsedError;
+  Err? get loadMoreError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PagenatedListCopyWith<Item, PagenatedList<Item>> get copyWith =>
+  $PagenatedListCopyWith<Item, Err, PagenatedList<Item, Err>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PagenatedListCopyWith<Item, $Res> {
-  factory $PagenatedListCopyWith(
-          PagenatedList<Item> value, $Res Function(PagenatedList<Item>) then) =
-      _$PagenatedListCopyWithImpl<Item, $Res>;
+abstract class $PagenatedListCopyWith<Item, Err, $Res> {
+  factory $PagenatedListCopyWith(PagenatedList<Item, Err> value,
+          $Res Function(PagenatedList<Item, Err>) then) =
+      _$PagenatedListCopyWithImpl<Item, Err, $Res>;
   $Res call(
       {List<Item> list,
       CursorImpl? cursor,
       dynamic isRefreshing,
       dynamic isMoreLoading,
       dynamic hasMoreData,
-      dynamic refreshError,
-      dynamic loadMoreError});
+      Err? refreshError,
+      Err? loadMoreError});
 }
 
 /// @nodoc
-class _$PagenatedListCopyWithImpl<Item, $Res>
-    implements $PagenatedListCopyWith<Item, $Res> {
+class _$PagenatedListCopyWithImpl<Item, Err, $Res>
+    implements $PagenatedListCopyWith<Item, Err, $Res> {
   _$PagenatedListCopyWithImpl(this._value, this._then);
 
-  final PagenatedList<Item> _value;
+  final PagenatedList<Item, Err> _value;
   // ignore: unused_field
-  final $Res Function(PagenatedList<Item>) _then;
+  final $Res Function(PagenatedList<Item, Err>) _then;
 
   @override
   $Res call({
@@ -87,21 +87,21 @@ class _$PagenatedListCopyWithImpl<Item, $Res>
       refreshError: refreshError == freezed
           ? _value.refreshError
           : refreshError // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Err?,
       loadMoreError: loadMoreError == freezed
           ? _value.loadMoreError
           : loadMoreError // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Err?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_DataCopyWith<Item, $Res>
-    implements $PagenatedListCopyWith<Item, $Res> {
-  factory _$$_DataCopyWith(
-          _$_Data<Item> value, $Res Function(_$_Data<Item>) then) =
-      __$$_DataCopyWithImpl<Item, $Res>;
+abstract class _$$_PagenatedListCopyWith<Item, Err, $Res>
+    implements $PagenatedListCopyWith<Item, Err, $Res> {
+  factory _$$_PagenatedListCopyWith(_$_PagenatedList<Item, Err> value,
+          $Res Function(_$_PagenatedList<Item, Err>) then) =
+      __$$_PagenatedListCopyWithImpl<Item, Err, $Res>;
   @override
   $Res call(
       {List<Item> list,
@@ -109,20 +109,21 @@ abstract class _$$_DataCopyWith<Item, $Res>
       dynamic isRefreshing,
       dynamic isMoreLoading,
       dynamic hasMoreData,
-      dynamic refreshError,
-      dynamic loadMoreError});
+      Err? refreshError,
+      Err? loadMoreError});
 }
 
 /// @nodoc
-class __$$_DataCopyWithImpl<Item, $Res>
-    extends _$PagenatedListCopyWithImpl<Item, $Res>
-    implements _$$_DataCopyWith<Item, $Res> {
-  __$$_DataCopyWithImpl(
-      _$_Data<Item> _value, $Res Function(_$_Data<Item>) _then)
-      : super(_value, (v) => _then(v as _$_Data<Item>));
+class __$$_PagenatedListCopyWithImpl<Item, Err, $Res>
+    extends _$PagenatedListCopyWithImpl<Item, Err, $Res>
+    implements _$$_PagenatedListCopyWith<Item, Err, $Res> {
+  __$$_PagenatedListCopyWithImpl(_$_PagenatedList<Item, Err> _value,
+      $Res Function(_$_PagenatedList<Item, Err>) _then)
+      : super(_value, (v) => _then(v as _$_PagenatedList<Item, Err>));
 
   @override
-  _$_Data<Item> get _value => super._value as _$_Data<Item>;
+  _$_PagenatedList<Item, Err> get _value =>
+      super._value as _$_PagenatedList<Item, Err>;
 
   @override
   $Res call({
@@ -134,7 +135,7 @@ class __$$_DataCopyWithImpl<Item, $Res>
     Object? refreshError = freezed,
     Object? loadMoreError = freezed,
   }) {
-    return _then(_$_Data<Item>(
+    return _then(_$_PagenatedList<Item, Err>(
       list: list == freezed
           ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
@@ -151,19 +152,19 @@ class __$$_DataCopyWithImpl<Item, $Res>
       refreshError: refreshError == freezed
           ? _value.refreshError
           : refreshError // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Err?,
       loadMoreError: loadMoreError == freezed
           ? _value.loadMoreError
           : loadMoreError // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Err?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Data<Item> extends _Data<Item> {
-  _$_Data(
+class _$_PagenatedList<Item, Err> extends _PagenatedList<Item, Err> {
+  _$_PagenatedList(
       {final List<Item> list = const [],
       this.cursor,
       this.isRefreshing = false,
@@ -195,21 +196,21 @@ class _$_Data<Item> extends _Data<Item> {
   final dynamic hasMoreData;
   @override
   @JsonKey()
-  final dynamic refreshError;
+  final Err? refreshError;
   @override
   @JsonKey()
-  final dynamic loadMoreError;
+  final Err? loadMoreError;
 
   @override
   String toString() {
-    return 'PagenatedList<$Item>(list: $list, cursor: $cursor, isRefreshing: $isRefreshing, isMoreLoading: $isMoreLoading, hasMoreData: $hasMoreData, refreshError: $refreshError, loadMoreError: $loadMoreError)';
+    return 'PagenatedList<$Item, $Err>(list: $list, cursor: $cursor, isRefreshing: $isRefreshing, isMoreLoading: $isMoreLoading, hasMoreData: $hasMoreData, refreshError: $refreshError, loadMoreError: $loadMoreError)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Data<Item> &&
+            other is _$_PagenatedList<Item, Err> &&
             const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality().equals(other.cursor, cursor) &&
             const DeepCollectionEquality()
@@ -237,20 +238,21 @@ class _$_Data<Item> extends _Data<Item> {
 
   @JsonKey(ignore: true)
   @override
-  _$$_DataCopyWith<Item, _$_Data<Item>> get copyWith =>
-      __$$_DataCopyWithImpl<Item, _$_Data<Item>>(this, _$identity);
+  _$$_PagenatedListCopyWith<Item, Err, _$_PagenatedList<Item, Err>>
+      get copyWith => __$$_PagenatedListCopyWithImpl<Item, Err,
+          _$_PagenatedList<Item, Err>>(this, _$identity);
 }
 
-abstract class _Data<Item> extends PagenatedList<Item> {
-  factory _Data(
+abstract class _PagenatedList<Item, Err> extends PagenatedList<Item, Err> {
+  factory _PagenatedList(
       {final List<Item> list,
       final CursorImpl? cursor,
       final dynamic isRefreshing,
       final dynamic isMoreLoading,
       final dynamic hasMoreData,
-      final dynamic refreshError,
-      final dynamic loadMoreError}) = _$_Data<Item>;
-  _Data._() : super._();
+      final Err? refreshError,
+      final Err? loadMoreError}) = _$_PagenatedList<Item, Err>;
+  _PagenatedList._() : super._();
 
   @override
   List<Item> get list => throw _privateConstructorUsedError;
@@ -263,11 +265,11 @@ abstract class _Data<Item> extends PagenatedList<Item> {
   @override
   dynamic get hasMoreData => throw _privateConstructorUsedError;
   @override
-  dynamic get refreshError => throw _privateConstructorUsedError;
+  Err? get refreshError => throw _privateConstructorUsedError;
   @override
-  dynamic get loadMoreError => throw _privateConstructorUsedError;
+  Err? get loadMoreError => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_DataCopyWith<Item, _$_Data<Item>> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_PagenatedListCopyWith<Item, Err, _$_PagenatedList<Item, Err>>
+      get copyWith => throw _privateConstructorUsedError;
 }

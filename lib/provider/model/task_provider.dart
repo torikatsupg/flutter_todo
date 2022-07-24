@@ -1,3 +1,5 @@
+import 'package:flutter_todo/infrastructure/firestore_error.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,18 +10,23 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part '../../generated/provider/model/task_provider.freezed.dart';
 
 final todoTasksFamily = StateNotifierProvider.family<
-    PagenatedListController<Task>, AsyncValue<PagenatedList<Task>>, String>(
+    PagenatedListController<Task, FirestoreError>,
+    AsyncValue<PagenatedList<Task, FirestoreError>>,
+    String>(
   (ref, uid) =>
       PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllTodo),
 );
 
 final doneTasksFamily = StateNotifierProvider.family<
-    PagenatedListController<Task>, AsyncValue<PagenatedList<Task>>, String>(
+    PagenatedListController<Task, FirestoreError>,
+    AsyncValue<PagenatedList<Task, FirestoreError>>,
+    String>(
   (ref, uid) =>
       PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllDone),
 );
 
-final taskFamily = FutureProvider.family<Task?, TaskArg>(
+final taskFamily =
+    FutureProvider.family<Result<Task?, FirestoreError>, TaskArg>(
   (ref, arg) => ref.watch(taskRepositoryFamily(arg.uid)).findById(arg.id),
 );
 

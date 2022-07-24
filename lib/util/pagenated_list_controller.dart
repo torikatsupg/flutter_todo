@@ -1,5 +1,6 @@
 import 'package:flutter_todo/infrastructure/cursor_impl.dart';
 import 'package:flutter_todo/model/query_list.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/util/util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,46 +8,41 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part '../generated/util/pagenated_list_controller.freezed.dart';
 
 // TODO(torikatsu): handle error.
-class PagenatedListController<Item>
-    extends StateNotifier<AsyncPagenatedList<Item>> {
+class PagenatedListController<Item, Err>
+    extends StateNotifier<AsyncPagenatedList<Item, Err>> {
   PagenatedListController(this._fetch) : super(const AsyncValue.loading());
 
-  final Fetch<Item> _fetch;
+  final Fetch<Item, Err> _fetch;
 
   Future<void> initialize() async {
-    try {
-      final result = await _fetch();
-      state = AsyncValue.data(
-        PagenatedList<Item>(
-          list: result.list,
-          cursor: result.cursor,
-        ),
-      );
-    } on dynamic catch (e) {
-      print(e);
-      state = AsyncValue.error(e);
-    }
+    state = (await _fetch()).map(
+      ok: (data) => AsyncValue.data(
+        PagenatedList(list: data.value.list, cursor: data.value.cursor),
+      ),
+      err: AsyncValue.error,
+    );
   }
 
   Future<void> refresh() async => state.whenData(
         (data) async {
           if (!data.canRefresh) return;
           state = AsyncValue.data(data.copyWith(isRefreshing: true));
-          try {
-            final result = await _fetch();
-            state = AsyncValue.data(data.copyWith(
-              list: result.list,
-              cursor: result.cursor,
-              refreshError: null,
-              isRefreshing: false,
-            ));
-          } on dynamic catch (e) {
-            print(e);
-            state = AsyncValue.data(data.copyWith(
-              refreshError: e,
-              isRefreshing: false,
-            ));
-          }
+          state = (await _fetch()).map(
+            ok: (result) => AsyncValue.data(
+              data.copyWith(
+                list: result.value.list,
+                cursor: result.value.cursor,
+                refreshError: null,
+                isRefreshing: false,
+              ),
+            ),
+            err: (e) => AsyncValue.data(
+              data.copyWith(
+                refreshError: e.value,
+                isRefreshing: false,
+              ),
+            ),
+          );
         },
       );
 
@@ -61,20 +57,22 @@ class PagenatedListController<Item>
         (data) async {
           if (!data.canLoadMore) return;
           state = AsyncValue.data(data.copyWith(isMoreLoading: true));
-          try {
-            final result = await _fetch(data.cursor);
-            state = AsyncValue.data(data.copyWith(
-              list: [...data.list, ...result.list],
-              cursor: result.cursor,
-              hasMoreData: result.hasMoreData,
-              isMoreLoading: false,
-            ));
-          } on dynamic catch (e) {
-            state = AsyncValue.data(data.copyWith(
-              loadMoreError: e,
-              isMoreLoading: false,
-            ));
-          }
+          state = (await _fetch(data.cursor)).map(
+            ok: (result) => AsyncValue.data(
+              data.copyWith(
+                list: [...data.list, ...result.value.list],
+                cursor: result.value.cursor,
+                hasMoreData: result.value.hasMoreData,
+                isMoreLoading: false,
+              ),
+            ),
+            err: (e) => AsyncValue.data(
+              data.copyWith(
+                loadMoreError: e.value,
+                isMoreLoading: false,
+              ),
+            ),
+          );
         },
       );
 
@@ -98,16 +96,16 @@ class PagenatedListController<Item>
 }
 
 @freezed
-class PagenatedList<Item> with _$PagenatedList<Item> {
+class PagenatedList<Item, Err> with _$PagenatedList<Item, Err> {
   factory PagenatedList({
     @Default([]) List<Item> list,
     CursorImpl? cursor,
     @Default(false) isRefreshing,
     @Default(false) isMoreLoading,
     @Default(true) hasMoreData,
-    @Default(null) dynamic refreshError,
-    @Default(null) dynamic loadMoreError,
-  }) = _Data<Item>;
+    @Default(null) Err? refreshError,
+    @Default(null) Err? loadMoreError,
+  }) = _PagenatedList<Item, Err>;
 
   late final bool hasLoadMoreError = isNotNull(loadMoreError);
   late final bool hasRefreshError = isNotNull(refreshError);
@@ -118,7 +116,7 @@ class PagenatedList<Item> with _$PagenatedList<Item> {
   PagenatedList._();
 }
 
-typedef AsyncPagenatedList<Item> = AsyncValue<PagenatedList<Item>>;
+typedef AsyncPagenatedList<Item, Err> = AsyncValue<PagenatedList<Item, Err>>;
 
-typedef Fetch<Item> = Future<QueryList<Item, CursorImpl>> Function(
-    [CursorImpl? impl]);
+typedef Fetch<Item, Err> = Future<Result<QueryList<Item, CursorImpl>, Err>>
+    Function([CursorImpl? impl]);

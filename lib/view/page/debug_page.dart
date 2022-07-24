@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
@@ -19,7 +20,7 @@ class DebugPage extends ConsumerWidget {
             ListTile(
               onTap: () async {
                 final uid = ref.read(authProvider).uid;
-                final result = <Task>[];
+                final result = <Result<Task, dynamic>>[];
                 for (var i = 0; i < 100; i++) {
                   result.add(await ref
                       .read(taskRepositoryFamily(uid))

@@ -1,11 +1,13 @@
+import 'package:flutter_todo/infrastructure/firestore_error.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final prepareTaskDetailControllerProvider =
-    FutureProvider.autoDispose.family<Task?, String>((ref, id) async {
+final prepareTaskDetailControllerProvider = FutureProvider.autoDispose
+    .family<Result<Task?, FirestoreError>, String>((ref, id) async {
   final uid = ref.read(authProvider).uid;
   return ref.watch(taskFamily(TaskArg(uid: uid, id: id)).future);
 });

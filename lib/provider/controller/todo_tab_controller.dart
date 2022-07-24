@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
@@ -38,14 +39,14 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
       }
     });
 
-    ref.listen<AsyncPagenatedList<Task>>(
+    ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
         todoTasksFamily(_uid), (_, next) => onChagneList(next));
   }
 
   late final Reader _read;
   final String _uid;
 
-  void onChagneList(AsyncPagenatedList<Task> list) =>
+  void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>
       state = state.copyWith(list: list);
 
   Future<void> refresh() => _read(todoTasksFamily(_uid).notifier).refresh();
@@ -60,7 +61,7 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
 @freezed
 class _TodoTabState with _$_TodoTabState {
   factory _TodoTabState({
-    required AsyncPagenatedList<Task> list,
+    required AsyncPagenatedList<Task, FirestoreError> list,
     required ScrollController scrollController,
   }) = __TodoTabState;
 

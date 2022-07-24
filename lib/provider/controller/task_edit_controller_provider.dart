@@ -1,3 +1,5 @@
+import 'package:flutter_todo/infrastructure/firestore_error.dart';
+import 'package:flutter_todo/model/result.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,7 +22,7 @@ final prepareTaskEditControllerProvider =
 });
 
 class PrepareTaskEditState {
-  final AsyncValue<Task?> task;
+  final AsyncValue<Result<Task?, FirestoreError>> task;
   final String id;
   PrepareTaskEditState({
     required this.task,
