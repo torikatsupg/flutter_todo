@@ -12,7 +12,9 @@ class DoneTab extends ConsumerWidget {
     final state = ref.watch(doneTabControllerProvider);
     final controller = ref.read(doneTabControllerProvider.notifier);
 
-    return state.list.map(
+    return state.list.when<Widget>(
+      error: (error, stackTrace) => const ErrorView(),
+      loading: () => const LoadingView(),
       data: (list) => RefreshIndicator(
         // TODO(torikatsu): apply web
         onRefresh: controller.refresh,
@@ -33,14 +35,14 @@ class DoneTab extends ConsumerWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final task = list.items[index];
+                  final task = list.list[index];
                   return ListTile(
                     leading: Text(task.id),
                     title: Text(task.name),
                     onTap: () => controller.onTapListItem(task.id),
                   );
                 },
-                childCount: list.items.length,
+                childCount: list.list.length,
               ),
             ),
             if (list.isMoreLoading)
@@ -68,8 +70,6 @@ class DoneTab extends ConsumerWidget {
           ],
         ),
       ),
-      error: (e) => const ErrorView(),
-      loading: (_) => const LoadingView(),
     );
   }
 }

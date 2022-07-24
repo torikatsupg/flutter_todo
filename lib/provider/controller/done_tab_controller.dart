@@ -3,7 +3,7 @@ import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
-import 'package:flutter_todo/util/list_cache_controller.dart';
+import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -32,7 +32,7 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
       }
     });
 
-    ref.listen<ListCacheState<Task>>(
+    ref.listen<AsyncPagenatedList<Task>>(
         doneTasksFamily(_uid), (_, next) => onChagneList(next));
 
     ref.read(doneTasksFamily(_uid).notifier).initialize();
@@ -41,7 +41,7 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
   late final Reader _read;
   final String _uid;
 
-  void onChagneList(ListCacheState<Task> list) =>
+  void onChagneList(AsyncPagenatedList<Task> list) =>
       state = state.copyWith(list: list);
 
   void onTapListItem(String taskId) =>
@@ -56,7 +56,7 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
 @freezed
 class _DoneTabState with _$_DoneTabState {
   factory _DoneTabState({
-    required ListCacheState<Task> list,
+    required AsyncPagenatedList<Task> list,
     required ScrollController scrollController,
   }) = __DoneTabState;
 

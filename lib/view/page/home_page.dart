@@ -23,8 +23,8 @@ class HomePage extends ConsumerWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'todo'),
-          BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'mypage'),
+          BottomNavigationBarItem(icon: Icon(Icons.task), label: 'task'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'mypage'),
         ],
         currentIndex: controller.toIndex(tab),
         onTap: controller.onTapTab,

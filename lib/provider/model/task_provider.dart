@@ -1,4 +1,4 @@
-import 'package:flutter_todo/util/list_cache_controller.dart';
+import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
@@ -7,16 +7,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../../generated/provider/model/task_provider.freezed.dart';
 
-final todoTasksFamily = StateNotifierProvider
-    .family<ListCacheController<Task>, ListCacheState<Task>, String>(
+final todoTasksFamily = StateNotifierProvider.family<
+    PagenatedListController<Task>, AsyncValue<PagenatedList<Task>>, String>(
   (ref, uid) =>
-      ListCacheController(ref.watch(taskRepositoryFamily(uid)).findAllTodo),
+      PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllTodo),
 );
 
-final doneTasksFamily = StateNotifierProvider
-    .family<ListCacheController<Task>, ListCacheState<Task>, String>(
+final doneTasksFamily = StateNotifierProvider.family<
+    PagenatedListController<Task>, AsyncValue<PagenatedList<Task>>, String>(
   (ref, uid) =>
-      ListCacheController(ref.watch(taskRepositoryFamily(uid)).findAllDone),
+      PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllDone),
 );
 
 final taskFamily = FutureProvider.family<Task?, TaskArg>(

@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$_TodoTabState {
-  ListCacheState<Task> get list => throw _privateConstructorUsedError;
+  AsyncValue<PagenatedList<Task>> get list =>
+      throw _privateConstructorUsedError;
   ScrollController get scrollController => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,9 +30,9 @@ abstract class _$TodoTabStateCopyWith<$Res> {
   factory _$TodoTabStateCopyWith(
           _TodoTabState value, $Res Function(_TodoTabState) then) =
       __$TodoTabStateCopyWithImpl<$Res>;
-  $Res call({ListCacheState<Task> list, ScrollController scrollController});
-
-  $ListCacheStateCopyWith<Task, $Res> get list;
+  $Res call(
+      {AsyncValue<PagenatedList<Task>> list,
+      ScrollController scrollController});
 }
 
 /// @nodoc
@@ -52,19 +53,12 @@ class __$TodoTabStateCopyWithImpl<$Res>
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
-              as ListCacheState<Task>,
+              as AsyncValue<PagenatedList<Task>>,
       scrollController: scrollController == freezed
           ? _value.scrollController
           : scrollController // ignore: cast_nullable_to_non_nullable
               as ScrollController,
     ));
-  }
-
-  @override
-  $ListCacheStateCopyWith<Task, $Res> get list {
-    return $ListCacheStateCopyWith<Task, $Res>(_value.list, (value) {
-      return _then(_value.copyWith(list: value));
-    });
   }
 }
 
@@ -75,10 +69,9 @@ abstract class _$$__TodoTabStateCopyWith<$Res>
           _$__TodoTabState value, $Res Function(_$__TodoTabState) then) =
       __$$__TodoTabStateCopyWithImpl<$Res>;
   @override
-  $Res call({ListCacheState<Task> list, ScrollController scrollController});
-
-  @override
-  $ListCacheStateCopyWith<Task, $Res> get list;
+  $Res call(
+      {AsyncValue<PagenatedList<Task>> list,
+      ScrollController scrollController});
 }
 
 /// @nodoc
@@ -101,7 +94,7 @@ class __$$__TodoTabStateCopyWithImpl<$Res>
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
-              as ListCacheState<Task>,
+              as AsyncValue<PagenatedList<Task>>,
       scrollController: scrollController == freezed
           ? _value.scrollController
           : scrollController // ignore: cast_nullable_to_non_nullable
@@ -117,7 +110,7 @@ class _$__TodoTabState extends __TodoTabState {
       : super._();
 
   @override
-  final ListCacheState<Task> list;
+  final AsyncValue<PagenatedList<Task>> list;
   @override
   final ScrollController scrollController;
 
@@ -150,12 +143,13 @@ class _$__TodoTabState extends __TodoTabState {
 
 abstract class __TodoTabState extends _TodoTabState {
   factory __TodoTabState(
-      {required final ListCacheState<Task> list,
+      {required final AsyncValue<PagenatedList<Task>> list,
       required final ScrollController scrollController}) = _$__TodoTabState;
   __TodoTabState._() : super._();
 
   @override
-  ListCacheState<Task> get list => throw _privateConstructorUsedError;
+  AsyncValue<PagenatedList<Task>> get list =>
+      throw _privateConstructorUsedError;
   @override
   ScrollController get scrollController => throw _privateConstructorUsedError;
   @override

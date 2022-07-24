@@ -12,7 +12,9 @@ class TodoTab extends ConsumerWidget {
     final state = ref.watch(todoTabControllerProvider);
     final controller = ref.read(todoTabControllerProvider.notifier);
 
-    return state.list.map(
+    return state.list.when<Widget>(
+      loading: () => const LoadingView(),
+      error: ((error, stackTrace) => const ErrorView()),
       data: (list) => RefreshIndicator(
         // TODO(torikatsu): apply web
         onRefresh: controller.refresh,
@@ -33,14 +35,14 @@ class TodoTab extends ConsumerWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final task = list.items[index];
+                  final task = list.list[index];
                   return ListTile(
                     leading: Text(task.id),
                     title: Text(task.name),
                     onTap: () => controller.onPressItem(task.id),
                   );
                 },
-                childCount: list.items.length,
+                childCount: list.list.length,
               ),
             ),
             if (list.isMoreLoading)
@@ -68,8 +70,6 @@ class TodoTab extends ConsumerWidget {
           ],
         ),
       ),
-      error: (e) => const ErrorView(),
-      loading: (_) => const LoadingView(),
     );
   }
 }
