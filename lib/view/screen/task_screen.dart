@@ -40,7 +40,10 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
       ),
       body: TabBarView(
         controller: _controller,
-        children: const [TodoTab(), DoneTab()],
+        children: const [
+          TodoTab(),
+          DoneTab(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
