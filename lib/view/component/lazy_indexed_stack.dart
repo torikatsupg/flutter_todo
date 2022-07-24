@@ -27,8 +27,8 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
       _cache[index] = builders[index](context);
     }
     return IndexedStack(
-      children: _cache.map((e) => e ?? defaultWidget).toList(),
       index: widget.index,
+      children: _cache.map((e) => e ?? defaultWidget).toList(),
     );
   }
 }

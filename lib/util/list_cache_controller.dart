@@ -18,7 +18,7 @@ class ListCacheController<Item> extends StateNotifier<ListCacheState<Item>> {
         items: result.list,
         cursor: result.cursor,
       );
-    } on dynamic catch (e) {
+    } on dynamic catch (_) {
       state = ListCacheState.error();
     }
   }

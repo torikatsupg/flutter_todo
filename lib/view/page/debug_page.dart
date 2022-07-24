@@ -25,7 +25,6 @@ class DebugPage extends ConsumerWidget {
                       .read(taskRepositoryFamily(uid))
                       .insert(name: '$i'));
                 }
-                print(result.map((e) => e.name));
               },
               title: const Text('create many todo'),
             ),
@@ -43,7 +42,6 @@ class DebugPage extends ConsumerWidget {
                       .read(taskRepositoryFamily(uid))
                       .update(e.copyWith(isDone: true)),
                 ));
-                print(result.map((e) => e.name));
               },
               title: const Text('create many done'),
             ),

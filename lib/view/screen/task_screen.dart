@@ -47,8 +47,8 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: controller.onTapFab,
+        child: const Icon(Icons.add),
       ),
     );
   }

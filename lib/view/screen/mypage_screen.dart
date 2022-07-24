@@ -15,12 +15,12 @@ class MyPageScreen extends ConsumerWidget {
       body: Column(
         children: [
           TextButton(
-            child: const Text('setting'),
             onPressed: controller.openSetting,
+            child: const Text('setting'),
           ),
           TextButton(
-            child: const Text('signout'),
             onPressed: controller.signOut,
+            child: const Text('signout'),
           ),
         ],
       ),

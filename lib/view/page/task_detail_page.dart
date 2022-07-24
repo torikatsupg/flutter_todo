@@ -51,8 +51,8 @@ class TaskDetailView extends ConsumerWidget {
         Text(task.createdAt.toIso8601String()),
         Text(task.isDone.toString()),
         TextButton(
-          child: const Text('to edit'),
           onPressed: controller.toEditPage,
+          child: const Text('to edit'),
         ),
       ],
     );
