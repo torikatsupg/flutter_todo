@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/route/go_router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -30,6 +31,7 @@ class App extends ConsumerWidget {
 
 // initializing between runApp() and MaterialApp.router()
 Future<bool> _init(WidgetRef ref) async {
+  ref.read(authStreamProvider.stream);
   await FirebaseAuth.instance.authStateChanges().first;
   return true;
 }
