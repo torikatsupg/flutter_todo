@@ -15,88 +15,88 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Result<Data, Error> {
+mixin _$Result<Data, Err> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Data value) ok,
-    required TResult Function(Error value) err,
+    required TResult Function(Err value) err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Ok<Data, Error> value) ok,
-    required TResult Function(Err<Data, Error> value) err,
+    required TResult Function(Ok<Data, Err> value) ok,
+    required TResult Function(Error<Data, Err> value) err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ResultCopyWith<Data, Error, $Res> {
+abstract class $ResultCopyWith<Data, Err, $Res> {
   factory $ResultCopyWith(
-          Result<Data, Error> value, $Res Function(Result<Data, Error>) then) =
-      _$ResultCopyWithImpl<Data, Error, $Res>;
+          Result<Data, Err> value, $Res Function(Result<Data, Err>) then) =
+      _$ResultCopyWithImpl<Data, Err, $Res>;
 }
 
 /// @nodoc
-class _$ResultCopyWithImpl<Data, Error, $Res>
-    implements $ResultCopyWith<Data, Error, $Res> {
+class _$ResultCopyWithImpl<Data, Err, $Res>
+    implements $ResultCopyWith<Data, Err, $Res> {
   _$ResultCopyWithImpl(this._value, this._then);
 
-  final Result<Data, Error> _value;
+  final Result<Data, Err> _value;
   // ignore: unused_field
-  final $Res Function(Result<Data, Error>) _then;
+  final $Res Function(Result<Data, Err>) _then;
 }
 
 /// @nodoc
-abstract class _$$OkCopyWith<Data, Error, $Res> {
+abstract class _$$OkCopyWith<Data, Err, $Res> {
   factory _$$OkCopyWith(
-          _$Ok<Data, Error> value, $Res Function(_$Ok<Data, Error>) then) =
-      __$$OkCopyWithImpl<Data, Error, $Res>;
+          _$Ok<Data, Err> value, $Res Function(_$Ok<Data, Err>) then) =
+      __$$OkCopyWithImpl<Data, Err, $Res>;
   $Res call({Data value});
 }
 
 /// @nodoc
-class __$$OkCopyWithImpl<Data, Error, $Res>
-    extends _$ResultCopyWithImpl<Data, Error, $Res>
-    implements _$$OkCopyWith<Data, Error, $Res> {
+class __$$OkCopyWithImpl<Data, Err, $Res>
+    extends _$ResultCopyWithImpl<Data, Err, $Res>
+    implements _$$OkCopyWith<Data, Err, $Res> {
   __$$OkCopyWithImpl(
-      _$Ok<Data, Error> _value, $Res Function(_$Ok<Data, Error>) _then)
-      : super(_value, (v) => _then(v as _$Ok<Data, Error>));
+      _$Ok<Data, Err> _value, $Res Function(_$Ok<Data, Err>) _then)
+      : super(_value, (v) => _then(v as _$Ok<Data, Err>));
 
   @override
-  _$Ok<Data, Error> get _value => super._value as _$Ok<Data, Error>;
+  _$Ok<Data, Err> get _value => super._value as _$Ok<Data, Err>;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(_$Ok<Data, Error>(
+    return _then(_$Ok<Data, Err>(
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -107,7 +107,7 @@ class __$$OkCopyWithImpl<Data, Error, $Res>
 
 /// @nodoc
 
-class _$Ok<Data, Error> extends Ok<Data, Error> {
+class _$Ok<Data, Err> extends Ok<Data, Err> {
   _$Ok(this.value) : super._();
 
   @override
@@ -115,14 +115,14 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
 
   @override
   String toString() {
-    return 'Result<$Data, $Error>.ok(value: $value)';
+    return 'Result<$Data, $Err>.ok(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Ok<Data, Error> &&
+            other is _$Ok<Data, Err> &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -132,14 +132,14 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
 
   @JsonKey(ignore: true)
   @override
-  _$$OkCopyWith<Data, Error, _$Ok<Data, Error>> get copyWith =>
-      __$$OkCopyWithImpl<Data, Error, _$Ok<Data, Error>>(this, _$identity);
+  _$$OkCopyWith<Data, Err, _$Ok<Data, Err>> get copyWith =>
+      __$$OkCopyWithImpl<Data, Err, _$Ok<Data, Err>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Data value) ok,
-    required TResult Function(Error value) err,
+    required TResult Function(Err value) err,
   }) {
     return ok(value);
   }
@@ -148,7 +148,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
   }) {
     return ok?.call(value);
   }
@@ -157,7 +157,7 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
     required TResult orElse(),
   }) {
     if (ok != null) {
@@ -169,8 +169,8 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Ok<Data, Error> value) ok,
-    required TResult Function(Err<Data, Error> value) err,
+    required TResult Function(Ok<Data, Err> value) ok,
+    required TResult Function(Error<Data, Err> value) err,
   }) {
     return ok(this);
   }
@@ -178,8 +178,8 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
   }) {
     return ok?.call(this);
   }
@@ -187,8 +187,8 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
     required TResult orElse(),
   }) {
     if (ok != null) {
@@ -198,66 +198,66 @@ class _$Ok<Data, Error> extends Ok<Data, Error> {
   }
 }
 
-abstract class Ok<Data, Error> extends Result<Data, Error> {
-  factory Ok(final Data value) = _$Ok<Data, Error>;
+abstract class Ok<Data, Err> extends Result<Data, Err> {
+  factory Ok(final Data value) = _$Ok<Data, Err>;
   Ok._() : super._();
 
   Data get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$$OkCopyWith<Data, Error, _$Ok<Data, Error>> get copyWith =>
+  _$$OkCopyWith<Data, Err, _$Ok<Data, Err>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrCopyWith<Data, Error, $Res> {
-  factory _$$ErrCopyWith(
-          _$Err<Data, Error> value, $Res Function(_$Err<Data, Error>) then) =
-      __$$ErrCopyWithImpl<Data, Error, $Res>;
-  $Res call({Error value});
+abstract class _$$ErrorCopyWith<Data, Err, $Res> {
+  factory _$$ErrorCopyWith(
+          _$Error<Data, Err> value, $Res Function(_$Error<Data, Err>) then) =
+      __$$ErrorCopyWithImpl<Data, Err, $Res>;
+  $Res call({Err value});
 }
 
 /// @nodoc
-class __$$ErrCopyWithImpl<Data, Error, $Res>
-    extends _$ResultCopyWithImpl<Data, Error, $Res>
-    implements _$$ErrCopyWith<Data, Error, $Res> {
-  __$$ErrCopyWithImpl(
-      _$Err<Data, Error> _value, $Res Function(_$Err<Data, Error>) _then)
-      : super(_value, (v) => _then(v as _$Err<Data, Error>));
+class __$$ErrorCopyWithImpl<Data, Err, $Res>
+    extends _$ResultCopyWithImpl<Data, Err, $Res>
+    implements _$$ErrorCopyWith<Data, Err, $Res> {
+  __$$ErrorCopyWithImpl(
+      _$Error<Data, Err> _value, $Res Function(_$Error<Data, Err>) _then)
+      : super(_value, (v) => _then(v as _$Error<Data, Err>));
 
   @override
-  _$Err<Data, Error> get _value => super._value as _$Err<Data, Error>;
+  _$Error<Data, Err> get _value => super._value as _$Error<Data, Err>;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(_$Err<Data, Error>(
+    return _then(_$Error<Data, Err>(
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as Error,
+              as Err,
     ));
   }
 }
 
 /// @nodoc
 
-class _$Err<Data, Error> extends Err<Data, Error> {
-  _$Err(this.value) : super._();
+class _$Error<Data, Err> extends Error<Data, Err> {
+  _$Error(this.value) : super._();
 
   @override
-  final Error value;
+  final Err value;
 
   @override
   String toString() {
-    return 'Result<$Data, $Error>.err(value: $value)';
+    return 'Result<$Data, $Err>.err(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Err<Data, Error> &&
+            other is _$Error<Data, Err> &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -267,14 +267,14 @@ class _$Err<Data, Error> extends Err<Data, Error> {
 
   @JsonKey(ignore: true)
   @override
-  _$$ErrCopyWith<Data, Error, _$Err<Data, Error>> get copyWith =>
-      __$$ErrCopyWithImpl<Data, Error, _$Err<Data, Error>>(this, _$identity);
+  _$$ErrorCopyWith<Data, Err, _$Error<Data, Err>> get copyWith =>
+      __$$ErrorCopyWithImpl<Data, Err, _$Error<Data, Err>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Data value) ok,
-    required TResult Function(Error value) err,
+    required TResult Function(Err value) err,
   }) {
     return err(value);
   }
@@ -283,7 +283,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
   }) {
     return err?.call(value);
   }
@@ -292,7 +292,7 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Data value)? ok,
-    TResult Function(Error value)? err,
+    TResult Function(Err value)? err,
     required TResult orElse(),
   }) {
     if (err != null) {
@@ -304,8 +304,8 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Ok<Data, Error> value) ok,
-    required TResult Function(Err<Data, Error> value) err,
+    required TResult Function(Ok<Data, Err> value) ok,
+    required TResult Function(Error<Data, Err> value) err,
   }) {
     return err(this);
   }
@@ -313,8 +313,8 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
   }) {
     return err?.call(this);
   }
@@ -322,8 +322,8 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Ok<Data, Error> value)? ok,
-    TResult Function(Err<Data, Error> value)? err,
+    TResult Function(Ok<Data, Err> value)? ok,
+    TResult Function(Error<Data, Err> value)? err,
     required TResult orElse(),
   }) {
     if (err != null) {
@@ -333,12 +333,12 @@ class _$Err<Data, Error> extends Err<Data, Error> {
   }
 }
 
-abstract class Err<Data, Error> extends Result<Data, Error> {
-  factory Err(final Error value) = _$Err<Data, Error>;
-  Err._() : super._();
+abstract class Error<Data, Err> extends Result<Data, Err> {
+  factory Error(final Err value) = _$Error<Data, Err>;
+  Error._() : super._();
 
-  Error get value => throw _privateConstructorUsedError;
+  Err get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$$ErrCopyWith<Data, Error, _$Err<Data, Error>> get copyWith =>
+  _$$ErrorCopyWith<Data, Err, _$Error<Data, Err>> get copyWith =>
       throw _privateConstructorUsedError;
 }
