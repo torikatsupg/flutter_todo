@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/infrastructure/firestore_error.dart';
+import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/controller/task_detail_controller_provider.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
@@ -12,27 +14,21 @@ class TaskDetailPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final task = ref.watch(prepareTaskDetailControllerProvider(id));
+    final state = ref.watch(taskDetailFamily(id));
     return Scaffold(
       appBar: AppBar(
         title: Text(id),
       ),
-      body: task.map(
-        data: (result) => result.value.map(
-          ok: (data) {
-            final task = data.value;
-            if (task == null) return const NotFoundView();
-            return ProviderScope(
-              overrides: [
-                taskDetailControllerProvider
-                    .overrideWithProvider(taskDetailControllerFamily(task))
-              ],
-              child: const TaskDetailView(),
-            );
-          },
-          err: (e) => const ErrorView(),
-        ),
-        error: (_) => const ErrorView(),
+      body: state.map(
+        data: (data) => TaskDetailView(data.value),
+        error: (e) {
+          // TODO(torikatsu): errorの判定ができない？？
+          if (e == FirestoreError.notFound) {
+            return const NotFoundView();
+          } else {
+            return const ErrorView();
+          }
+        },
         loading: (_) => const LoadingView(),
       ),
     );
@@ -40,12 +36,13 @@ class TaskDetailPage extends ConsumerWidget {
 }
 
 class TaskDetailView extends ConsumerWidget {
-  const TaskDetailView({Key? key}) : super(key: key);
+  const TaskDetailView(this.task, {Key? key}) : super(key: key);
+
+  final Task task;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(taskDetailControllerProvider);
-    final controller = ref.read(taskDetailControllerProvider.notifier);
+    final controller = ref.read(taskDetailFamily(task.id).notifier);
     return Column(
       children: [
         Text(task.id),

@@ -23,7 +23,7 @@ class Task with _$Task {
 abstract class TaskRepository<C extends Cursor, Err> {
   Future<Result<QueryList<Task, C>, Err>> findAllTodo([C? cursor]);
   Future<Result<QueryList<Task, C>, Err>> findAllDone([C? cursor]);
-  Future<Result<Task?, Err>> findById(String id);
+  Future<Result<Task, Err>> findById(String id);
   Future<Result<Task, Err>> insert({required String name});
   Future<Result<void, Err>> update(Task task);
 }

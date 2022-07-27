@@ -50,7 +50,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
           return;
         }
 
-        final user = _ref.read(authStreamProvider.stream).first;
+        final user = _ref.read(authStreamProvider.future);
         final result = await _ref.read(authenticatorProvider).signin(
               email: state.email.text,
               password: state.password.text,

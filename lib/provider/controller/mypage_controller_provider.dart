@@ -18,8 +18,8 @@ class MyPageController {
 
   void signOut() async {
     await _ref.read(loadingProvider.notifier).run(() async {
+      final user = _ref.read(authStreamProvider.future);
       final result = await _ref.read(authenticatorProvider).signout();
-      final user = _ref.read(authStreamProvider.stream).first;
       result.when(
         ok: (_) async {
           if (await user == null) {

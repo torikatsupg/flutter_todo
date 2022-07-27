@@ -59,6 +59,7 @@ class SignupNotifier extends StateNotifier<_SignupState> {
           return;
         }
 
+        final user = await _read(authStreamProvider.future);
         final result = await _read(authenticatorProvider).signup(
           email: state.email.text,
           password: state.password.text,
@@ -66,7 +67,6 @@ class SignupNotifier extends StateNotifier<_SignupState> {
 
         result.when(
           ok: (_) async {
-            final user = await _read(authStreamProvider.future);
             if (user == null) {
               throw AppError.unknown();
             } else {

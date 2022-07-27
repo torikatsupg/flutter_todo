@@ -26,7 +26,7 @@ final doneTasksFamily = StateNotifierProvider.family<
 );
 
 final taskFamily =
-    FutureProvider.family<Result<Task?, FirestoreError>, TaskArg>(
+    FutureProvider.family<Result<Task, FirestoreError>, TaskArg>(
   (ref, arg) => ref.watch(taskRepositoryFamily(arg.uid)).findById(arg.id),
 );
 

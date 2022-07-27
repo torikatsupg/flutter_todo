@@ -1,30 +1,33 @@
-import 'package:flutter_todo/infrastructure/firestore_error.dart';
-import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final prepareTaskDetailControllerProvider = FutureProvider.autoDispose
-    .family<Result<Task?, FirestoreError>, String>((ref, id) async {
-  final uid = ref.read(authProvider).uid;
-  return ref.watch(taskFamily(TaskArg(uid: uid, id: id)).future);
-});
+final taskDetailFamily = StateNotifierProvider.autoDispose
+    .family<TaskDetailController, AsyncValue<Task>, String>(
+  (ref, id) => TaskDetailController(ref, id),
+);
 
-final taskDetailControllerProvider =
-    StateNotifierProvider.autoDispose<TaskDetailController, Task>(
-        (_) => throw UnimplementedError());
+class TaskDetailController extends StateNotifier<AsyncValue<Task>> {
+  TaskDetailController(Ref ref, String taskId)
+      : super(const AsyncValue.loading()) {
+    _read = ref.read;
+    init(ref, taskId);
+  }
 
-final taskDetailControllerFamily = StateNotifierProvider.autoDispose
-    .family<TaskDetailController, Task, Task>(
-        (ref, task) => TaskDetailController(ref, task));
+  late final Reader _read;
 
-class TaskDetailController extends StateNotifier<Task> {
-  TaskDetailController(this._ref, Task state) : super(state);
+  Future<void> init(Ref ref, String taskId) async {
+    final uid = ref.read(authProvider).uid;
+    final result =
+        await ref.read(taskFamily(TaskArg(uid: uid, id: taskId)).future);
+    state = result.map(
+      ok: (data) => AsyncValue.data(data.value),
+      err: AsyncValue.error,
+    );
+  }
 
-  final Ref _ref;
-
-  void toEditPage() =>
-      _ref.read(routerProvider.notifier).go('/home/todo/${state.id}/edit');
+  void toEditPage() => state.whenData((task) =>
+      _read(routerProvider.notifier).go('/home/todo/${task.id}/edit'));
 }

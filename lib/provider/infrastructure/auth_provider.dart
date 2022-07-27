@@ -15,6 +15,7 @@ final authProvider = Provider<User>((ref) {
 
 final _prev = StateProvider<User?>((ref) => null);
 
+// TODO(torikatsu): resultにする
 final authStreamProvider = StreamProvider<User?>((ref) {
   final authStream = FirebaseAuth.instance.authStateChanges();
   final stream = authStream.transform<User?>(
