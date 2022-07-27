@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/controller/task_detail_controller_provider.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
 import 'package:flutter_todo/view/component/not_found_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_todo/util/async_value.dart';
 
 class TaskDetailPage extends ConsumerWidget {
   const TaskDetailPage(this.id, {Key? key}) : super(key: key);
@@ -19,17 +19,11 @@ class TaskDetailPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(id),
       ),
-      body: state.map(
-        data: (data) => TaskDetailView(data.value),
-        error: (e) {
-          // TODO(torikatsu): errorの判定ができない？？
-          if (e == FirestoreError.notFound) {
-            return const NotFoundView();
-          } else {
-            return const ErrorView();
-          }
-        },
-        loading: (_) => const LoadingView(),
+      body: state.flatMap(
+        data: TaskDetailView.new,
+        loading: LoadingView.new,
+        notFound: NotFoundView.new,
+        error: ErrorView.new,
       ),
     );
   }

@@ -12,24 +12,24 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part '../../generated/provider/controller/signup_controller_provider.freezed.dart';
 
 final signupControllerProvider =
-    StateNotifierProvider.autoDispose<SignupNotifier, _SignupState>(
-  (ref) => SignupNotifier(ref.read),
-);
+    StateNotifierProvider.autoDispose<SignupController, _SignupState>(
+        SignupController.new);
 
-class SignupNotifier extends StateNotifier<_SignupState> {
-  SignupNotifier(this._read)
+class SignupController extends StateNotifier<_SignupState> {
+  SignupController(Ref ref)
       : super(_SignupState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
           confirmPassword: createFormModel(mandatoryValidator),
         )) {
+    _read = ref.read;
     state.email.setListeners(onChangedEmail, onFocusChangeEmail);
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
     state.confirmPassword
         .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
   }
 
-  final Reader _read;
+  late final Reader _read;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());

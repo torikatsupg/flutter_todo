@@ -17,10 +17,14 @@ part '../../generated/provider/controller/task_edit_controller_provider.freezed.
 
 final prepareTaskEditProvider = Provider.autoDispose
     .family<AsyncValue<Result<Task, FirestoreError>>, String>(
-  (ref, id) {
-    final uid = ref.read(authProvider).uid;
-    return ref.watch(taskFamily(TaskArg(uid: uid, id: id)));
-  },
+  (ref, id) => ref.watch(
+    taskFamily(
+      TaskArg(
+        uid: ref.read(authProvider).uid,
+        id: id,
+      ),
+    ),
+  ),
 );
 
 final taskEditControllerFamily = StateNotifierProvider.autoDispose

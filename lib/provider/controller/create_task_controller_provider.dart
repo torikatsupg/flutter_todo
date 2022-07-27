@@ -12,7 +12,8 @@ part '../../generated/provider/controller/create_task_controller_provider.freeze
 
 final createTaskController =
     StateNotifierProvider.autoDispose<CreateTaskController, _CreateTaskState>(
-        (ref) => CreateTaskController(ref));
+  CreateTaskController.new,
+);
 
 class CreateTaskController extends StateNotifier<_CreateTaskState> {
   CreateTaskController(this._ref)

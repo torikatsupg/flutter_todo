@@ -13,7 +13,8 @@ part '../../generated/provider/controller/signin_controller_provider.freezed.dar
 
 final signinControllerProvider =
     StateNotifierProvider.autoDispose<SigninNotifier, _SigninState>(
-        (ref) => SigninNotifier(ref));
+  SigninNotifier.new,
+);
 
 class SigninNotifier extends StateNotifier<_SigninState> {
   SigninNotifier(this._ref)

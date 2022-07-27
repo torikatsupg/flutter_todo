@@ -18,12 +18,10 @@ class MyGoRoute extends GoRoute {
           redirect: redirect ?? (_) => null,
           path: path,
           builder: (context, state) {
+            assert(builder != null);
             return Stack(
               children: [
-                if (builder != null)
-                  builder(context, state)
-                else
-                  _builder(context, state),
+                builder!(context, state),
                 Consumer(
                   builder: (context, ref, child) => ref.watch(loadingProvider)
                       ? child!
@@ -37,6 +35,3 @@ class MyGoRoute extends GoRoute {
           routes: routes ?? [],
         );
 }
-
-// ignore: prefer_function_declarations_over_variables
-final RouteBuilder _builder = (context, state) => throw Error;

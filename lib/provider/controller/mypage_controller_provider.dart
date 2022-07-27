@@ -6,7 +6,7 @@ import 'package:flutter_todo/provider/global_controller/network_dialog_provider.
 import 'package:flutter_todo/provider/route/route_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final myPageControllerProvider = Provider((ref) => MyPageController(ref));
+final myPageControllerProvider = Provider(MyPageController.new);
 
 class MyPageController {
   MyPageController(this._ref);
