@@ -11,11 +11,13 @@ part '../generated/util/pagenated_list_controller.freezed.dart';
 // TODO(torikatsu): handle error.
 class PagenatedListController<Item, Err>
     extends StateNotifier<AsyncValue<Result<PagenatedList<Item, Err>, Err>>> {
-  PagenatedListController(this._fetch) : super(const AsyncValue.loading());
+  PagenatedListController(this._fetch) :  super(const AsyncValue.loading()) {
+    _initialize();
+  }
 
   final Fetch<Item, Err> _fetch;
 
-  Future<void> initialize() async {
+  Future<void> _initialize() async {
     state = (await _fetch()).flatMap(
       ok: (data) => AsyncValue.data(
         Result.ok(

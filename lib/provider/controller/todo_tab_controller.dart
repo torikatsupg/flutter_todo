@@ -13,23 +13,20 @@ part '../../generated/provider/controller/todo_tab_controller.freezed.dart';
 
 final todoTabControllerProvider =
     StateNotifierProvider<TodoTabController, _TodoTabState>(
-  (ref) {
-    final uid = ref.read(authProvider).uid;
-    final controller = TodoTabController(ref, uid);
-    // avoid modify provider during their initialization
-    Future.delayed(const Duration(microseconds: 1)).then(
-      (_) => ref.read(todoTasksFamily(uid).notifier).initialize(),
-    );
-    return controller;
-  },
+  (ref) => TodoTabController(
+    ref,
+    ref.read(authProvider).uid,
+  ),
 );
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
   TodoTabController(Ref ref, this._uid)
-      : super(_TodoTabState(
-          list: ref.read(todoTasksFamily(_uid)),
-          scrollController: ScrollController(),
-        )) {
+      : super(
+          _TodoTabState(
+            list: ref.read(todoTasksFamily(_uid)),
+            scrollController: ScrollController(),
+          ),
+        ) {
     _read = ref.read;
 
     state.scrollController.addListener(() {

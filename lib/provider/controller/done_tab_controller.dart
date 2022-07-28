@@ -13,7 +13,10 @@ part '../../generated/provider/controller/done_tab_controller.freezed.dart';
 
 final doneTabControllerProvider =
     StateNotifierProvider<DoneTabController, _DoneTabState>(
-  (ref) => DoneTabController(ref, ref.read(authProvider).uid),
+  (ref) => DoneTabController(
+    ref,
+    ref.read(authProvider).uid,
+  ),
 );
 
 class DoneTabController extends StateNotifier<_DoneTabState> {
@@ -36,8 +39,6 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
 
     ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
         doneTasksFamily(_uid), (_, next) => onChagneList(next));
-
-    ref.read(doneTasksFamily(_uid).notifier).initialize();
   }
 
   late final Reader _read;
