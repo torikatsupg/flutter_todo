@@ -60,7 +60,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
         await result.when(
           ok: (_) async {
             if (await user == null) {
-              throw AppError.unknown();
+              throw AppError.unknown;
             } else {
               _ref.read(routerProvider.notifier).go('/home');
             }

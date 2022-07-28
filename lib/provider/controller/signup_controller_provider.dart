@@ -68,7 +68,7 @@ class SignupController extends StateNotifier<_SignupState> {
         result.when(
           ok: (_) async {
             if (user == null) {
-              throw AppError.unknown();
+              throw AppError.unknown;
             } else {
               _read(routerProvider.notifier).go('/home');
             }

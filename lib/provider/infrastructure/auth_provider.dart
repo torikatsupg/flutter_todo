@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final authProvider = Provider<User>((ref) {
   final maybeUser = ref.watch(authStreamProvider).value;
   if (maybeUser == null) {
-    throw AppError.unauthorized();
+    throw AppError.unauthorized;
   } else {
     return maybeUser;
   }

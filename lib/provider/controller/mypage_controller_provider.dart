@@ -25,7 +25,7 @@ class MyPageController {
           if (await user == null) {
             _ref.read(routerProvider.notifier).go('/signin');
           } else {
-            throw AppError.unknown();
+            throw AppError.unknown;
           }
         },
         err: (e) {
