@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/controller/done_tab_controller.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
+import 'package:flutter_todo/util/async_value.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DoneTab extends ConsumerWidget {
@@ -12,9 +13,7 @@ class DoneTab extends ConsumerWidget {
     final state = ref.watch(doneTabControllerProvider);
     final controller = ref.read(doneTabControllerProvider.notifier);
 
-    return state.list.when<Widget>(
-      error: (error, stackTrace) => const ErrorView(),
-      loading: () => const LoadingView(),
+    return state.list.flatMap<Widget>(
       data: (list) => RefreshIndicator(
         // TODO(torikatsu): apply web
         onRefresh: controller.refresh,
@@ -70,6 +69,8 @@ class DoneTab extends ConsumerWidget {
           ],
         ),
       ),
+      loading: LoadingView.new,
+      orElse: ErrorView.new,
     );
   }
 }

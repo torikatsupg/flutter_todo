@@ -16,5 +16,14 @@ class Result<Data, Err> with _$Result<Data, Err> {
         err: (e) => err(e.value),
       );
 
+  Result<T, E> map_<T, E>({
+    required T Function(Data) ok,
+    required E Function(Err) err,
+  }) =>
+      map(
+        ok: (v) => Result.ok(ok(v.value)),
+        err: (e) => Result.err(err(e.value)),
+      );
+
   Result._();
 }

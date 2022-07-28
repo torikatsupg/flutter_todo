@@ -11,23 +11,28 @@ part '../../generated/provider/model/task_provider.freezed.dart';
 
 final todoTasksFamily = StateNotifierProvider.family<
     PagenatedListController<Task, FirestoreError>,
-    AsyncValue<PagenatedList<Task, FirestoreError>>,
+    AsyncPagenatedList<Task, FirestoreError>,
     String>(
-  (ref, uid) =>
-      PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllTodo),
+  (ref, uid) => PagenatedListController(
+    ref.watch(taskRepositoryFamily(uid)).findAllTodo,
+  ),
 );
 
 final doneTasksFamily = StateNotifierProvider.family<
     PagenatedListController<Task, FirestoreError>,
-    AsyncValue<PagenatedList<Task, FirestoreError>>,
+    AsyncPagenatedList<Task, FirestoreError>,
     String>(
-  (ref, uid) =>
-      PagenatedListController(ref.watch(taskRepositoryFamily(uid)).findAllDone),
+  (ref, uid) => PagenatedListController(
+    ref.watch(taskRepositoryFamily(uid)).findAllDone,
+  ),
 );
 
-final taskFamily =
-    FutureProvider.family<Result<Task, FirestoreError>, TaskArg>(
-  (ref, arg) => ref.watch(taskRepositoryFamily(arg.uid)).findById(arg.id),
+final taskFamily = FutureProvider.family<Result<Task, FirestoreError>, TaskArg>(
+  (ref, arg) => ref
+      .watch(
+        taskRepositoryFamily(arg.uid),
+      )
+      .findById(arg.id),
 );
 
 @freezed

@@ -1,4 +1,5 @@
 import 'package:flutter_todo/infrastructure/cursor_impl.dart';
+import 'package:flutter_todo/util/async_value.dart';
 import 'package:flutter_todo/model/query_list.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/util/util.dart';
@@ -9,86 +10,79 @@ part '../generated/util/pagenated_list_controller.freezed.dart';
 
 // TODO(torikatsu): handle error.
 class PagenatedListController<Item, Err>
-    extends StateNotifier<AsyncPagenatedList<Item, Err>> {
+    extends StateNotifier<AsyncValue<Result<PagenatedList<Item, Err>, Err>>> {
   PagenatedListController(this._fetch) : super(const AsyncValue.loading());
 
   final Fetch<Item, Err> _fetch;
 
   Future<void> initialize() async {
-    state = (await _fetch()).map(
+    state = (await _fetch()).flatMap(
       ok: (data) => AsyncValue.data(
-        PagenatedList(list: data.value.list, cursor: data.value.cursor),
+        Result.ok(
+          PagenatedList(list: data.list, cursor: data.cursor),
+        ),
       ),
-      err: AsyncValue.error,
+      err: (e) => AsyncValue.data(Result.err(e)),
     );
   }
 
-  Future<void> refresh() async => state.whenData(
-        (data) async {
-          if (!data.canRefresh) return;
-          state = AsyncValue.data(data.copyWith(isRefreshing: true));
-          state = (await _fetch()).map(
-            ok: (result) => AsyncValue.data(
-              data.copyWith(
-                list: result.value.list,
-                cursor: result.value.cursor,
-                refreshError: null,
-                isRefreshing: false,
-              ),
-            ),
-            err: (e) => AsyncValue.data(
-              data.copyWith(
-                refreshError: e.value,
-                isRefreshing: false,
-              ),
-            ),
-          );
-        },
-      );
-
-  void resolveAndLoadMore() async => state.whenData(
-        (data) async {
-          state = AsyncValue.data(data.copyWith(loadMoreError: null));
-          await loadMore();
-        },
-      );
-
-  Future<void> loadMore() async => state.whenData(
-        (data) async {
-          if (!data.canLoadMore) return;
-          state = AsyncValue.data(data.copyWith(isMoreLoading: true));
-          state = (await _fetch(data.cursor)).map(
-            ok: (result) => AsyncValue.data(
-              data.copyWith(
-                list: [...data.list, ...result.value.list],
-                cursor: result.value.cursor,
-                hasMoreData: result.value.hasMoreData,
-                isMoreLoading: false,
-              ),
-            ),
-            err: (e) => AsyncValue.data(
-              data.copyWith(
-                loadMoreError: e.value,
-                isMoreLoading: false,
-              ),
-            ),
-          );
-        },
-      );
-
-  void insert(Item item) => state = state.whenData(
-        (state) => state.copyWith(
-          list: [item, ...state.list],
+  Future<void> refresh() async {
+    if (!state.maybeFlatMap((v) => v.canRefresh, false)) return;
+    state = state.flatMapData((data) => data.copyWith(isRefreshing: true));
+    final result = await _fetch();
+    state = state.flatMapData(
+      (state) => result.flatMap(
+        ok: (ok) => state.copyWith(
+          list: ok.list,
+          cursor: ok.cursor,
+          refreshError: null,
+          isRefreshing: false,
         ),
+        err: (e) => state.copyWith(
+          refreshError: e,
+          isRefreshing: false,
+        ),
+      ),
+    );
+  }
+
+  void resolveAndLoadMore() async {
+    state = state.flatMapData((data) => data.copyWith(loadMoreError: null));
+    await loadMore();
+  }
+
+  Future<void> loadMore() async {
+    if (!state.maybeFlatMap((data) => data.canLoadMore, false)) return;
+    state = state.flatMapData((data) => data.copyWith(isMoreLoading: true));
+    final cursor = state.maybeFlatMap((data) => data.cursor, null);
+    final result = await _fetch(cursor);
+    state = state.flatMapData(
+      (data) => result.map(
+        ok: (result) => data.copyWith(
+          list: [...data.list, ...result.value.list],
+          cursor: result.value.cursor,
+          hasMoreData: result.value.hasMoreData,
+          isMoreLoading: false,
+        ),
+        err: (e) => data.copyWith(
+          loadMoreError: e.value,
+          isMoreLoading: false,
+        ),
+      ),
+    );
+  }
+
+  void insert(Item item) => state = state.flatMapData(
+        (state) => state.copyWith(list: [item, ...state.list]),
       );
 
-  void update(Item item) => state = state.whenData(
+  void update(Item item) => state = state.flatMapData(
         (data) => data.copyWith(
           list: data.list.map((e) => e == item ? item : e).toList(),
         ),
       );
 
-  void delete(Item item) => state = state.whenData(
+  void delete(Item item) => state = state.flatMapData(
         (data) => data.copyWith(
           list: data.list.where((e) => e == item).toList(),
         ),
@@ -116,7 +110,8 @@ class PagenatedList<Item, Err> with _$PagenatedList<Item, Err> {
   PagenatedList._();
 }
 
-typedef AsyncPagenatedList<Item, Err> = AsyncValue<PagenatedList<Item, Err>>;
+typedef AsyncPagenatedList<Item, Err>
+    = AsyncValue<Result<PagenatedList<Item, Err>, Err>>;
 
 typedef Fetch<Item, Err> = Future<Result<QueryList<Item, CursorImpl>, Err>>
     Function([CursorImpl? impl]);
