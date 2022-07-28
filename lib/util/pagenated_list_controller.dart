@@ -8,10 +8,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/util/pagenated_list_controller.freezed.dart';
 
-// TODO(torikatsu): handle error.
 class PagenatedListController<Item, Err>
-    extends StateNotifier<AsyncValue<Result<PagenatedList<Item, Err>, Err>>> {
-  PagenatedListController(this._fetch) :  super(const AsyncValue.loading()) {
+    extends StateNotifier<AsyncPagenatedList<Item, Err>> {
+  PagenatedListController(this._fetch) : super(const AsyncValue.loading()) {
     _initialize();
   }
 
