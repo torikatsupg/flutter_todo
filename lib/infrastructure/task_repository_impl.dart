@@ -24,8 +24,10 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
   @override
   Future<Result<QueryList<Task, CursorImpl>, FirestoreError>> findAllTodo(
       [CursorImpl? cursor]) async {
-    final query =
-        _ref.where(_isDone, isEqualTo: false).orderBy(_createdAt).limit(limit);
+    final query = _ref
+        .where(_isDone, isEqualTo: false)
+        .orderBy(_createdAt, descending: true)
+        .limit(limit);
     final cursorDoc = cursor?.value;
     try {
       final result = await (cursorDoc == null
@@ -50,8 +52,10 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
   @override
   Future<Result<QueryList<Task, CursorImpl>, FirestoreError>> findAllDone(
       [CursorImpl? cursor]) async {
-    final query =
-        _ref.where(_isDone, isEqualTo: true).orderBy(_createdAt).limit(limit);
+    final query = _ref
+        .where(_isDone, isEqualTo: true)
+        .orderBy(_createdAt, descending: true)
+        .limit(limit);
     final cursorDoc = cursor?.value;
     try {
       final result = await (cursorDoc == null
