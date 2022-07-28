@@ -6,7 +6,7 @@ import 'package:flutter_todo/util/async_value.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TodoTab extends ConsumerWidget {
-  const TodoTab({Key? key}) : super(key: key);
+  const TodoTab({super.key});
 
   @override
   Widget build(context, ref) {

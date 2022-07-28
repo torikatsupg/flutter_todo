@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/controller/not_found_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NotFoundPage extends ConsumerWidget {
-  const NotFoundPage({Key? key}) : super(key: key);
+  const NotFoundPage({super.key});
 
   @override
   Widget build(BuildContext context, ref) {

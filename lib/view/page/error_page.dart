@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/controller/error_controller_provider.dart'
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ErrorPage extends ConsumerWidget {
-  const ErrorPage({Key? key}) : super(key: key);
+  const ErrorPage({super.key});
 
   @override
   Widget build(BuildContext context, ref) {

@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/util/async_value.dart';
 
 class TaskDetailPage extends ConsumerWidget {
-  const TaskDetailPage(this.id, {Key? key}) : super(key: key);
+  const TaskDetailPage(this.id, {super.key});
 
   final String id;
 
@@ -30,7 +30,7 @@ class TaskDetailPage extends ConsumerWidget {
 }
 
 class TaskDetailView extends ConsumerWidget {
-  const TaskDetailView(this.task, {Key? key}) : super(key: key);
+  const TaskDetailView(this.task, {super.key});
 
   final Task task;
 

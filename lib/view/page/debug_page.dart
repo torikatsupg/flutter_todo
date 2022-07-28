@@ -6,7 +6,7 @@ import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DebugPage extends ConsumerWidget {
-  const DebugPage({Key? key}) : super(key: key);
+  const DebugPage({super.key});
 
   @override
   Widget build(context, ref) {

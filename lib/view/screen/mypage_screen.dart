@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/controller/mypage_controller_provider.dart
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MyPageScreen extends ConsumerWidget {
-  const MyPageScreen({Key? key}) : super(key: key);
+  const MyPageScreen({super.key});
 
   @override
   Widget build(context, ref) {

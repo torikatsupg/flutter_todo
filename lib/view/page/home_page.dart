@@ -6,7 +6,7 @@ import 'package:flutter_todo/view/screen/task_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage(this.tab, {Key? key}) : super(key: key);
+  const HomePage(this.tab, {super.key});
 
   final String tab;
 

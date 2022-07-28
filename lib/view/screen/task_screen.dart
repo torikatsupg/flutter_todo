@@ -6,7 +6,7 @@ import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TaskScreen extends ConsumerStatefulWidget {
-  const TaskScreen({Key? key}) : super(key: key);
+  const TaskScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TodoScreenState();

@@ -17,19 +17,19 @@ final signupControllerProvider =
 
 class SignupController extends StateNotifier<_SignupState> {
   SignupController(Ref ref)
-      : super(_SignupState(
+      : _read = ref.read,
+        super(_SignupState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
           confirmPassword: createFormModel(mandatoryValidator),
         )) {
-    _read = ref.read;
     state.email.setListeners(onChangedEmail, onFocusChangeEmail);
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
     state.confirmPassword
         .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
   }
 
-  late final Reader _read;
+  final Reader _read;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());

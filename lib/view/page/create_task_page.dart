@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/controller/create_task_controller_provider
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CreatePage extends ConsumerWidget {
-  const CreatePage({Key? key}) : super(key: key);
+  const CreatePage({super.key});
 
   @override
   Widget build(context, ref) {

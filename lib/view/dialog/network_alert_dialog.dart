@@ -4,7 +4,7 @@ import 'package:flutter_todo/provider/global_controller/network_dialog_provider.
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NetworkAlertDialog extends ConsumerWidget {
-  const NetworkAlertDialog({Key? key}) : super(key: key);
+  const NetworkAlertDialog({super.key});
 
   @override
   Widget build(context, ref) {

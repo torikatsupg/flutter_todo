@@ -3,7 +3,7 @@ import 'package:flutter_todo/provider/controller/signup_controller_provider.dart
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SignupPage extends ConsumerWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   Widget build(context, ref) {

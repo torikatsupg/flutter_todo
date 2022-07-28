@@ -32,17 +32,19 @@ final taskEditControllerFamily = StateNotifierProvider.autoDispose
 
 class TaskEditController extends StateNotifier<_TaskEditState> {
   TaskEditController(Ref ref, Task initTask)
-      : super(_TaskEditState(
-          initTask: initTask,
-          name: createFormModel(mandatoryValidator, initTask.name),
-        )) {
-    _read = ref.read;
-    _refresh = ref.refresh;
+      : _read = ref.read,
+        _refresh = ref.refresh,
+        super(
+          _TaskEditState(
+            initTask: initTask,
+            name: createFormModel(mandatoryValidator, initTask.name),
+          ),
+        ) {
     state.name.setListeners(_onChangeText, _onFocusChanged);
   }
 
-  late final Reader _read;
-  late final Refresh _refresh;
+  final Reader _read;
+  final Refresh _refresh;
 
   void _onChangeText() {
     state = state.copyWith(name: state.name.onChangeText());

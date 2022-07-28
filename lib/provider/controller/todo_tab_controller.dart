@@ -21,14 +21,13 @@ final todoTabControllerProvider =
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
   TodoTabController(Ref ref, this._uid)
-      : super(
+      : _read = ref.read,
+        super(
           _TodoTabState(
             list: ref.read(todoTasksFamily(_uid)),
             scrollController: ScrollController(),
           ),
         ) {
-    _read = ref.read;
-
     state.scrollController.addListener(() {
       // TODO(torikatsu): fix conditions
       if (state.scrollController.offset >
@@ -41,7 +40,7 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
         todoTasksFamily(_uid), (_, next) => onChagneList(next));
   }
 
-  late final Reader _read;
+  final Reader _read;
   final String _uid;
 
   void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>

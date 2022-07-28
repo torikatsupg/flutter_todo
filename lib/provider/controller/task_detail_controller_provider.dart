@@ -15,12 +15,12 @@ final taskDetailFamily = StateNotifierProvider.autoDispose.family<
 class TaskDetailController
     extends StateNotifier<AsyncValue<Result<Task, FirestoreError>>> {
   TaskDetailController(Ref ref, String taskId)
-      : super(const AsyncValue.loading()) {
-    _read = ref.read;
+      : _read = ref.read,
+        super(const AsyncValue.loading()) {
     init(ref, taskId);
   }
 
-  late final Reader _read;
+  final Reader _read;
 
   Future<void> init(Ref ref, String taskId) async {
     final uid = ref.read(authProvider).uid;
