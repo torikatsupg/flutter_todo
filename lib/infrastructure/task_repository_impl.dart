@@ -78,15 +78,15 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
   }
 
   @override
-  Future<Result<Task, FirestoreError>> findById(String id) async {
+  Future<Result<Task, FirestoreError>> findById(TaskId id) async {
     try {
-      final result = await _ref.doc(id).get();
+      final result = await _ref.doc(id.value).get();
       final data = result.data() as Map<String, dynamic>?;
       if (data == null) {
         return Result.err(FirestoreError.notFound);
       } else {
         return Result.ok(
-          Task(
+          Task.restore(
             id: result.id,
             name: data[_name],
             createdAt: (data[_createdAt] as Timestamp).toDate(),
@@ -123,7 +123,7 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
   @override
   Future<Result<void, FirestoreError>> update(Task task) async {
     try {
-      await _ref.doc(task.id).set(
+      await _ref.doc(task.id.value).set(
         {
           _name: task.name,
           _createdAt: task.createdAt,
@@ -140,7 +140,7 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
 
   Task _toTask(DocumentSnapshot<Object?> doc) {
     final data = doc.data() as Map<String, dynamic>;
-    return Task(
+    return Task.restore(
       id: doc.id,
       name: data[_name],
       createdAt: (data[_createdAt] as Timestamp).toDate(),

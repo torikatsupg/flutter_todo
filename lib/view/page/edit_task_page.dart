@@ -10,14 +10,14 @@ import 'package:flutter_todo/util/async_value.dart';
 class EditTaskPage extends ConsumerWidget {
   const EditTaskPage(this.id, {super.key});
 
-  final String id;
+  final TaskId id;
 
   @override
   Widget build(context, ref) {
     final state = ref.watch(prepareTaskEditProvider(id));
     return Scaffold(
       appBar: AppBar(
-        title: Text(id),
+        title: Text(id.value),
       ),
       body: state.flatMap(
         data: _EditView.new,

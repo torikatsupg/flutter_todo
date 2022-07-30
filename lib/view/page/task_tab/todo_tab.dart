@@ -36,9 +36,9 @@ class TodoTab extends ConsumerWidget {
                 (context, index) {
                   final task = list.list[index];
                   return ListTile(
-                    leading: Text(task.id),
+                    leading: Text(task.id.value),
                     title: Text(task.name),
-                    onTap: () => controller.onPressItem(task.id),
+                    onTap: () => controller.onPressItem(task.id.value),
                   );
                 },
                 childCount: list.list.length,

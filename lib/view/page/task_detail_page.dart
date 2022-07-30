@@ -10,14 +10,14 @@ import 'package:flutter_todo/util/async_value.dart';
 class TaskDetailPage extends ConsumerWidget {
   const TaskDetailPage(this.id, {super.key});
 
-  final String id;
+  final TaskId id;
 
   @override
   Widget build(context, ref) {
     final state = ref.watch(taskDetailFamily(id));
     return Scaffold(
       appBar: AppBar(
-        title: Text(id),
+        title: Text(id.value),
       ),
       body: state.flatMap(
         data: TaskDetailView.new,
@@ -39,7 +39,7 @@ class TaskDetailView extends ConsumerWidget {
     final controller = ref.read(taskDetailFamily(task.id).notifier);
     return Column(
       children: [
-        Text(task.id),
+        Text(task.id.value),
         Text(task.name),
         Text(task.createdAt.toIso8601String()),
         Text(task.isDone.toString()),

@@ -10,11 +10,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final taskDetailFamily = StateNotifierProvider.autoDispose.family<
     TaskDetailController,
     AsyncValue<Result<Task, FirestoreError>>,
-    String>(TaskDetailController.new);
+    TaskId>(TaskDetailController.new);
 
 class TaskDetailController
     extends StateNotifier<AsyncValue<Result<Task, FirestoreError>>> {
-  TaskDetailController(Ref ref, String taskId)
+  TaskDetailController(Ref ref, TaskId taskId)
       : _read = ref.read,
         super(const AsyncValue.loading()) {
     init(ref, taskId);
@@ -22,10 +22,10 @@ class TaskDetailController
 
   final Reader _read;
 
-  Future<void> init(Ref ref, String taskId) async {
+  Future<void> init(Ref ref, TaskId taskId) async {
     final uid = ref.read(authProvider).uid;
     final result =
-        await ref.read(taskFamily(TaskArg(uid: uid, id: taskId)).future);
+        await ref.read(taskFamily(TaskArg(uid: uid, taskId: taskId)).future);
     state = AsyncValue.data(result);
   }
 

@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TaskArg {
   String get uid => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
+  TaskId get taskId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskArgCopyWith<TaskArg> get copyWith => throw _privateConstructorUsedError;
@@ -27,7 +27,9 @@ mixin _$TaskArg {
 abstract class $TaskArgCopyWith<$Res> {
   factory $TaskArgCopyWith(TaskArg value, $Res Function(TaskArg) then) =
       _$TaskArgCopyWithImpl<$Res>;
-  $Res call({String uid, String id});
+  $Res call({String uid, TaskId taskId});
+
+  $TaskIdCopyWith<$Res> get taskId;
 }
 
 /// @nodoc
@@ -41,18 +43,25 @@ class _$TaskArgCopyWithImpl<$Res> implements $TaskArgCopyWith<$Res> {
   @override
   $Res call({
     Object? uid = freezed,
-    Object? id = freezed,
+    Object? taskId = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      taskId: taskId == freezed
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as TaskId,
     ));
+  }
+
+  @override
+  $TaskIdCopyWith<$Res> get taskId {
+    return $TaskIdCopyWith<$Res>(_value.taskId, (value) {
+      return _then(_value.copyWith(taskId: value));
+    });
   }
 }
 
@@ -62,7 +71,10 @@ abstract class _$$_TaskArgCopyWith<$Res> implements $TaskArgCopyWith<$Res> {
           _$_TaskArg value, $Res Function(_$_TaskArg) then) =
       __$$_TaskArgCopyWithImpl<$Res>;
   @override
-  $Res call({String uid, String id});
+  $Res call({String uid, TaskId taskId});
+
+  @override
+  $TaskIdCopyWith<$Res> get taskId;
 }
 
 /// @nodoc
@@ -77,17 +89,17 @@ class __$$_TaskArgCopyWithImpl<$Res> extends _$TaskArgCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = freezed,
-    Object? id = freezed,
+    Object? taskId = freezed,
   }) {
     return _then(_$_TaskArg(
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      taskId: taskId == freezed
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as TaskId,
     ));
   }
 }
@@ -95,16 +107,16 @@ class __$$_TaskArgCopyWithImpl<$Res> extends _$TaskArgCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TaskArg extends _TaskArg {
-  _$_TaskArg({required this.uid, required this.id}) : super._();
+  _$_TaskArg({required this.uid, required this.taskId}) : super._();
 
   @override
   final String uid;
   @override
-  final String id;
+  final TaskId taskId;
 
   @override
   String toString() {
-    return 'TaskArg(uid: $uid, id: $id)';
+    return 'TaskArg(uid: $uid, taskId: $taskId)';
   }
 
   @override
@@ -113,14 +125,14 @@ class _$_TaskArg extends _TaskArg {
         (other.runtimeType == runtimeType &&
             other is _$_TaskArg &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.taskId, taskId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(id));
+      const DeepCollectionEquality().hash(taskId));
 
   @JsonKey(ignore: true)
   @override
@@ -129,14 +141,14 @@ class _$_TaskArg extends _TaskArg {
 }
 
 abstract class _TaskArg extends TaskArg {
-  factory _TaskArg({required final String uid, required final String id}) =
+  factory _TaskArg({required final String uid, required final TaskId taskId}) =
       _$_TaskArg;
   _TaskArg._() : super._();
 
   @override
   String get uid => throw _privateConstructorUsedError;
   @override
-  String get id => throw _privateConstructorUsedError;
+  TaskId get taskId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_TaskArgCopyWith<_$_TaskArg> get copyWith =>

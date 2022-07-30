@@ -32,14 +32,14 @@ final taskFamily = FutureProvider.family<Result<Task, FirestoreError>, TaskArg>(
       .watch(
         taskRepositoryFamily(arg.uid),
       )
-      .findById(arg.id),
+      .findById(arg.taskId),
 );
 
 @freezed
 class TaskArg with _$TaskArg {
   factory TaskArg({
     required String uid,
-    required String id,
+    required TaskId taskId,
   }) = _TaskArg;
 
   TaskArg._();

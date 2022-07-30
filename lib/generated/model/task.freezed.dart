@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Task {
-  String get id => throw _privateConstructorUsedError;
+  TaskId get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
@@ -29,7 +29,9 @@ mixin _$Task {
 abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res>;
-  $Res call({String id, String name, DateTime createdAt, bool isDone});
+  $Res call({TaskId id, String name, DateTime createdAt, bool isDone});
+
+  $TaskIdCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -51,7 +53,7 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TaskId,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -66,6 +68,13 @@ class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
               as bool,
     ));
   }
+
+  @override
+  $TaskIdCopyWith<$Res> get id {
+    return $TaskIdCopyWith<$Res>(_value.id, (value) {
+      return _then(_value.copyWith(id: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -73,7 +82,10 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   factory _$$_TaskCopyWith(_$_Task value, $Res Function(_$_Task) then) =
       __$$_TaskCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, DateTime createdAt, bool isDone});
+  $Res call({TaskId id, String name, DateTime createdAt, bool isDone});
+
+  @override
+  $TaskIdCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -96,7 +108,7 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TaskId,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -124,7 +136,7 @@ class _$_Task extends _Task {
       : super._();
 
   @override
-  final String id;
+  final TaskId id;
   @override
   final String name;
   @override
@@ -164,14 +176,14 @@ class _$_Task extends _Task {
 
 abstract class _Task extends Task {
   factory _Task(
-      {required final String id,
+      {required final TaskId id,
       required final String name,
       required final DateTime createdAt,
       required final bool isDone}) = _$_Task;
   _Task._() : super._();
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  TaskId get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override
@@ -181,4 +193,113 @@ abstract class _Task extends Task {
   @override
   @JsonKey(ignore: true)
   _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TaskId {
+  String get value => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TaskIdCopyWith<TaskId> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TaskIdCopyWith<$Res> {
+  factory $TaskIdCopyWith(TaskId value, $Res Function(TaskId) then) =
+      _$TaskIdCopyWithImpl<$Res>;
+  $Res call({String value});
+}
+
+/// @nodoc
+class _$TaskIdCopyWithImpl<$Res> implements $TaskIdCopyWith<$Res> {
+  _$TaskIdCopyWithImpl(this._value, this._then);
+
+  final TaskId _value;
+  // ignore: unused_field
+  final $Res Function(TaskId) _then;
+
+  @override
+  $Res call({
+    Object? value = freezed,
+  }) {
+    return _then(_value.copyWith(
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_TaskIdCopyWith<$Res> implements $TaskIdCopyWith<$Res> {
+  factory _$$_TaskIdCopyWith(_$_TaskId value, $Res Function(_$_TaskId) then) =
+      __$$_TaskIdCopyWithImpl<$Res>;
+  @override
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$_TaskIdCopyWithImpl<$Res> extends _$TaskIdCopyWithImpl<$Res>
+    implements _$$_TaskIdCopyWith<$Res> {
+  __$$_TaskIdCopyWithImpl(_$_TaskId _value, $Res Function(_$_TaskId) _then)
+      : super(_value, (v) => _then(v as _$_TaskId));
+
+  @override
+  _$_TaskId get _value => super._value as _$_TaskId;
+
+  @override
+  $Res call({
+    Object? value = freezed,
+  }) {
+    return _then(_$_TaskId(
+      value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TaskId extends _TaskId {
+  _$_TaskId(this.value) : super._();
+
+  @override
+  final String value;
+
+  @override
+  String toString() {
+    return 'TaskId(value: $value)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TaskId &&
+            const DeepCollectionEquality().equals(other.value, value));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TaskIdCopyWith<_$_TaskId> get copyWith =>
+      __$$_TaskIdCopyWithImpl<_$_TaskId>(this, _$identity);
+}
+
+abstract class _TaskId extends TaskId {
+  factory _TaskId(final String value) = _$_TaskId;
+  _TaskId._() : super._();
+
+  @override
+  String get value => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TaskIdCopyWith<_$_TaskId> get copyWith =>
+      throw _privateConstructorUsedError;
 }

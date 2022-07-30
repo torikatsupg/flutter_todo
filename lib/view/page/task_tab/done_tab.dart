@@ -36,9 +36,9 @@ class DoneTab extends ConsumerWidget {
                 (context, index) {
                   final task = list.list[index];
                   return ListTile(
-                    leading: Text(task.id),
+                    leading: Text(task.id.value),
                     title: Text(task.name),
-                    onTap: () => controller.onTapListItem(task.id),
+                    onTap: () => controller.onTapListItem(task.id.value),
                   );
                 },
                 childCount: list.list.length,

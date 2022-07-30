@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_todo/model/app_error.dart';
+import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/view/page/debug_page.dart';
 import 'package:flutter_todo/view/page/edit_task_page.dart';
 import 'package:flutter_todo/view/page/task_detail_page.dart';
@@ -53,7 +55,7 @@ final goRouterProvider = Provider(
       MyGoRoute(
         path: '/home/:tab',
         redirect: (_) => authGuard(ref),
-        builder: (context, state) => HomePage(state.params['tab']!),
+        builder: (context, state) => HomePage(state.getOrThrowTab),
         routes: [
           MyGoRoute(
             path: 'create',
@@ -67,18 +69,17 @@ final goRouterProvider = Provider(
           ),
           MyGoRoute(
             path: ':id',
-            redirect: (state) => todoGuard(
-              ref,
-              state,
-              () => state.params['id'] == null ? '/notfound' : null,
+            redirect: (state) => todoGuard(ref, state),
+            builder: (context, state) => TaskDetailPage(
+              state.getOrThrowTaskId,
             ),
-            // TODO(torikatsu): nullの握り潰しやめる
-            builder: (context, state) => TaskDetailPage(state.params['id']!),
             routes: [
               MyGoRoute(
                 path: 'edit',
                 redirect: (state) => todoGuard(ref, state),
-                builder: (context, state) => EditTaskPage(state.params['id']!),
+                builder: (context, state) => EditTaskPage(
+                  state.getOrThrowTaskId,
+                ),
               ),
             ],
           ),
@@ -96,3 +97,23 @@ final goRouterProvider = Provider(
     initialLocation: '/signin',
   ),
 );
+
+extension GoRouterStateExt on GoRouterState {
+  TaskId get getOrThrowTaskId {
+    final maybeTaskId = params['id'];
+    if (maybeTaskId != null) {
+      return TaskId(maybeTaskId);
+    } else {
+      throw AppError.illigalUrl;
+    }
+  }
+
+  String get getOrThrowTab {
+    final maybeTab = params['tab'];
+    if (maybeTab != null) {
+      return maybeTab;
+    } else {
+      throw AppError.illigalUrl;
+    }
+  }
+}

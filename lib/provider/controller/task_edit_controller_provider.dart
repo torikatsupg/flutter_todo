@@ -16,12 +16,12 @@ import 'package:flutter_todo/provider/route/route_provider.dart';
 part '../../generated/provider/controller/task_edit_controller_provider.freezed.dart';
 
 final prepareTaskEditProvider = Provider.autoDispose
-    .family<AsyncValue<Result<Task, FirestoreError>>, String>(
+    .family<AsyncValue<Result<Task, FirestoreError>>, TaskId>(
   (ref, id) => ref.watch(
     taskFamily(
       TaskArg(
         uid: ref.read(authProvider).uid,
-        id: id,
+        taskId: id,
       ),
     ),
   ),
@@ -69,7 +69,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
         updatedTask.isDone
             ? _read(doneTasksFamily(uid).notifier).update(updatedTask)
             : _read(todoTasksFamily(uid).notifier).update(updatedTask);
-        _refresh(taskFamily(TaskArg(uid: uid, id: state.initTask.id)));
+        _refresh(taskFamily(TaskArg(uid: uid, taskId: state.initTask.id)));
         _read(routerProvider.notifier).pop();
       }
     });
