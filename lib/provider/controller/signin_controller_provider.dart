@@ -17,16 +17,19 @@ final signinControllerProvider =
 );
 
 class SigninNotifier extends StateNotifier<_SigninState> {
-  SigninNotifier(this._ref)
-      : super(_SigninState(
-          email: createFormModel(emailValidator),
-          password: createFormModel(passwordValidator),
-        )) {
+  SigninNotifier(Ref ref)
+      : _read = ref.read,
+        super(
+          _SigninState(
+            email: createFormModel(emailValidator),
+            password: createFormModel(passwordValidator),
+          ),
+        ) {
     state.email.setListeners(onChangedEmail, onFocusChangeEmail);
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
   }
 
-  final Ref _ref;
+  final Reader _read;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
@@ -37,10 +40,10 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  void toSignup() => _ref.read(routerProvider.notifier).go('/signup');
+  void toSignup() => _read(routerProvider.notifier).go('/signup');
 
   Future<void> submit() async {
-    _ref.read(loadingProvider.notifier).run(
+    _read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
         // TODO(torikatsu): change focus process implicitly
@@ -51,8 +54,8 @@ class SigninNotifier extends StateNotifier<_SigninState> {
           return;
         }
 
-        final user = _ref.read(authStreamProvider.future);
-        final result = await _ref.read(authenticatorProvider).signin(
+        final user = _read(authStreamProvider.future);
+        final result = await _read(authenticatorProvider).signin(
               email: state.email.text,
               password: state.password.text,
             );
@@ -62,7 +65,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
             if (await user == null) {
               throw AppError.unknown;
             } else {
-              _ref.read(routerProvider.notifier).go('/home');
+              _read(routerProvider.notifier).go('/home');
             }
           },
           err: (e) {
@@ -80,7 +83,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
                     password: state.password.addServerError('パスワードが違います'));
                 break;
               case SigninError.network:
-                _ref.read(networkDialogProvider.notifier).show();
+                _read(networkDialogProvider.notifier).show();
                 break;
             }
           },

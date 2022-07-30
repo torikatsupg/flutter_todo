@@ -6,5 +6,5 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final taskRepositoryFamily =
     Provider.family<TaskRepository<CursorImpl, FirestoreError>, String>(
-  (ref, uid) => TaskRepositoryImpl(uid),
+  (_, uid) => TaskRepositoryImpl(uid),
 );

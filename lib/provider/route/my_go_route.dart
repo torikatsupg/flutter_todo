@@ -10,13 +10,12 @@ typedef RouteBuilder = Widget Function(
 
 class MyGoRoute extends GoRoute {
   MyGoRoute({
-    required String path,
+    required super.path,
     RouteBuilder? builder,
-    List<GoRoute>? routes,
+    super.routes = const [],
     GoRouterRedirect? redirect,
   }) : super(
           redirect: redirect ?? (_) => null,
-          path: path,
           builder: (context, state) {
             assert(builder != null);
             return Stack(
@@ -32,6 +31,5 @@ class MyGoRoute extends GoRoute {
               ],
             );
           },
-          routes: routes ?? [],
         );
 }

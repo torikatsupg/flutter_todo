@@ -16,12 +16,13 @@ final createTaskController =
 );
 
 class CreateTaskController extends StateNotifier<_CreateTaskState> {
-  CreateTaskController(this._ref)
-      : super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
+  CreateTaskController(Ref ref)
+      : _read = ref.read,
+        super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
     state.name.setListeners(onFocusChangeName, onChangeName);
   }
 
-  final Ref _ref;
+  final Reader _read;
 
   onFocusChangeName() =>
       state = state.copyWith(name: state.name.onFocusChange());
@@ -32,21 +33,20 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
     if (!state.isValidAll) {
       return;
     }
-    final uid = _ref.read(authStreamProvider).value?.uid;
+    final uid = _read(authStreamProvider).value?.uid;
     if (uid == null) {
       state = state.copyWith(
         name: state.name.addServerError('エラーが発生しました。'),
       );
     } else {
-      await _ref.read(loadingProvider.notifier).run(
+      await _read(loadingProvider.notifier).run(
         () async {
-          final result = await _ref
-              .read(taskRepositoryFamily(uid))
+          final result = await _read(taskRepositoryFamily(uid))
               .insert(name: state.name.text);
           result.map(
             ok: (data) {
-              _ref.read(todoTasksFamily(uid).notifier).insert(data.value);
-              _ref.read(routerProvider.notifier).pop();
+              _read(todoTasksFamily(uid).notifier).insert(data.value);
+              _read(routerProvider.notifier).pop();
             },
             err: (e) {
               // TODO(torikatsu): handle error.

@@ -3,11 +3,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final homeControllerProvider =
     StateNotifierProvider.autoDispose<HomeController, void>(
-  (ref) => HomeController(ref.read),
+  HomeController.new,
 );
 
 class HomeController extends StateNotifier<void> {
-  HomeController(this._read) : super(null);
+  HomeController(Ref ref)
+      : _read = ref.read,
+        super(null);
 
   final Reader _read;
 

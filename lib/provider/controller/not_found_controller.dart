@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final notFoundController = Provider<NotFoundController>(NotFoundController.new);
 
 class NotFoundController {
-  const NotFoundController(this._ref);
-  final Ref _ref;
+  NotFoundController(Ref ref) : _read = ref.read;
+  final Reader _read;
 
-  void backHome() => _ref.read(routerProvider.notifier).go('/home');
+  void backHome() => _read(routerProvider.notifier).go('/home');
 }

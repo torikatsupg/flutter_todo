@@ -9,21 +9,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final myPageControllerProvider = Provider(MyPageController.new);
 
 class MyPageController {
-  MyPageController(this._ref);
+  MyPageController(Ref ref): _read = ref.read;
 
-  final Ref _ref;
+  final Reader _read;
 
   void openSetting() =>
-      _ref.read(routerProvider.notifier).go('/home/mypage/setting');
+      _read(routerProvider.notifier).go('/home/mypage/setting');
 
   void signOut() async {
-    await _ref.read(loadingProvider.notifier).run(() async {
-      final user = _ref.read(authStreamProvider.future);
-      final result = await _ref.read(authenticatorProvider).signout();
+    await _read(loadingProvider.notifier).run(() async {
+      final user = _read(authStreamProvider.future);
+      final result = await _read(authenticatorProvider).signout();
       result.when(
         ok: (_) async {
           if (await user == null) {
-            _ref.read(routerProvider.notifier).go('/signin');
+            _read(routerProvider.notifier).go('/signin');
           } else {
             throw AppError.unknown;
           }
@@ -31,7 +31,7 @@ class MyPageController {
         err: (e) {
           switch (e) {
             case SignOutError.network:
-              _ref.read(networkDialogProvider.notifier).show();
+              _read(networkDialogProvider.notifier).show();
           }
         },
       );
