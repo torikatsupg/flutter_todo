@@ -1,11 +1,9 @@
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
-import 'package:flutter_todo/model/app_error.dart';
 import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/infrastructure/authenticator_provider.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/global_controller/network_dialog_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -49,7 +47,7 @@ class SignupController extends StateNotifier<_SignupState> {
   void onChangedConfirmPassword() => state =
       state.copyWith(confirmPassword: state.confirmPassword.onChangeText());
 
-  void toSignin() => _read(routerProvider.notifier).go('/signin');
+  void toSignin() => _read(routerProvider).go_('/signin', _read);
 
   Future<void> submit() async {
     return _read(loadingProvider.notifier).run(
@@ -59,20 +57,13 @@ class SignupController extends StateNotifier<_SignupState> {
           return;
         }
 
-        final user = await _read(authStreamProvider.future);
         final result = await _read(authenticatorProvider).signup(
           email: state.email.text,
           password: state.password.text,
         );
 
         result.when(
-          ok: (_) async {
-            if (user == null) {
-              throw AppError.unknown;
-            } else {
-              _read(routerProvider.notifier).go('/home');
-            }
-          },
+          ok: (_) {},
           err: (e) {
             switch (e) {
               case SignupError.emailAlreadyInUse:

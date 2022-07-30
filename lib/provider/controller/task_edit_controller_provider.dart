@@ -1,5 +1,6 @@
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/riverpod_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
 
 part '../../generated/provider/controller/task_edit_controller_provider.freezed.dart';
 
@@ -70,7 +70,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
             ? _read(doneTasksFamily(uid).notifier).update(updatedTask)
             : _read(todoTasksFamily(uid).notifier).update(updatedTask);
         _refresh(taskFamily(TaskArg(uid: uid, taskId: state.initTask.id)));
-        _read(routerProvider.notifier).pop();
+        _read(routerProvider).pop_(_read);
       }
     });
   }

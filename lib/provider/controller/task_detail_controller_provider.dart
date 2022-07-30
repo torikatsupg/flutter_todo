@@ -3,7 +3,7 @@ import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/async_value.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -30,5 +30,5 @@ class TaskDetailController
   }
 
   void toEditPage() => state.flatWhenData((task) =>
-      _read(routerProvider.notifier).go('/home/todo/${task.id}/edit'));
+      _read(routerProvider).go_('/home/todo/${task.id.value}/edit', _read));
 }

@@ -5,7 +5,7 @@ import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/infrastructure/authenticator_provider.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/global_controller/network_dialog_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -40,7 +40,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  void toSignup() => _read(routerProvider.notifier).go('/signup');
+  void toSignup() => _read(routerProvider).go_('/signup', _read);
 
   Future<void> submit() async {
     _read(loadingProvider.notifier).run(
@@ -56,16 +56,16 @@ class SigninNotifier extends StateNotifier<_SigninState> {
 
         final user = _read(authStreamProvider.future);
         final result = await _read(authenticatorProvider).signin(
-              email: state.email.text,
-              password: state.password.text,
-            );
+          email: state.email.text,
+          password: state.password.text,
+        );
 
         await result.when(
           ok: (_) async {
             if (await user == null) {
               throw AppError.unknown;
             } else {
-              _read(routerProvider.notifier).go('/home');
+              // _read(routerProvider.notifier).go('/home');
             }
           },
           err: (e) {

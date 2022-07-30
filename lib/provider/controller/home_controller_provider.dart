@@ -1,4 +1,4 @@
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final homeControllerProvider =
@@ -16,7 +16,7 @@ class HomeController extends StateNotifier<void> {
   int toIndex(String tab) => TabIndex.toIndex(tab);
 
   void onTapTab(int value) =>
-      _read(routerProvider.notifier).go('/home/${TabIndex.toParam(value)}');
+      _read(routerProvider).go_('/home/${TabIndex.toParam(value)}', _read);
 }
 
 // TODO(torikatsu): enumにしたい

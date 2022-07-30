@@ -1,9 +1,10 @@
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final taskControllerProvider = StateNotifierProvider<TaskController, int>(
   (ref) {
-    final query = ref.read(todoQueryProvider);
+    // TODO(torikatsu): fix
+    const query = "todo";
     return TaskController(ref.read, query);
   },
 );
@@ -13,16 +14,17 @@ class TaskController extends StateNotifier<int> {
   final Reader _read;
 
   void onTap(int index) {
-    _read(routerProvider.notifier).go(
+    _read(routerProvider).go_(
       '/home/todo',
+      _read,
       queryParameters: {'todo': fromIndex(index)},
     );
   }
 
   void toDetailPage(String id) =>
-      _read(routerProvider.notifier).go('/home/todo/$id');
+      _read(routerProvider).go_('/home/todo/$id', _read);
 
-  void onTapFab() => _read(routerProvider.notifier).go('/home/todo/create');
+  void onTapFab() => _read(routerProvider).go_('/home/todo/create', _read);
 }
 
 String fromIndex(int index) {

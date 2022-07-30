@@ -3,7 +3,7 @@ import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
-import 'package:flutter_todo/provider/route/route_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_todo/model/result.dart';
@@ -52,7 +52,7 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
       _read(todoTasksFamily(_uid).notifier).loadMore();
 
   void onPressItem(String taskId) =>
-      _read(routerProvider.notifier).go('/home/todo/$taskId');
+      _read(routerProvider).go_('/home/todo/$taskId', _read);
 }
 
 @freezed
