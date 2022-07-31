@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/view/component/loading_overlay.dart';
 import 'package:flutter_todo/view/dialog/network_alert_dialog.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
@@ -9,26 +12,42 @@ typedef RouteBuilder = Widget Function(
     BuildContext context, GoRouterState state);
 
 class MyGoRoute extends GoRoute {
-  MyGoRoute({
-    required super.path,
+  MyGoRoute(
+    String path,
+    Reader read, {
     RouteBuilder? builder,
     super.routes = const [],
     GoRouterRedirect? redirect,
   }) : super(
+          path: path,
           redirect: redirect ?? (_) => null,
           builder: (context, state) {
             assert(builder != null);
-            return Stack(
-              children: [
-                builder!(context, state),
-                Consumer(
-                  builder: (context, ref, child) => ref.watch(loadingProvider)
-                      ? child!
-                      : const SizedBox.shrink(),
-                  child: const LoadingOverlay(),
-                ),
-                const NetworkAlertDialog(),
+            final maybeAuth = read(authProvider).value;
+            final maybeTab = state.tab;
+            final maybeTaskId = state.taskId;
+            return ProviderScope(
+              overrides: [
+                if (maybeAuth != null)
+                  localAuthProvider.overrideWithValue(maybeAuth),
+                if (maybeTab != null)
+                  localTabParamProvier.overrideWithValue(maybeTab),
+                if (maybeTaskId != null)
+                  localTaskIdParamProvier.overrideWithValue(maybeTaskId),
+                localTodoQueryParamProvier.overrideWithValue(state.todoQuery),
               ],
+              child: Stack(
+                children: [
+                  builder!(context, state),
+                  Consumer(
+                    builder: (context, ref, child) => ref.watch(loadingProvider)
+                        ? child!
+                        : const SizedBox.shrink(),
+                    child: const LoadingOverlay(),
+                  ),
+                  const NetworkAlertDialog(),
+                ],
+              ),
             );
           },
         );

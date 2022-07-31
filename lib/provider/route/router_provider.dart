@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_todo/model/app_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/view/page/debug_page.dart';
@@ -26,58 +25,65 @@ class RouteState {
 
 final routerProvider = Provider(
   (ref) {
-    final router = GoRouter(
+    final read = ref.read;
+    return GoRouter(
       routes: [
         MyGoRoute(
-          path: '/',
+          '/',
+          read,
           redirect: (_) => 'home/todo',
         ),
         MyGoRoute(
-          path: '/home',
+          '/home',
+          read,
           redirect: (_) => '/home/todo',
         ),
         MyGoRoute(
-          path: '/notfound',
+          '/notfound',
+          read,
           builder: (_, __) => const NotFoundPage(),
         ),
         MyGoRoute(
-          path: '/signin',
-          redirect: (_) => noAuthGuard(ref),
+          '/signin',
+          read,
+          redirect: (_) => noAuthGuard(read),
           builder: (_, __) => const SigninPage(),
         ),
         MyGoRoute(
-          path: '/signup',
-          redirect: (_) => noAuthGuard(ref),
+          '/signup',
+          read,
+          redirect: (_) => noAuthGuard(read),
           builder: (_, __) => const SignupPage(),
         ),
         MyGoRoute(
-          path: '/home/:tab',
-          redirect: (_) => authGuard(ref),
-          builder: (context, state) => HomePage(state.tabOrThrow),
+          '/home/:tab',
+          read,
+          redirect: (_) => authGuard(read),
+          builder: (context, state) => const HomePage(),
           routes: [
             MyGoRoute(
-              path: 'create',
-              redirect: (state) => todoGuard(ref, state),
+              'create',
+              read,
+              redirect: (state) => todoGuard(read, state),
               builder: (context, state) => const CreatePage(),
             ),
             MyGoRoute(
-              path: 'setting',
-              redirect: (state) => myPageGuard(ref, state),
+              'setting',
+              read,
+              redirect: (state) => myPageGuard(read, state),
               builder: (context, state) => const SettingPage(),
             ),
             MyGoRoute(
-              path: ':id',
-              redirect: (state) => todoGuard(ref, state),
-              builder: (context, state) => TaskDetailPage(
-                state.taskIdOrThrow,
-              ),
+              ':id',
+              read,
+              redirect: (state) => todoGuard(read, state),
+              builder: (context, state) => const TaskDetailPage(),
               routes: [
                 MyGoRoute(
-                  path: 'edit',
-                  redirect: (state) => todoGuard(ref, state),
-                  builder: (context, state) => EditTaskPage(
-                    state.taskIdOrThrow,
-                  ),
+                  'edit',
+                  read,
+                  redirect: (state) => todoGuard(read, state),
+                  builder: (context, state) => const EditTaskPage(),
                 ),
               ],
             ),
@@ -85,7 +91,8 @@ final routerProvider = Provider(
         ),
         if (kDebugMode)
           MyGoRoute(
-            path: '/debug',
+            '/debug',
+            read,
             builder: (_, __) => const DebugPage(),
           ),
       ],
@@ -93,34 +100,26 @@ final routerProvider = Provider(
       urlPathStrategy: UrlPathStrategy.path,
       debugLogDiagnostics: true,
       initialLocation: '/signin',
+      refreshListenable: authStateNotifier,
     );
-    ref.listen(authStreamProvider, (p, n) => router.refresh());
-    return router;
   },
 );
 
 const _emptyQuery = <String, String>{};
 
 extension GoRouterStateExt on GoRouterState {
-  TaskId get taskIdOrThrow {
+  TaskId? get taskId {
     final maybeTaskId = params['id'];
     if (maybeTaskId != null) {
       return TaskId(maybeTaskId);
     } else {
-      throw AppError.illigalUrl;
+      return null;
     }
   }
 
-  String get tabOrThrow {
-    final maybeTab = params['tab'];
-    if (maybeTab != null) {
-      return maybeTab;
-    } else {
-      throw AppError.illigalUrl;
-    }
-  }
+  String? get tab => params['tab'];
 
-  String get todoQueryOrDefault => queryParams['todo'] ?? "todo";
+  String get todoQuery => queryParams['todo'] ?? "todo";
 }
 
 extension GoRouterExt on GoRouter {

@@ -1,4 +1,5 @@
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model.dart';
@@ -10,19 +11,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part '../../generated/provider/controller/create_task_controller_provider.freezed.dart';
 
-final createTaskController =
-    StateNotifierProvider.autoDispose<CreateTaskController, _CreateTaskState>(
+final createTaskControllerFamily = StateNotifierProvider.autoDispose
+    .family<CreateTaskController, _CreateTaskState, UserId>(
   CreateTaskController.new,
 );
 
 class CreateTaskController extends StateNotifier<_CreateTaskState> {
-  CreateTaskController(Ref ref)
+  CreateTaskController(Ref ref, this.userId)
       : _read = ref.read,
         super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
     state.name.setListeners(onFocusChangeName, onChangeName);
   }
 
   final Reader _read;
+  final userId;
 
   onFocusChangeName() =>
       state = state.copyWith(name: state.name.onFocusChange());
@@ -33,28 +35,21 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
     if (!state.isValidAll) {
       return;
     }
-    final uid = _read(authStreamProvider).value?.uid;
-    if (uid == null) {
-      state = state.copyWith(
-        name: state.name.addServerError('エラーが発生しました。'),
-      );
-    } else {
-      await _read(loadingProvider.notifier).run(
-        () async {
-          final result = await _read(taskRepositoryFamily(uid))
-              .insert(name: state.name.text);
-          result.map(
-            ok: (data) {
-              _read(todoTasksFamily(uid).notifier).insert(data.value);
-              _read(routerProvider).pop_(_read);
-            },
-            err: (e) {
-              // TODO(torikatsu): handle error.
-            },
-          );
-        },
-      );
-    }
+    await _read(loadingProvider.notifier).run(
+      () async {
+        final result = await _read(taskRepositoryFamily(userId))
+            .insert(name: state.name.text);
+        result.map(
+          ok: (data) {
+            _read(todoTasksFamily(userId).notifier).insert(data.value);
+            _read(routerProvider).pop_(_read);
+          },
+          err: (e) {
+            // TODO(torikatsu): handle error.
+          },
+        );
+      },
+    );
   }
 }
 

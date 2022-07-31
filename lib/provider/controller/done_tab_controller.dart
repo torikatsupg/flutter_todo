@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/model/user_auth.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
@@ -11,20 +11,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part '../../generated/provider/controller/done_tab_controller.freezed.dart';
 
-final doneTabControllerProvider =
-    StateNotifierProvider<DoneTabController, _DoneTabState>(
-  (ref) => DoneTabController(
-    ref,
-    ref.read(authProvider).uid,
-  ),
+final doneTabControllerFamily =
+    StateNotifierProvider.family<DoneTabController, _DoneTabState, UserId>(
+  DoneTabController.new,
 );
 
 class DoneTabController extends StateNotifier<_DoneTabState> {
-  DoneTabController(Ref ref, this._uid)
+  DoneTabController(Ref ref, this._userId)
       : _read = ref.read,
         super(
           _DoneTabState(
-            list: ref.read(doneTasksFamily(_uid)),
+            list: ref.read(doneTasksFamily(_userId)),
             scrollController: ScrollController(),
           ),
         ) {
@@ -32,16 +29,16 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
       // TODO(torikatsu): fix conditions
       if (state.scrollController.offset >
           state.scrollController.position.maxScrollExtent - 100) {
-        _read(doneTasksFamily(_uid).notifier).loadMore();
+        _read(doneTasksFamily(_userId).notifier).loadMore();
       }
     });
 
     ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
-        doneTasksFamily(_uid), (_, next) => onChagneList(next));
+        doneTasksFamily(_userId), (_, next) => onChagneList(next));
   }
 
   final Reader _read;
-  final String _uid;
+  final UserId _userId;
 
   void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>
       state = state.copyWith(list: list);
@@ -49,10 +46,10 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
   void onTapListItem(String taskId) =>
       _read(routerProvider).go_('/home/todo/$taskId', _read);
 
-  Future<void> refresh() => _read(doneTasksFamily(_uid).notifier).refresh();
+  Future<void> refresh() => _read(doneTasksFamily(_userId).notifier).refresh();
 
   Future<void> resolveAndLoadMore() =>
-      _read(doneTasksFamily(_uid).notifier).loadMore();
+      _read(doneTasksFamily(_userId).notifier).loadMore();
 }
 
 @freezed

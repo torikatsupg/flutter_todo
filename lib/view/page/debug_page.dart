@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,11 +19,11 @@ class DebugPage extends ConsumerWidget {
           children: [
             ListTile(
               onTap: () async {
-                final uid = ref.read(authProvider).uid;
+                final userId = ref.read(localAuthProvider).userId;
                 final result = <Result<Task, dynamic>>[];
                 for (var i = 0; i < 100; i++) {
                   result.add(await ref
-                      .read(taskRepositoryFamily(uid))
+                      .read(taskRepositoryFamily(userId))
                       .insert(name: '$i'));
                 }
               },
@@ -31,16 +31,16 @@ class DebugPage extends ConsumerWidget {
             ),
             ListTile(
               onTap: () async {
-                final uid = ref.read(authProvider).uid;
+                final userId = ref.read(localAuthProvider).userId;
                 final result = [];
                 for (var i = 0; i < 100; i++) {
                   result.add(await ref
-                      .read(taskRepositoryFamily(uid))
+                      .read(taskRepositoryFamily(userId))
                       .insert(name: '$i'));
                 }
                 await Future.wait(result.map(
                   (e) => ref
-                      .read(taskRepositoryFamily(uid))
+                      .read(taskRepositoryFamily(userId))
                       .update(e.copyWith(isDone: true)),
                 ));
               },

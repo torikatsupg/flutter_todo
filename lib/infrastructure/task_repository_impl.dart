@@ -5,6 +5,7 @@ import 'package:flutter_todo/model/query_list.dart';
 import 'package:flutter_todo/model/result.dart';
 
 import 'package:flutter_todo/model/task.dart';
+import 'package:flutter_todo/model/user_auth.dart';
 
 const _name = 'name';
 const _createdAt = 'createdAt';
@@ -12,13 +13,13 @@ const _isDone = 'isDone';
 const limit = 20;
 
 class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
-  TaskRepositoryImpl(this.uid);
+  TaskRepositoryImpl(this.userId);
 
-  final String uid;
+  final UserId userId;
 
   CollectionReference get _ref => FirebaseFirestore.instance
       .collection('users')
-      .doc(uid)
+      .doc(userId.value)
       .collection('tasks');
 
   @override

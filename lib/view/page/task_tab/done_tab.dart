@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/controller/done_tab_controller.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
 import 'package:flutter_todo/util/async_value.dart';
@@ -10,8 +11,9 @@ class DoneTab extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final state = ref.watch(doneTabControllerProvider);
-    final controller = ref.read(doneTabControllerProvider.notifier);
+    final userId = ref.watch(localAuthProvider).userId;
+    final state = ref.watch(doneTabControllerFamily(userId));
+    final controller = ref.read(doneTabControllerFamily(userId).notifier);
 
     return state.list.flatMap<Widget>(
       data: (list) => RefreshIndicator(

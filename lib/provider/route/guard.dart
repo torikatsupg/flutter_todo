@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef RouteGuard = String? Function();
 
-String? authGuard(ProviderRef<GoRouter> ref, [RouteGuard? guard]) {
-  if (ref.read(authStreamProvider).value == null) {
+String? authGuard(Reader read, [RouteGuard? guard]) {
+  if (read(authProvider).value == null) {
     return '/signin';
   } else if (guard != null) {
     return guard();
@@ -14,8 +14,8 @@ String? authGuard(ProviderRef<GoRouter> ref, [RouteGuard? guard]) {
   }
 }
 
-String? noAuthGuard(ProviderRef<GoRouter> ref, [RouteGuard? guard]) {
-  if (ref.read(authStreamProvider).value != null) {
+String? noAuthGuard(Reader read, [RouteGuard? guard]) {
+  if (read(authProvider).value != null) {
     return '/home';
   } else if (guard != null) {
     return guard();
@@ -25,12 +25,12 @@ String? noAuthGuard(ProviderRef<GoRouter> ref, [RouteGuard? guard]) {
 }
 
 String? todoGuard(
-  ProviderRef<GoRouter> ref,
+  Reader read,
   GoRouterState state, [
   RouteGuard? guard,
 ]) {
   return authGuard(
-    ref,
+    read,
     () {
       if (state.params['tab'] != 'todo') {
         return '/notfound';
@@ -44,12 +44,12 @@ String? todoGuard(
 }
 
 String? myPageGuard(
-  ProviderRef<GoRouter> ref,
+  Reader read,
   GoRouterState state, [
   RouteGuard? guard,
 ]) {
   return authGuard(
-    ref,
+    read,
     () {
       if (state.params['tab'] != 'mypage') {
         return '/notfound';

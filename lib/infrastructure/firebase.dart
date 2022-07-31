@@ -10,7 +10,7 @@ const authPort = 9099;
 
 Future<void> initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+  // await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   if (Env.isEmulator) {
     FirebaseFirestore.instance.useFirestoreEmulator(_localhost, firestorePort);

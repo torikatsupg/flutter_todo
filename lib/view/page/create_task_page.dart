@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/controller/create_task_controller_provider.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CreatePage extends ConsumerWidget {
@@ -7,8 +8,9 @@ class CreatePage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final state = ref.watch(createTaskController);
-    final controller = ref.read(createTaskController.notifier);
+    final userId = ref.watch(localAuthProvider).userId;
+    final state = ref.watch(createTaskControllerFamily(userId));
+    final controller = ref.read(createTaskControllerFamily(userId).notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('create'),

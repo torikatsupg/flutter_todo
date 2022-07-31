@@ -54,20 +54,13 @@ class SigninNotifier extends StateNotifier<_SigninState> {
           return;
         }
 
-        final user = _read(authStreamProvider.future);
         final result = await _read(authenticatorProvider).signin(
           email: state.email.text,
           password: state.password.text,
         );
 
-        await result.when(
-          ok: (_) async {
-            if (await user == null) {
-              throw AppError.unknown;
-            } else {
-              // _read(routerProvider.notifier).go('/home');
-            }
-          },
+        result.when(
+          ok: (_) {},
           err: (e) {
             switch (e) {
               case SigninError.userDisabled:

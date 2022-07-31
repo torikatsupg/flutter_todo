@@ -1,11 +1,10 @@
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final taskControllerProvider = StateNotifierProvider<TaskController, int>(
-  (ref) {
-    // TODO(torikatsu): fix
-    const query = "todo";
-    return TaskController(ref.read, query);
+final taskControllerFamily =
+    StateNotifierProvider.family<TaskController, int, String>(
+  (ref, tab) {
+    return TaskController(ref.read, tab);
   },
 );
 

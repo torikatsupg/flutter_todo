@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/config/page_storage_keys.dart';
 import 'package:flutter_todo/provider/controller/task_controller_provider.dart';
+import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:flutter_todo/view/page/task_tab/done_tab.dart';
 import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,14 +20,25 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
   @override
   void initState() {
     _controller = TabController(
-        length: 2, vsync: this, initialIndex: ref.read(taskControllerProvider));
+      length: 2,
+      vsync: this,
+      initialIndex: ref.read(
+        taskControllerFamily(
+          ref.read(localTabParamProvier),
+        ),
+      ),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final controller = ref.read(taskControllerProvider.notifier);
+    final controller = ref.read(
+      taskControllerFamily(
+        ref.watch(localTabParamProvier),
+      ).notifier,
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('task'),
