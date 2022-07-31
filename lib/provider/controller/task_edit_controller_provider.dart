@@ -52,6 +52,8 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
     state = state.copyWith(name: state.name.onFocusChange());
   }
 
+  bool _isTarget(Task item) => item.id == state.initTask.id;
+
   Future<void> onSubmit() async {
     state = state.copyWith(name: state.name.onSubmit());
     if (!state.isValidAll) {
@@ -61,8 +63,10 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
     await _read(loadingProvider.notifier).run(() async {
       await _read(taskRepositoryFamily(userId)).update(updatedTask);
       updatedTask.isDone
-          ? _read(doneTasksFamily(userId).notifier).update(updatedTask)
-          : _read(todoTasksFamily(userId).notifier).update(updatedTask);
+          ? _read(doneTasksFamily(userId).notifier)
+              .update(_isTarget, updatedTask)
+          : _read(todoTasksFamily(userId).notifier)
+              .update(_isTarget, updatedTask);
       _refresh(
         taskFamily(
           T2(

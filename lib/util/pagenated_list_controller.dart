@@ -74,12 +74,14 @@ class PagenatedListController<Item, Err>
   }
 
   void insert(Item item) => state = state.flatMapData(
-        (state) => state.copyWith(list: [item, ...state.list]),
+        (state) => state.copyWith(
+          list: [item, ...state.list],
+        ),
       );
 
-  void update(Item item) => state = state.flatMapData(
+  void update(bool Function(Item) isTarget, Item next) => state = state.flatMapData(
         (data) => data.copyWith(
-          list: data.list.map((e) => e == item ? item : e).toList(),
+          list: data.list.map((item) => isTarget(item) ? next : item).toList(),
         ),
       );
 
