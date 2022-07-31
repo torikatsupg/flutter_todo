@@ -7,8 +7,7 @@ enum FirestoreError {
     T Function()? notFound,
     T Function()? orElse,
   }) {
-    assert((error == null || notFound == null) && orElse != null);
-    assert(!(error == null || notFound == null) && orElse == null);
+    assert((error == null && notFound == null) && orElse != null);
 
     switch (this) {
       case FirestoreError.error:
