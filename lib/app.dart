@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,5 +30,13 @@ class App extends ConsumerWidget {
 
 // initializing between runApp() and MaterialApp.router()
 Future<bool> _init(WidgetRef ref) async {
+  Future.wait([
+    // [FirebaseAuth.instance.authStateChange] sends User to the Stream
+    // at initialization if authenticated, or null if not authenticated.
+    // To avoid having the sign-in screen appear momentarily despite
+    // the fact that the user has authenticated when the app is launched,
+    // the GoRouter is attached after waiting for the first event.
+    ref.read(authProvider.stream).first,
+  ]);
   return true;
 }
