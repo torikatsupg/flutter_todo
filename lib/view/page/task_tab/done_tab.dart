@@ -11,7 +11,7 @@ class DoneTab extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     final state = ref.watch(doneTabControllerFamily(userId));
     final controller = ref.read(doneTabControllerFamily(userId).notifier);
 
@@ -85,7 +85,7 @@ class _ListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(doneTaskListItemProvider);
-    final userId = ref.read(localAuthProvider).userId;
+    final userId = ref.read(localUserProvider).userId;
     final controller = ref.read(doneTabControllerFamily(userId).notifier);
 
     return ListTile(

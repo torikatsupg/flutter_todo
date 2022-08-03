@@ -14,7 +14,7 @@ class TaskDetailPage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     final taskId = ref.watch(localTaskIdParamProvier);
     final state = ref.watch(taskDetailFamily(T2(userId, taskId)));
     return Scaffold(
@@ -38,7 +38,7 @@ class TaskDetailView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     return Column(
       children: [
         Text(task.id.value),

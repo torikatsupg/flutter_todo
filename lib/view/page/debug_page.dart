@@ -19,7 +19,7 @@ class DebugPage extends ConsumerWidget {
           children: [
             ListTile(
               onTap: () async {
-                final userId = ref.read(localAuthProvider).userId;
+                final userId = ref.read(localUserProvider).userId;
                 final result = <Result<Task, dynamic>>[];
                 for (var i = 0; i < 100; i++) {
                   result.add(await ref
@@ -31,7 +31,7 @@ class DebugPage extends ConsumerWidget {
             ),
             ListTile(
               onTap: () async {
-                final userId = ref.read(localAuthProvider).userId;
+                final userId = ref.read(localUserProvider).userId;
                 final result = [];
                 for (var i = 0; i < 100; i++) {
                   result.add(await ref

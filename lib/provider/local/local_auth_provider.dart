@@ -1,8 +1,13 @@
 import 'package:flutter_todo/model/task.dart';
+import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/model/user_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final localAuthProvider = Provider<UserAuth>(
+  (ref) => throw UnimplementedError(),
+);
+
+final localUserProvider = Provider<User>(
   (ref) => throw UnimplementedError(),
 );
 

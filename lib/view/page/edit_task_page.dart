@@ -15,7 +15,7 @@ class EditTaskPage extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final taskId = ref.watch(localTaskIdParamProvier);
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     final state = ref.watch(prepareTaskEditProvider(T2(userId, taskId)));
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +38,7 @@ class _EditView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     final state = ref.watch(taskEditControllerFamily(T2(userId, task)));
     final controller =
         ref.read(taskEditControllerFamily(T2(userId, task)).notifier);

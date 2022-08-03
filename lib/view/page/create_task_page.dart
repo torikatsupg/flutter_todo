@@ -8,7 +8,7 @@ class CreatePage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final userId = ref.watch(localAuthProvider).userId;
+    final userId = ref.watch(localUserProvider).userId;
     final state = ref.watch(createTaskControllerFamily(userId));
     final controller = ref.read(createTaskControllerFamily(userId).notifier);
     return Scaffold(
