@@ -79,7 +79,8 @@ class PagenatedListController<Item, Err>
         ),
       );
 
-  void update(bool Function(Item) isTarget, Item next) => state = state.flatMapData(
+  void update(bool Function(Item) isTarget, Item next) =>
+      state = state.flatMapData(
         (data) => data.copyWith(
           list: data.list.map((item) => isTarget(item) ? next : item).toList(),
         ),
@@ -87,7 +88,7 @@ class PagenatedListController<Item, Err>
 
   void delete(Item item) => state = state.flatMapData(
         (data) => data.copyWith(
-          list: data.list.where((e) => e == item).toList(),
+          list: data.list.where((e) => e != item).toList(),
         ),
       );
 }

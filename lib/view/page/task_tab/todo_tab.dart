@@ -35,15 +35,16 @@ class TodoTab extends ConsumerWidget {
               ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
+                childCount: list.list.length,
                 (context, index) {
-                  final task = list.list[index];
-                  return ListTile(
-                    leading: Text(task.id.value),
-                    title: Text(task.name),
-                    onTap: () => controller.onPressItem(task.id.value),
+                  return ProviderScope(
+                    overrides: [
+                      todoTaskListItemProvider
+                          .overrideWithValue(list.list[index])
+                    ],
+                    child: const _ListItem(),
                   );
                 },
-                childCount: list.list.length,
               ),
             ),
             if (list.isMoreLoading)
@@ -62,10 +63,11 @@ class TodoTab extends ConsumerWidget {
                   height: 60,
                   width: double.infinity,
                   child: Center(
-                      child: TextButton(
-                    onPressed: controller.resolveAndLoadMore,
-                    child: const Text('retry'),
-                  )),
+                    child: TextButton(
+                      onPressed: controller.resolveAndLoadMore,
+                      child: const Text('retry'),
+                    ),
+                  ),
                 ),
               )
           ],
@@ -73,6 +75,27 @@ class TodoTab extends ConsumerWidget {
       ),
       loading: LoadingView.new,
       orElse: ErrorView.new,
+    );
+  }
+}
+
+class _ListItem extends ConsumerWidget {
+  const _ListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final task = ref.watch(todoTaskListItemProvider);
+    final userId = ref.read(localAuthProvider).userId;
+    final controller = ref.read(todoTabControllerProvider(userId).notifier);
+
+    return Dismissible(
+      key: ValueKey(task.id),
+      onDismissed: ((_) => controller.onDismissedItem(task)),
+      child: ListTile(
+        leading: Text(task.id.value),
+        title: Text(task.name),
+        onTap: () => controller.onPressItem(task.id),
+      ),
     );
   }
 }

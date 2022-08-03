@@ -2,7 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
+import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,6 +16,10 @@ part '../../generated/provider/controller/todo_tab_controller.freezed.dart';
 final todoTabControllerProvider =
     StateNotifierProvider.family<TodoTabController, _TodoTabState, UserId>(
   TodoTabController.new,
+);
+
+final todoTaskListItemProvider = Provider<Task>(
+  (ref) => throw UnimplementedError(),
 );
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
@@ -48,8 +54,17 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
   Future<void> resolveAndLoadMore() =>
       _read(todoTasksFamily(_userId).notifier).loadMore();
 
-  void onPressItem(String taskId) =>
-      _read(routerProvider).go_('/home/todo/$taskId', _read);
+  void onPressItem(TaskId taskId) =>
+      _read(routerProvider).go_('/home/todo/${taskId.value}', _read);
+
+  Future<void> onDismissedItem(Task task) =>
+      _read(loadingProvider.notifier).run(
+        () async {
+          await _read(taskRepositoryFamily(_userId)).update(task.done());
+          _read(todoTasksFamily(_userId).notifier).delete(task);
+          _read(doneTasksFamily(_userId).notifier).insert(task);
+        },
+      );
 }
 
 @freezed

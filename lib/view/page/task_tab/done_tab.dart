@@ -36,11 +36,13 @@ class DoneTab extends ConsumerWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final task = list.list[index];
-                  return ListTile(
-                    leading: Text(task.id.value),
-                    title: Text(task.name),
-                    onTap: () => controller.onTapListItem(task.id.value),
+                  return ProviderScope(
+                    overrides: [
+                      doneTaskListItemProvider.overrideWithValue(
+                        list.list[index],
+                      ),
+                    ],
+                    child: const _ListItem(),
                   );
                 },
                 childCount: list.list.length,
@@ -73,6 +75,23 @@ class DoneTab extends ConsumerWidget {
       ),
       loading: LoadingView.new,
       orElse: ErrorView.new,
+    );
+  }
+}
+
+class _ListItem extends ConsumerWidget {
+  const _ListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final task = ref.watch(doneTaskListItemProvider);
+    final userId = ref.read(localAuthProvider).userId;
+    final controller = ref.read(doneTabControllerFamily(userId).notifier);
+
+    return ListTile(
+      leading: Text(task.id.value),
+      title: Text(task.name),
+      onTap: () => controller.onTapListItem(task.id.value),
     );
   }
 }

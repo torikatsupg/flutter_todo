@@ -16,6 +16,10 @@ final doneTabControllerFamily =
   DoneTabController.new,
 );
 
+final doneTaskListItemProvider = Provider<Task>(
+  (ref) => throw UnimplementedError(),
+);
+
 class DoneTabController extends StateNotifier<_DoneTabState> {
   DoneTabController(Ref ref, this._userId)
       : _read = ref.read,
