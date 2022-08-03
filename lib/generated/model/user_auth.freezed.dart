@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserAuth {
-  UserId get userId => throw _privateConstructorUsedError;
+  AuthId get userId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserAuthCopyWith<UserAuth> get copyWith =>
@@ -27,9 +27,9 @@ mixin _$UserAuth {
 abstract class $UserAuthCopyWith<$Res> {
   factory $UserAuthCopyWith(UserAuth value, $Res Function(UserAuth) then) =
       _$UserAuthCopyWithImpl<$Res>;
-  $Res call({UserId userId});
+  $Res call({AuthId userId});
 
-  $UserIdCopyWith<$Res> get userId;
+  $AuthIdCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -48,13 +48,13 @@ class _$UserAuthCopyWithImpl<$Res> implements $UserAuthCopyWith<$Res> {
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as UserId,
+              as AuthId,
     ));
   }
 
   @override
-  $UserIdCopyWith<$Res> get userId {
-    return $UserIdCopyWith<$Res>(_value.userId, (value) {
+  $AuthIdCopyWith<$Res> get userId {
+    return $AuthIdCopyWith<$Res>(_value.userId, (value) {
       return _then(_value.copyWith(userId: value));
     });
   }
@@ -66,10 +66,10 @@ abstract class _$$_UserAuthCopyWith<$Res> implements $UserAuthCopyWith<$Res> {
           _$_UserAuth value, $Res Function(_$_UserAuth) then) =
       __$$_UserAuthCopyWithImpl<$Res>;
   @override
-  $Res call({UserId userId});
+  $Res call({AuthId userId});
 
   @override
-  $UserIdCopyWith<$Res> get userId;
+  $AuthIdCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class __$$_UserAuthCopyWithImpl<$Res> extends _$UserAuthCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as UserId,
+              as AuthId,
     ));
   }
 }
@@ -101,7 +101,7 @@ class _$_UserAuth extends _UserAuth {
   _$_UserAuth({required this.userId}) : super._();
 
   @override
-  final UserId userId;
+  final AuthId userId;
 
   @override
   String toString() {
@@ -127,11 +127,11 @@ class _$_UserAuth extends _UserAuth {
 }
 
 abstract class _UserAuth extends UserAuth {
-  factory _UserAuth({required final UserId userId}) = _$_UserAuth;
+  factory _UserAuth({required final AuthId userId}) = _$_UserAuth;
   _UserAuth._() : super._();
 
   @override
-  UserId get userId => throw _privateConstructorUsedError;
+  AuthId get userId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserAuthCopyWith<_$_UserAuth> get copyWith =>
@@ -139,27 +139,27 @@ abstract class _UserAuth extends UserAuth {
 }
 
 /// @nodoc
-mixin _$UserId {
+mixin _$AuthId {
   String get value => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $UserIdCopyWith<UserId> get copyWith => throw _privateConstructorUsedError;
+  $AuthIdCopyWith<AuthId> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserIdCopyWith<$Res> {
-  factory $UserIdCopyWith(UserId value, $Res Function(UserId) then) =
-      _$UserIdCopyWithImpl<$Res>;
+abstract class $AuthIdCopyWith<$Res> {
+  factory $AuthIdCopyWith(AuthId value, $Res Function(AuthId) then) =
+      _$AuthIdCopyWithImpl<$Res>;
   $Res call({String value});
 }
 
 /// @nodoc
-class _$UserIdCopyWithImpl<$Res> implements $UserIdCopyWith<$Res> {
-  _$UserIdCopyWithImpl(this._value, this._then);
+class _$AuthIdCopyWithImpl<$Res> implements $AuthIdCopyWith<$Res> {
+  _$AuthIdCopyWithImpl(this._value, this._then);
 
-  final UserId _value;
+  final AuthId _value;
   // ignore: unused_field
-  final $Res Function(UserId) _then;
+  final $Res Function(AuthId) _then;
 
   @override
   $Res call({
@@ -175,27 +175,27 @@ class _$UserIdCopyWithImpl<$Res> implements $UserIdCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_UserIdCopyWith<$Res> implements $UserIdCopyWith<$Res> {
-  factory _$$_UserIdCopyWith(_$_UserId value, $Res Function(_$_UserId) then) =
-      __$$_UserIdCopyWithImpl<$Res>;
+abstract class _$$_AuthIdCopyWith<$Res> implements $AuthIdCopyWith<$Res> {
+  factory _$$_AuthIdCopyWith(_$_AuthId value, $Res Function(_$_AuthId) then) =
+      __$$_AuthIdCopyWithImpl<$Res>;
   @override
   $Res call({String value});
 }
 
 /// @nodoc
-class __$$_UserIdCopyWithImpl<$Res> extends _$UserIdCopyWithImpl<$Res>
-    implements _$$_UserIdCopyWith<$Res> {
-  __$$_UserIdCopyWithImpl(_$_UserId _value, $Res Function(_$_UserId) _then)
-      : super(_value, (v) => _then(v as _$_UserId));
+class __$$_AuthIdCopyWithImpl<$Res> extends _$AuthIdCopyWithImpl<$Res>
+    implements _$$_AuthIdCopyWith<$Res> {
+  __$$_AuthIdCopyWithImpl(_$_AuthId _value, $Res Function(_$_AuthId) _then)
+      : super(_value, (v) => _then(v as _$_AuthId));
 
   @override
-  _$_UserId get _value => super._value as _$_UserId;
+  _$_AuthId get _value => super._value as _$_AuthId;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(_$_UserId(
+    return _then(_$_AuthId(
       value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -206,22 +206,22 @@ class __$$_UserIdCopyWithImpl<$Res> extends _$UserIdCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserId extends _UserId {
-  _$_UserId(this.value) : super._();
+class _$_AuthId extends _AuthId {
+  _$_AuthId(this.value) : super._();
 
   @override
   final String value;
 
   @override
   String toString() {
-    return 'UserId(value: $value)';
+    return 'AuthId(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserId &&
+            other is _$_AuthId &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -231,18 +231,18 @@ class _$_UserId extends _UserId {
 
   @JsonKey(ignore: true)
   @override
-  _$$_UserIdCopyWith<_$_UserId> get copyWith =>
-      __$$_UserIdCopyWithImpl<_$_UserId>(this, _$identity);
+  _$$_AuthIdCopyWith<_$_AuthId> get copyWith =>
+      __$$_AuthIdCopyWithImpl<_$_AuthId>(this, _$identity);
 }
 
-abstract class _UserId extends UserId {
-  factory _UserId(final String value) = _$_UserId;
-  _UserId._() : super._();
+abstract class _AuthId extends AuthId {
+  factory _AuthId(final String value) = _$_AuthId;
+  _AuthId._() : super._();
 
   @override
   String get value => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_UserIdCopyWith<_$_UserId> get copyWith =>
+  _$$_AuthIdCopyWith<_$_AuthId> get copyWith =>
       throw _privateConstructorUsedError;
 }

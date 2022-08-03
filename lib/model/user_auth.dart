@@ -4,14 +4,14 @@ part '../generated/model/user_auth.freezed.dart';
 
 @freezed
 class UserAuth with _$UserAuth {
-  factory UserAuth({required UserId userId}) = _UserAuth;
+  factory UserAuth({required AuthId userId}) = _UserAuth;
 
   UserAuth._();
 }
 
 @freezed
-class UserId with _$UserId {
-  factory UserId(String value) = _UserId;
+class AuthId with _$AuthId {
+  factory AuthId(String value) = _AuthId;
 
-  UserId._();
+  AuthId._();
 }
