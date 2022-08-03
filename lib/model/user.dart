@@ -1,3 +1,4 @@
+import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/user_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,4 +12,8 @@ class User with _$User {
   }) = _User;
 
   User._();
+}
+
+abstract class UserRepository<Err> {
+  Future<Result<User, Err>> findById(UserId id);
 }
