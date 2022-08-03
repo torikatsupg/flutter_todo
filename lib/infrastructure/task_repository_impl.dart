@@ -124,13 +124,10 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
   @override
   Future<Result<void, FirestoreError>> update(Task task) async {
     try {
-      await _ref.doc(task.id.value).set(
+      await _ref.doc(task.id.value).update(
         {
-          _name: task.name,
-          _createdAt: task.createdAt,
           _isDone: task.isDone,
         },
-        SetOptions(merge: true),
       );
       return Result.ok(null);
     } on dynamic catch (e) {
