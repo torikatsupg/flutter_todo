@@ -5,7 +5,7 @@ import 'package:flutter_todo/model/query_list.dart';
 import 'package:flutter_todo/model/result.dart';
 
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/model/user.dart';
 
 const _name = 'name';
 const _createdAt = 'createdAt';

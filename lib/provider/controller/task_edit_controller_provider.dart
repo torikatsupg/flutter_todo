@@ -1,6 +1,6 @@
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
-import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/riverpod_type.dart';
 import 'package:flutter_todo/util/tupple.dart';

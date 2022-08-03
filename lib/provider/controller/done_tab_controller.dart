@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';

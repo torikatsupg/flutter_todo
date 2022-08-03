@@ -1,6 +1,6 @@
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
-import 'package:flutter_todo/model/user_auth.dart';
+import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:flutter_todo/util/tupple.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

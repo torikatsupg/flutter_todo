@@ -19,7 +19,7 @@ final authProvider = StreamProvider<UserAuth?>(
         if (maybeAuth == null) {
           return null;
         } else {
-          return UserAuth(userId: UserId(maybeAuth.uid));
+          return UserAuth(userId: AuthId(maybeAuth.uid));
         }
       },
     );

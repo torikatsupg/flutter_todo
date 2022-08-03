@@ -1,5 +1,4 @@
-import 'package:flutter_todo/model/user_auth.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model.dart';
