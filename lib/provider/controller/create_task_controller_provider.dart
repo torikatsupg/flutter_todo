@@ -23,7 +23,7 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
   }
 
   final Reader _read;
-  final userId;
+  final UserId userId;
 
   onFocusChangeName() =>
       state = state.copyWith(name: state.name.onFocusChange());
