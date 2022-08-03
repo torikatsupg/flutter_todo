@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:flutter_todo/view/page/debug_page.dart';
 import 'package:flutter_todo/view/page/edit_task_page.dart';
 import 'package:flutter_todo/view/page/task_detail_page.dart';
@@ -100,7 +100,7 @@ final routerProvider = Provider(
       urlPathStrategy: UrlPathStrategy.path,
       debugLogDiagnostics: true,
       initialLocation: '/signin',
-      refreshListenable: authStateNotifier,
+      refreshListenable: userStateNotifier,
     );
   },
 );

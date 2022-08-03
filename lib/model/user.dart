@@ -1,4 +1,5 @@
 import 'package:flutter_todo/model/result.dart';
+import 'package:flutter_todo/model/user_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../generated/model/user.freezed.dart';
@@ -20,6 +21,8 @@ abstract class UserRepository<Err> {
 @freezed
 class UserId with _$UserId {
   factory UserId(String value) = _UserId;
+
+  factory UserId.fromAuthId(AuthId id) => UserId(id.value);
 
   UserId._();
 }

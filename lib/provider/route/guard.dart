@@ -1,4 +1,4 @@
-import 'package:flutter_todo/provider/infrastructure/auth_provider.dart';
+import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
