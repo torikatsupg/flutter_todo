@@ -23,9 +23,8 @@ Future<void> initializeFirebase() async {
 
 bool _isInitialized() {
   try {
-    Firebase.apps;
-    return true;
-  } catch (e) {
+    return Firebase.apps.isNotEmpty;
+  } on dynamic catch (e) {
     return false;
   }
 }
