@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_todo/model/result.dart';
+import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final authenticatorProvider = Provider((_) => Authenticator());
+final authenticatorProvider = Provider(Authenticator.new);
 
 class Authenticator {
+  Authenticator(Ref ref) : _read = ref.read;
+  final Reader _read;
+
   Future<Result<User?, SignupError>> signup({
     required String email,
     required String password,
@@ -12,6 +16,8 @@ class Authenticator {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      // wait for update of user
+      await _read(userProvider.stream).first;
       return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -38,6 +44,8 @@ class Authenticator {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      // wait for update of user
+      await _read(userProvider.stream).first;
       return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -60,6 +68,8 @@ class Authenticator {
   Future<Result<void, SignOutError>> signout() async {
     try {
       await FirebaseAuth.instance.signOut();
+      // wait for update of user
+      await _read(userProvider.stream).first;
       return Result.ok(null);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
