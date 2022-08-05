@@ -12,6 +12,7 @@ targets:
             - 'lib/provider/**.dart'
             - 'lib/firebase/**.dart'
             - 'lib/util/**.dart'
+            - 'lib/view/**.dart'
         options:
           build_extensions:
             '^lib/{{}}.dart': 'lib/generated/{{}}.freezed.dart'

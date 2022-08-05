@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
-import 'package:flutter_todo/view/page/debug_page.dart';
-import 'package:flutter_todo/view/page/edit_task_page.dart';
-import 'package:flutter_todo/view/page/register_page.dart';
-import 'package:flutter_todo/view/page/task_detail_page.dart';
+import 'package:flutter_todo/view/page/debug_page/debug_page.dart';
+import 'package:flutter_todo/view/page/edit_task_page/edit_task_page.dart';
+import 'package:flutter_todo/view/page/register_page/register_page.dart';
+import 'package:flutter_todo/view/page/task_detail_page/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
 import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_todo/view/page/error_page.dart';
-import 'package:flutter_todo/view/page/home_page.dart';
-import 'package:flutter_todo/view/page/create_task_page.dart';
-import 'package:flutter_todo/view/page/notfound_page.dart';
-import 'package:flutter_todo/view/page/setting_page.dart';
-import 'package:flutter_todo/view/page/signin_page.dart';
-import 'package:flutter_todo/view/page/signup_page.dart';
+import 'package:flutter_todo/view/page/error_page/error_page.dart';
+import 'package:flutter_todo/view/page/home_page/home_page.dart';
+import 'package:flutter_todo/view/page/create_task_page/create_task_page.dart';
+import 'package:flutter_todo/view/page/notfound_page/notfound_page.dart';
+import 'package:flutter_todo/view/page/setting_page/setting_page.dart';
+import 'package:flutter_todo/view/page/signin_page/signin_page.dart';
+import 'package:flutter_todo/view/page/signup_page/signup_page.dart';
 
 class RouteState {
   RouteState(this.params, this.queryParams, this.name);

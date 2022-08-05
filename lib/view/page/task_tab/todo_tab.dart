@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/controller/todo_tab_controller.dart';
+import 'package:flutter_todo/view/page/task_tab/todo_tab_controller.dart';
 import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
