@@ -5,9 +5,9 @@ import 'package:flutter_todo/provider/model/user_repository_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/model/user.dart';
 
-class _UserStateNotifier extends ValueNotifier<User?> {
+class _UserStateNotifier extends ValueNotifier<void> {
   _UserStateNotifier() : super(null);
-  void change(User? v) => value = v;
+  void notify() => notifyListeners();
 }
 
 final userStateNotifier = _UserStateNotifier();
@@ -27,18 +27,20 @@ final authProvider = StreamProvider<UserAuth?>(
   },
 );
 
-final userProvider = StreamProvider<User?>((ref) {
-  ref.listenSelf((_, v) => userStateNotifier.change(v.value));
-  return ref.watch(authProvider.stream).asyncMap(
-    (auth) async {
-      if (auth == null) return null;
-      final userId = UserId.fromAuthId(auth.userId);
-      final result = await ref.read(userRepositoryProvider).findById(userId);
-      return result.map(
-        ok: (user) => user.value,
-        // TODO(torikatsu): handle error correctory
-        err: (e) => null,
-      );
-    },
-  );
-});
+final userProvider = StreamProvider<User?>(
+  (ref) {
+    ref.listenSelf((_, v) => userStateNotifier.notify());
+    return ref.watch(authProvider.stream).asyncMap(
+      (auth) async {
+        if (auth == null) return null;
+        final userId = UserId.fromAuthId(auth.userId);
+        final result = await ref.read(userRepositoryProvider).findById(userId);
+        return result.map(
+          ok: (user) => user.value,
+          // TODO(torikatsu): handle error correctory
+          err: (e) => null,
+        );
+      },
+    );
+  },
+);
