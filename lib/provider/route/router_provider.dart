@@ -3,6 +3,7 @@ import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:flutter_todo/view/page/debug_page.dart';
 import 'package:flutter_todo/view/page/edit_task_page.dart';
+import 'package:flutter_todo/view/page/register_page.dart';
 import 'package:flutter_todo/view/page/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
 import 'package:flutter_todo/provider/route/my_go_route.dart';
@@ -56,9 +57,15 @@ final routerProvider = Provider(
           builder: (_, __) => const SignupPage(),
         ),
         MyGoRoute(
+          '/register',
+          read,
+          redirect: (_) => noUserGuard(read),
+          builder: (_, __) => const RegisterPage(),
+        ),
+        MyGoRoute(
           '/home/:tab',
           read,
-          redirect: (_) => authGuard(read),
+          redirect: (_) => userGuard(read),
           builder: (context, state) => const HomePage(),
           routes: [
             MyGoRoute(
@@ -76,7 +83,7 @@ final routerProvider = Provider(
             MyGoRoute(
               ':id',
               read,
-              redirect: (state) => todoGuard(read, state),
+              redirect: (state) => userGuard(read),
               builder: (context, state) => const TaskDetailPage(),
               routes: [
                 MyGoRoute(
