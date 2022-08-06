@@ -8,7 +8,7 @@ part '../generated/model/user.freezed.dart';
 class User with _$User {
   factory User({
     required UserId userId,
-    required String name,
+    required String username,
   }) = _User;
 
   User._();
@@ -16,6 +16,10 @@ class User with _$User {
 
 abstract class UserRepository<Err> {
   Future<Result<User, Err>> findById(UserId id);
+  Future<Result<User, Err>> register({
+    required UserId id,
+    required String username,
+  });
 }
 
 @freezed
