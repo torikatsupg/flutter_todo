@@ -166,7 +166,6 @@ final routerProvider = Provider(
       debugLogDiagnostics: true,
       initialLocation: '/signin',
       refreshListenable: userStateNotifier,
-      redirectLimit: 50,
     );
   },
 );
