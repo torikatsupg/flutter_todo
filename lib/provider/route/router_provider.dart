@@ -170,8 +170,6 @@ final routerProvider = Provider(
   },
 );
 
-const _emptyQuery = <String, String>{};
-
 extension GoRouterStateExt on GoRouterState {
   TaskId? get taskId {
     final maybeTaskId = params['id'];
@@ -191,7 +189,7 @@ extension GoRouterExt on GoRouter {
   void go_(
     String path,
     Reader read, {
-    Map<String, String> queryParameters = _emptyQuery,
+    Map<String, String> queryParameters = const {},
     bool isMaintainQuery = true,
   }) {
     final nextQuery = isMaintainQuery

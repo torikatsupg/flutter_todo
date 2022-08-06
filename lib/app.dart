@@ -28,15 +28,15 @@ class App extends ConsumerWidget {
   }
 }
 
-// initializing between runApp() and MaterialApp.router()
+/// initializing between [runApp] and [MaterialApp.router]
 Future<bool> _init(WidgetRef ref) async {
-  Future.wait([
+  await Future.wait([
     // [FirebaseAuth.instance.authStateChange] sends User to the Stream
     // at initialization if authenticated, or null if not authenticated.
     // To avoid having the sign-in screen appear momentarily despite
     // the fact that the user has authenticated when the app is launched,
     // the GoRouter is attached after waiting for the first event.
-    ref.read(authProvider.stream).first,
+    ref.read(userProvider.stream).first,
   ]);
   return true;
 }
