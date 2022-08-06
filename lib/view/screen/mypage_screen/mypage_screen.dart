@@ -19,6 +19,10 @@ class MyPageScreen extends ConsumerWidget {
             child: const Text('setting'),
           ),
           TextButton(
+            onPressed: () => showLicensePage(context: context),
+            child: const Text('license'),
+          ),
+          TextButton(
             onPressed: controller.signOut,
             child: const Text('signout'),
           ),
