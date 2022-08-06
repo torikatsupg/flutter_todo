@@ -192,7 +192,7 @@ extension GoRouterExt on GoRouter {
     bool isMaintainQuery = true,
   }) {
     final nextQuery = isMaintainQuery
-        ? (state().queryParams..addAll(queryParameters))
+        ? (_calcState(this).queryParams..addAll(queryParameters))
         : queryParameters;
 
     final queryStr = nextQuery
@@ -200,16 +200,10 @@ extension GoRouterExt on GoRouter {
         .values
         .join('&');
 
-    if (queryStr.isEmpty) {
-      go(path);
-    } else {
-      go('$path?$queryStr');
-    }
+    go(queryStr.isEmpty ? path : '$path?$queryStr');
   }
 
   void pop_(Reader read) => read(routerProvider).routerDelegate.pop();
-
-  RouteState state() => _calcState(this);
 }
 
 RouteState _calcState(GoRouter router) {
