@@ -4,6 +4,9 @@
 {
   users: [
     $userId: {
+      // field
+      username: String,
+      // collection
       tasks: [
         $taskId: {
           name: String,
