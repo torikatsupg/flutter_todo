@@ -47,49 +47,107 @@ final routerProvider = Provider(
         MyGoRoute(
           '/signin',
           read,
-          redirect: (_) => noAuthGuard(read),
+          redirect: (state) => combineGuard(
+            state,
+            read,
+            [
+              noAuthGuard,
+            ],
+          ),
           builder: (_, __) => const SigninPage(),
         ),
         MyGoRoute(
           '/signup',
           read,
-          redirect: (_) => noAuthGuard(read),
+          redirect: (state) => combineGuard(
+            state,
+            read,
+            [
+              noAuthGuard,
+            ],
+          ),
           builder: (_, __) => const SignupPage(),
         ),
         MyGoRoute(
           '/register',
           read,
-          redirect: (_) => noUserGuard(read),
+          redirect: (state) => combineGuard(
+            state,
+            read,
+            [
+              authGuard,
+              noUserGuard,
+            ],
+          ),
           builder: (_, __) => const RegisterPage(),
         ),
         MyGoRoute(
           '/home/:tab',
           read,
-          redirect: (_) => userGuard(read),
+          redirect: (state) => combineGuard(
+            state,
+            read,
+            [
+              authGuard,
+              userGuard,
+            ],
+          ),
           builder: (context, state) => const HomePage(),
           routes: [
             MyGoRoute(
               'create',
               read,
-              redirect: (state) => todoGuard(read, state),
+              redirect: (state) => combineGuard(
+                state,
+                read,
+                [
+                  authGuard,
+                  userGuard,
+                  todoGuard,
+                ],
+              ),
               builder: (context, state) => const CreatePage(),
             ),
             MyGoRoute(
               'setting',
               read,
-              redirect: (state) => myPageGuard(read, state),
+              redirect: (state) => combineGuard(
+                state,
+                read,
+                [
+                  authGuard,
+                  userGuard,
+                  myPageGuard,
+                ],
+              ),
               builder: (context, state) => const SettingPage(),
             ),
             MyGoRoute(
               ':id',
               read,
-              redirect: (state) => userGuard(read),
+              redirect: (state) => combineGuard(
+                state,
+                read,
+                [
+                  authGuard,
+                  userGuard,
+                  todoGuard,
+                ],
+              ),
               builder: (context, state) => const TaskDetailPage(),
               routes: [
                 MyGoRoute(
                   'edit',
                   read,
-                  redirect: (state) => todoGuard(read, state),
+                  redirect: (state) => combineGuard(
+                    state,
+                    read,
+                    [
+                      authGuard,
+                      userGuard,
+                      todoGuard,
+                    ],
+                  ),
                   builder: (context, state) => const EditTaskPage(),
                 ),
               ],
@@ -108,6 +166,7 @@ final routerProvider = Provider(
       debugLogDiagnostics: true,
       initialLocation: '/signin',
       refreshListenable: userStateNotifier,
+      redirectLimit: 50,
     );
   },
 );
