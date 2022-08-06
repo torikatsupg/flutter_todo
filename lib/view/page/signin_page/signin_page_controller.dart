@@ -38,7 +38,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  void toSignup() => _read(routerProvider).go_('/signup', _read);
+  void toSignup() => _read(routerProvider).go_('/signup');
 
   Future<void> submit() async {
     _read(loadingProvider.notifier).run(

@@ -187,13 +187,12 @@ extension GoRouterStateExt on GoRouterState {
 
 extension GoRouterExt on GoRouter {
   void go_(
-    String path,
-    Reader read, {
+    String path, {
     Map<String, String> queryParameters = const {},
     bool isMaintainQuery = true,
   }) {
     final nextQuery = isMaintainQuery
-        ? (state(read).queryParams..addAll(queryParameters))
+        ? (state().queryParams..addAll(queryParameters))
         : queryParameters;
 
     final queryStr = nextQuery
@@ -210,7 +209,7 @@ extension GoRouterExt on GoRouter {
 
   void pop_(Reader read) => read(routerProvider).routerDelegate.pop();
 
-  RouteState state(Reader read) => _calcState(read(routerProvider));
+  RouteState state() => _calcState(this);
 }
 
 RouteState _calcState(GoRouter router) {

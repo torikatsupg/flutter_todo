@@ -55,7 +55,7 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
       _read(todoTasksFamily(_userId).notifier).loadMore();
 
   void onPressItem(TaskId taskId) =>
-      _read(routerProvider).go_('/home/todo/${taskId.value}', _read);
+      _read(routerProvider).go_('/home/todo/${taskId.value}');
 
   Future<void> onDismissedItem(Task task) =>
       _read(loadingProvider.notifier).run(

@@ -7,5 +7,5 @@ class NotFoundController {
   NotFoundController(Ref ref) : _read = ref.read;
   final Reader _read;
 
-  void backHome() => _read(routerProvider).go_('/home', _read);
+  void backHome() => _read(routerProvider).go_('/home');
 }

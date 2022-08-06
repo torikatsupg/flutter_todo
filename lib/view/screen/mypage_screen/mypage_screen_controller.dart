@@ -12,7 +12,7 @@ class MyPageController {
   final Reader _read;
 
   void openSetting() =>
-      _read(routerProvider).go_('/home/mypage/setting', _read);
+      _read(routerProvider).go_('/home/mypage/setting');
 
   void signOut() async {
     await _read(loadingProvider.notifier).run(() async {

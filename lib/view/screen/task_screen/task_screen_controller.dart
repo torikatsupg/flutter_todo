@@ -1,29 +1,22 @@
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final taskControllerFamily =
-    StateNotifierProvider.family<TaskController, int, String>(
-  (ref, tab) {
-    return TaskController(ref.read, tab);
-  },
-);
+final taskScreenControllerProvider = Provider<TaskScreenController>(TaskScreenController.new);
 
-class TaskController extends StateNotifier<int> {
-  TaskController(this._read, query) : super(toIndex(query));
+class TaskScreenController {
+  TaskScreenController(Ref ref) : _read = ref.read;
   final Reader _read;
 
   void onTap(int index) {
     _read(routerProvider).go_(
       '/home/todo',
-      _read,
       queryParameters: {'todo': fromIndex(index)},
     );
   }
 
-  void toDetailPage(String id) =>
-      _read(routerProvider).go_('/home/todo/$id', _read);
+  void toDetailPage(String id) => _read(routerProvider).go_('/home/todo/$id');
 
-  void onTapFab() => _read(routerProvider).go_('/home/todo/create', _read);
+  void onTapFab() => _read(routerProvider).go_('/home/todo/create');
 }
 
 String fromIndex(int index) {

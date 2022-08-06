@@ -26,5 +26,5 @@ class TaskDetailController
   final Reader _read;
 
   void toEditPage() => state.flatWhenData((task) =>
-      _read(routerProvider).go_('/home/todo/${task.id.value}/edit', _read));
+      _read(routerProvider).go_('/home/todo/${task.id.value}/edit'));
 }

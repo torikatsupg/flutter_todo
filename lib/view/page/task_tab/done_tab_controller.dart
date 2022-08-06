@@ -48,7 +48,7 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
       state = state.copyWith(list: list);
 
   void onTapListItem(String taskId) =>
-      _read(routerProvider).go_('/home/todo/$taskId', _read);
+      _read(routerProvider).go_('/home/todo/$taskId');
 
   Future<void> refresh() => _read(doneTasksFamily(_userId).notifier).refresh();
 

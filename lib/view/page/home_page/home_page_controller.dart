@@ -16,7 +16,7 @@ class HomeController extends StateNotifier<void> {
   int toIndex(String tab) => TabIndex.toIndex(tab);
 
   void onTapTab(int value) =>
-      _read(routerProvider).go_('/home/${TabIndex.toParam(value)}', _read);
+      _read(routerProvider).go_('/home/${TabIndex.toParam(value)}');
 }
 
 // TODO(torikatsu): enumにしたい
