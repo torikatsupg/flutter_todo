@@ -22,11 +22,7 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
     _controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: ref.read(
-        taskControllerFamily(
-          ref.read(localTabParamProvier),
-        ),
-      ),
+      initialIndex: toIndex(ref.read(localTodoQueryParamProvier)),
     );
     super.initState();
   }
@@ -34,11 +30,12 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final controller = ref.read(
-      taskControllerFamily(
-        ref.watch(localTabParamProvier),
-      ).notifier,
+    ref.listen<String>(
+      localTodoQueryParamProvier,
+      (prev, next) => _controller.index = toIndex(next),
     );
+    final controller = ref.read(taskScreenControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('task'),
