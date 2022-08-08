@@ -91,7 +91,7 @@ class _ListItem extends ConsumerWidget {
     return ListTile(
       leading: Text(task.id.value),
       title: Text(task.name),
-      onTap: () => controller.onTapListItem(task.id.value),
+      onTap: () => controller.onTapListItem(task.id),
     );
   }
 }

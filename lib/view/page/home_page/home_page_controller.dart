@@ -1,4 +1,6 @@
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final homeControllerProvider =
@@ -13,20 +15,10 @@ class HomeController extends StateNotifier<void> {
 
   final Reader _read;
 
-  int toIndex(String tab) => TabIndex.toIndex(tab);
-
-  void onTapTab(int value) =>
-      _read(routerProvider).go_('/home/${TabIndex.toParam(value)}');
-}
-
-// TODO(torikatsu): enumにしたい
-class TabIndex {
-  static const _map = {'todo': 0, 'mypage': 1};
-
-  static int toIndex(String tab) => _map[tab]!;
-
-  // param -> indexはparamが不明だが、idnex -> paramはparamが必ずわかる
-  static String toParam(int index) {
-    return _map.keys.firstWhere((e) => _map[e] == index);
-  }
+  void onTapTab(int index) => _read(routerProvider).goNamed_(
+        Routes.home,
+        params: {
+          ParamKeys.tab: HomeTab.fromIndex(index).value,
+        },
+      );
 }

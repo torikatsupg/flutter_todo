@@ -1,4 +1,6 @@
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
+import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -66,23 +68,23 @@ String? noUserGuard(
   }
 }
 
-String? todoGuard(
+String? todoTabGuard(
   Reader read,
   GoRouterState state,
 ) {
-  final isNotTodoTab = state.params['tab'] != 'todo';
-  if (isNotTodoTab) {
+  final isNotTaskTab = state.tab != HomeTab.task;
+  if (isNotTaskTab) {
     return '/notfound';
   } else {
     return null;
   }
 }
 
-String? myPageGuard(
+String? myPageTabGuard(
   Reader read,
   GoRouterState state,
 ) {
-  final isNotMyPageTab = state.params['tab'] != 'mypage';
+  final isNotMyPageTab = state.tab != HomeTab.mypage;
   if (isNotMyPageTab) {
     return '/notfound';
   } else {

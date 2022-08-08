@@ -1,42 +1,44 @@
+import 'package:flutter_todo/model/task.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final taskScreenControllerProvider = Provider<TaskScreenController>(TaskScreenController.new);
+final taskScreenControllerProvider =
+    Provider<TaskScreenController>(TaskScreenController.new);
 
 class TaskScreenController {
   TaskScreenController(Ref ref) : _read = ref.read;
   final Reader _read;
 
   void onTap(int index) {
-    _read(routerProvider).go_(
-      '/home/todo',
-      queryParameters: {'todo': fromIndex(index)},
+    _read(routerProvider).goNamed_(
+      Routes.home,
+      params: {
+        ParamKeys.tab: HomeTab.task.value,
+      },
+      queryParams: {
+        QueryParamKeys.innerTab: InnerTab.fromIndex(index).value,
+      },
     );
   }
 
-  void toDetailPage(String id) => _read(routerProvider).go_('/home/todo/$id');
+  void toDetailPage(TaskId id) => _read(routerProvider).goNamed_(
+        Routes.taskDetail,
+        params: {
+          ParamKeys.tab: HomeTab.task.value,
+          ParamKeys.taskId: id.value,
+        },
+      );
 
-  void onTapFab() => _read(routerProvider).go_('/home/todo/create');
-}
-
-String fromIndex(int index) {
-  switch (index) {
-    case 0:
-      return 'todo';
-    case 1:
-      return 'done';
-    default:
-      throw UnimplementedError();
-  }
-}
-
-int toIndex(String? query) {
-  switch (query) {
-    case 'todo':
-      return 0;
-    case 'done':
-      return 1;
-    default:
-      return 0;
+  void onTapFab() {
+    // _read(routerProvider).go('/home/task/create');
+    // return;
+    _read(routerProvider).goNamed_(
+      Routes.taskCreate,
+      params: {
+        ParamKeys.tab: HomeTab.task.value,
+      },
+    );
   }
 }

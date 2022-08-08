@@ -3,7 +3,9 @@ import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_todo/model/result.dart';
@@ -47,8 +49,13 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
   void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>
       state = state.copyWith(list: list);
 
-  void onTapListItem(String taskId) =>
-      _read(routerProvider).go_('/home/todo/$taskId');
+  void onTapListItem(TaskId taskId) => _read(routerProvider).goNamed_(
+        Routes.taskDetail,
+        params: {
+          ParamKeys.tab: HomeTab.task.value,
+          ParamKeys.taskId: taskId.value,
+        },
+      );
 
   Future<void> refresh() => _read(doneTasksFamily(_userId).notifier).refresh();
 

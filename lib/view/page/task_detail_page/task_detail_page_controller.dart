@@ -3,7 +3,9 @@ import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:flutter_todo/util/async_value.dart';
 import 'package:flutter_todo/util/tupple.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,6 +27,13 @@ class TaskDetailController
 
   final Reader _read;
 
-  void toEditPage() => state.flatWhenData((task) =>
-      _read(routerProvider).go_('/home/todo/${task.id.value}/edit'));
+  void toEditPage() => state.flatWhenData(
+        (task) => _read(routerProvider).goNamed_(
+          Routes.taskEdit,
+          params: {
+            ParamKeys.tab: HomeTab.task.value,
+            ParamKeys.taskId: task.id.value,
+          },
+        ),
+      );
 }

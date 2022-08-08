@@ -4,6 +4,7 @@ import 'package:flutter_todo/infrastructure/authenticator_provider.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/global_controller/network_dialog_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -38,7 +39,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  void toSignup() => _read(routerProvider).go_('/signup');
+  void toSignup() => _read(routerProvider).goNamed_(Routes.signUp);
 
   Future<void> submit() async {
     _read(loadingProvider.notifier).run(

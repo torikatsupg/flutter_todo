@@ -5,7 +5,9 @@ import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:flutter_todo/util/pagenated_list_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_todo/model/result.dart';
@@ -54,8 +56,13 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
   Future<void> resolveAndLoadMore() =>
       _read(todoTasksFamily(_userId).notifier).loadMore();
 
-  void onPressItem(TaskId taskId) =>
-      _read(routerProvider).go_('/home/todo/${taskId.value}');
+  void onPressItem(TaskId taskId) => _read(routerProvider).goNamed_(
+        Routes.taskDetail,
+        params: {
+          ParamKeys.tab: HomeTab.task.value,
+          ParamKeys.taskId: taskId.value,
+        },
+      );
 
   Future<void> onDismissedItem(Task task) =>
       _read(loadingProvider.notifier).run(
