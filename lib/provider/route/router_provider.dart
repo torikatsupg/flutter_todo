@@ -34,7 +34,12 @@ final routerProvider = Provider(
         MyGoRoute(
           '/',
           read,
-          redirect: (_) => '/home/task',
+          redirect: (state) => state.namedLocation(
+            Routes.home.value,
+            params: {
+              ParamKeys.tab.value: HomeTab.task.value,
+            },
+          ),
         ),
         MyGoRoute(
           '/notfound',
@@ -85,7 +90,12 @@ final routerProvider = Provider(
         MyGoRoute(
           '/home',
           read,
-          redirect: (_) => '/home/task',
+          redirect: (state) => state.namedLocation(
+            Routes.home.value,
+            params: {
+              ParamKeys.tab.value: HomeTab.task.value,
+            },
+          ),
         ),
         MyGoRoute(
           '/home/:tab',

@@ -1,10 +1,20 @@
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef RouteGuard = String? Function(Reader read, GoRouterState state);
+
+String _deafultHomePath(GoRouterState state) {
+  return state.namedLocation(
+    Routes.home.value,
+    params: {
+      ParamKeys.tab.value: HomeTab.task.value,
+    },
+  );
+}
 
 String? combineGuard(
   GoRouterState state,
@@ -26,7 +36,7 @@ String? authGuard(
 ) {
   final isNotAuthenticated = read(authProvider).value == null;
   if (isNotAuthenticated) {
-    return '/signin';
+    return state.namedLocation(Routes.signIn.value);
   } else {
     return null;
   }
@@ -38,7 +48,7 @@ String? noAuthGuard(
 ) {
   final isAuthenticated = read(authProvider).value != null;
   if (isAuthenticated) {
-    return '/home';
+    return _deafultHomePath(state);
   } else {
     return null;
   }
@@ -50,7 +60,7 @@ String? userGuard(
 ) {
   final isNotRegistered = read(userProvider).value == null;
   if (isNotRegistered) {
-    return '/register';
+    return state.namedLocation(Routes.register.value);
   } else {
     return null;
   }
@@ -62,7 +72,7 @@ String? noUserGuard(
 ) {
   final isRegistered = read(userProvider).value != null;
   if (isRegistered) {
-    return '/home';
+    return _deafultHomePath(state);
   } else {
     return null;
   }
@@ -74,7 +84,7 @@ String? todoTabGuard(
 ) {
   final isNotTaskTab = state.tab != HomeTab.task;
   if (isNotTaskTab) {
-    return '/notfound';
+    return state.namedLocation(Routes.notFound.value);
   } else {
     return null;
   }
@@ -86,7 +96,7 @@ String? myPageTabGuard(
 ) {
   final isNotMyPageTab = state.tab != HomeTab.mypage;
   if (isNotMyPageTab) {
-    return '/notfound';
+    return state.namedLocation(Routes.notFound.value);
   } else {
     return null;
   }
