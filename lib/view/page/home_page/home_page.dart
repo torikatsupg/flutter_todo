@@ -19,14 +19,14 @@ class HomePage extends ConsumerWidget {
           (context) => const TaskScreen(),
           (context) => const MyPageScreen(),
         ],
-        index: controller.toIndex(tab),
+        index: tab.index,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.task), label: 'task'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'mypage'),
         ],
-        currentIndex: controller.toIndex(tab),
+        currentIndex: tab.index,
         onTap: controller.onTapTab,
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/config/page_storage_keys.dart';
 import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/view/page/task_tab/done_tab.dart';
 import 'package:flutter_todo/view/page/task_tab/todo_tab.dart';
 import 'package:flutter_todo/view/screen/task_screen/task_screen_controller.dart';
@@ -22,7 +23,7 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
     _controller = TabController(
       length: 2,
       vsync: this,
-      initialIndex: toIndex(ref.read(localTodoQueryParamProvier)),
+      initialIndex: ref.read(localInnerTabProvier).index,
     );
     super.initState();
   }
@@ -30,9 +31,9 @@ class _TodoScreenState extends ConsumerState<TaskScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    ref.listen<String>(
-      localTodoQueryParamProvier,
-      (prev, next) => _controller.index = toIndex(next),
+    ref.listen<InnerTab>(
+      localInnerTabProvier,
+      (prev, next) => _controller.index = next.index,
     );
     final controller = ref.read(taskScreenControllerProvider);
 
