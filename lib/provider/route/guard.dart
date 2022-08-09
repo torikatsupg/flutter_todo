@@ -1,6 +1,5 @@
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
 import 'package:flutter_todo/provider/route/pram.dart';
-import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -82,7 +81,8 @@ String? todoTabGuard(
   Reader read,
   GoRouterState state,
 ) {
-  final isNotTaskTab = state.tab != HomeTab.task;
+  final isNotTaskTab =
+      HomeTab.parse(state.params[ParamKeys.tab.value]) != HomeTab.task;
   if (isNotTaskTab) {
     return state.namedLocation(Routes.notFound.value);
   } else {
@@ -94,7 +94,8 @@ String? myPageTabGuard(
   Reader read,
   GoRouterState state,
 ) {
-  final isNotMyPageTab = state.tab != HomeTab.mypage;
+  final isNotMyPageTab =
+      HomeTab.parse(state.params[ParamKeys.tab.value]) != HomeTab.mypage;
   if (isNotMyPageTab) {
     return state.namedLocation(Routes.notFound.value);
   } else {

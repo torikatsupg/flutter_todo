@@ -1,14 +1,16 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_todo/model/task.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
+import 'package:flutter_todo/provider/route/local_provider_scope.dart';
 import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
+import 'package:flutter_todo/view/component/loading_overlay.dart';
+import 'package:flutter_todo/view/dialog/network_alert_dialog.dart';
 import 'package:flutter_todo/view/page/debug_page/debug_page.dart';
 import 'package:flutter_todo/view/page/edit_task_page/edit_task_page.dart';
 import 'package:flutter_todo/view/page/register_page/register_page.dart';
 import 'package:flutter_todo/view/page/task_detail_page/task_detail_page.dart';
 import 'package:flutter_todo/provider/route/guard.dart';
-import 'package:flutter_todo/provider/route/my_go_route.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/view/page/error_page/error_page.dart';
@@ -19,21 +21,13 @@ import 'package:flutter_todo/view/page/setting_page/setting_page.dart';
 import 'package:flutter_todo/view/page/signin_page/signin_page.dart';
 import 'package:flutter_todo/view/page/signup_page/signup_page.dart';
 
-class RouteState {
-  RouteState(this.params, this.queryParams, this.name);
-  final Map<String, String> params;
-  final Map<String, String> queryParams;
-  final String? name;
-}
-
 final routerProvider = Provider(
   (ref) {
     final read = ref.read;
     return GoRouter(
       routes: [
-        MyGoRoute(
-          '/',
-          read,
+        GoRoute(
+          path: '/',
           redirect: (state) => state.namedLocation(
             Routes.home.value,
             params: {
@@ -41,16 +35,14 @@ final routerProvider = Provider(
             },
           ),
         ),
-        MyGoRoute(
-          '/notfound',
-          read,
-          name: Routes.notFound,
-          builder: (_, __) => const NotFoundPage(),
+        GoRoute(
+          path: '/notfound',
+          name: Routes.notFound.value,
+          builder: _builder(const NotFoundPage()),
         ),
-        MyGoRoute(
-          '/signin',
-          read,
-          name: Routes.signIn,
+        GoRoute(
+          path: '/signin',
+          name: Routes.signIn.value,
           redirect: (state) => combineGuard(
             state,
             read,
@@ -58,12 +50,11 @@ final routerProvider = Provider(
               noAuthGuard,
             ],
           ),
-          builder: (_, __) => const SigninPage(),
+          builder: _builder(const SigninPage()),
         ),
-        MyGoRoute(
-          '/signup',
-          read,
-          name: Routes.signUp,
+        GoRoute(
+          path: '/signup',
+          name: Routes.signUp.value,
           redirect: (state) => combineGuard(
             state,
             read,
@@ -71,12 +62,11 @@ final routerProvider = Provider(
               noAuthGuard,
             ],
           ),
-          builder: (_, __) => const SignupPage(),
+          builder: _builder(const SignupPage()),
         ),
-        MyGoRoute(
-          '/register',
-          read,
-          name: Routes.register,
+        GoRoute(
+          path: '/register',
+          name: Routes.register.value,
           redirect: (state) => combineGuard(
             state,
             read,
@@ -85,11 +75,10 @@ final routerProvider = Provider(
               noUserGuard,
             ],
           ),
-          builder: (_, __) => const RegisterPage(),
+          builder: _builder(const RegisterPage()),
         ),
-        MyGoRoute(
-          '/home',
-          read,
+        GoRoute(
+          path: '/home',
           redirect: (state) => state.namedLocation(
             Routes.home.value,
             params: {
@@ -97,10 +86,9 @@ final routerProvider = Provider(
             },
           ),
         ),
-        MyGoRoute(
-          '/home/:tab',
-          read,
-          name: Routes.home,
+        GoRoute(
+          path: '/home/:tab',
+          name: Routes.home.value,
           redirect: (state) => combineGuard(
             state,
             read,
@@ -109,12 +97,11 @@ final routerProvider = Provider(
               userGuard,
             ],
           ),
-          builder: (context, state) => const HomePage(),
+          builder: _builder(const HomePage()),
           routes: [
-            MyGoRoute(
-              'create',
-              read,
-              name: Routes.taskCreate,
+            GoRoute(
+              path: 'create',
+              name: Routes.taskCreate.value,
               redirect: (state) => combineGuard(
                 state,
                 read,
@@ -124,12 +111,11 @@ final routerProvider = Provider(
                   todoTabGuard,
                 ],
               ),
-              builder: (context, state) => const CreatePage(),
+              builder: _builder(const CreatePage()),
             ),
-            MyGoRoute(
-              'setting',
-              read,
-              name: Routes.setting,
+            GoRoute(
+              path: 'setting',
+              name: Routes.setting.value,
               redirect: (state) => combineGuard(
                 state,
                 read,
@@ -139,12 +125,11 @@ final routerProvider = Provider(
                   myPageTabGuard,
                 ],
               ),
-              builder: (context, state) => const SettingPage(),
+              builder: _builder(const SettingPage()),
             ),
-            MyGoRoute(
-              ':id',
-              read,
-              name: Routes.taskDetail,
+            GoRoute(
+              path: ':taskId',
+              name: Routes.taskDetail.value,
               redirect: (state) => combineGuard(
                 state,
                 read,
@@ -154,12 +139,11 @@ final routerProvider = Provider(
                   todoTabGuard,
                 ],
               ),
-              builder: (context, state) => const TaskDetailPage(),
+              builder: _builder(const TaskDetailPage()),
               routes: [
-                MyGoRoute(
-                  'edit',
-                  read,
-                  name: Routes.taskEdit,
+                GoRoute(
+                  path: 'edit',
+                  name: Routes.taskEdit.value,
                   redirect: (state) => combineGuard(
                     state,
                     read,
@@ -169,43 +153,28 @@ final routerProvider = Provider(
                       todoTabGuard,
                     ],
                   ),
-                  builder: (context, state) => const EditTaskPage(),
+                  builder: _builder(const EditTaskPage()),
                 ),
               ],
             ),
           ],
         ),
         if (kDebugMode)
-          MyGoRoute(
-            '/debug',
-            read,
-            name: Routes.debug,
-            builder: (_, __) => const DebugPage(),
+          GoRoute(
+            path: '/debug',
+            name: Routes.debug.value,
+            builder: _builder(const DebugPage()),
           ),
       ],
-      errorBuilder: (context, state) => const ErrorPage(),
+      errorBuilder: _builder(const ErrorPage()),
       urlPathStrategy: UrlPathStrategy.path,
       debugLogDiagnostics: true,
       initialLocation: '/signin',
       refreshListenable: userStateNotifier,
+      navigatorBuilder: navigatorBuilder,
     );
   },
 );
-
-extension GoRouterStateExt on GoRouterState {
-  TaskId? get taskId {
-    final maybeTaskId = params['id'];
-    if (maybeTaskId != null) {
-      return TaskId(maybeTaskId);
-    } else {
-      return null;
-    }
-  }
-
-  HomeTab? get tab => HomeTab.parse(params['tab']);
-
-  InnerTab get innerTab => InnerTab.parse(queryParams['innerTab']);
-}
 
 extension GoRouterExt on GoRouter {
   void goNamed_(
@@ -219,7 +188,7 @@ extension GoRouterExt on GoRouter {
         queryParams.map((key, value) => MapEntry(key.value, value));
 
     final nextQuery = isMaintainQuery
-        ? (_calcState(this).queryParams..addAll(queryParamsMap))
+        ? (_RouteState._fromRouter(this).queryParams..addAll(queryParamsMap))
         : queryParamsMap;
 
     goNamed(name.value, params: paramsMap, queryParams: nextQuery);
@@ -228,21 +197,48 @@ extension GoRouterExt on GoRouter {
   void pop_(Reader read) => read(routerProvider).routerDelegate.pop();
 }
 
-RouteState _calcState(GoRouter router) {
-  // ignore: invalid_use_of_visible_for_testing_member
-  final matches = router.routerDelegate.matches.matches;
-  assert(matches.isNotEmpty);
-  var params = <String, String>{};
-  var queryParams = <String, String>{};
-  String? name;
-  for (final match in matches) {
-    params.addAll(match.decodedParams);
-    queryParams.addAll(match.queryParams);
-    name = match.route.name;
+class _RouteState {
+  _RouteState(this.params, this.queryParams, this.name);
+  final Map<String, String> params;
+  final Map<String, String> queryParams;
+  final String? name;
+
+  factory _RouteState._fromRouter(GoRouter router) {
+    // ignore: invalid_use_of_visible_for_testing_member
+    final matches = router.routerDelegate.matches.matches;
+    assert(matches.isNotEmpty);
+    var params = <String, String>{};
+    var queryParams = <String, String>{};
+    String? name;
+    for (final match in matches) {
+      params.addAll(match.decodedParams);
+      queryParams.addAll(match.queryParams);
+      name = match.route.name;
+    }
+    return _RouteState(
+      params,
+      queryParams,
+      name,
+    );
   }
-  return RouteState(
-    params,
-    queryParams,
-    name,
+}
+
+
+Widget Function(BuildContext, GoRouterState) _builder(Widget child) {
+  return (BuildContext context, GoRouterState state) {
+    return LocalProviderScope(
+      state: state,
+      child: child,
+    );
+  };
+}
+
+Widget navigatorBuilder(_, __, Widget child) {
+  return Stack(
+    children: [
+      child,
+      const LoadingOverlay(),
+      const NetworkAlertDialog(),
+    ],
   );
 }

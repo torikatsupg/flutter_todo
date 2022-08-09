@@ -38,12 +38,9 @@ enum InnerTab {
   }
 
   static InnerTab parse(String? param) {
-    try {
-      return InnerTab.values.firstWhere(
-        (e) => e.value == param,
-      );
-    } catch (e) {
-      return InnerTab._defaultInnerTab;
-    }
+    return InnerTab.values.firstWhere(
+      (e) => e.value == param,
+      orElse: () => InnerTab._defaultInnerTab,
+    );
   }
 }
