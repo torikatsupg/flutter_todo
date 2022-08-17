@@ -131,6 +131,7 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
     try {
       await _ref.doc(task.id.value).update(
         {
+          _name: task.name,
           _isDone: task.isDone,
         },
       );
