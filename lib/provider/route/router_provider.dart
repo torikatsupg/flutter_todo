@@ -186,43 +186,19 @@ extension GoRouterExt on GoRouter {
     final paramsMap = params.map((key, value) => MapEntry(key.value, value));
     final queryParamsMap =
         queryParams.map((key, value) => MapEntry(key.value, value));
+    final currentQuery =
+        routerDelegate.currentConfiguration.location.queryParameters;
 
-    final nextQuery = isMaintainQuery
-        ? (_RouteState._fromRouter(this).queryParams..addAll(queryParamsMap))
-        : queryParamsMap;
+    final nextQuery = {
+      ...(isMaintainQuery ? currentQuery : <String, String>{}),
+      ...queryParamsMap
+    };
 
     goNamed(name.value, params: paramsMap, queryParams: nextQuery);
   }
 
   void pop_(Reader read) => read(routerProvider).routerDelegate.pop();
 }
-
-class _RouteState {
-  _RouteState(this.params, this.queryParams, this.name);
-  final Map<String, String> params;
-  final Map<String, String> queryParams;
-  final String? name;
-
-  factory _RouteState._fromRouter(GoRouter router) {
-    // ignore: invalid_use_of_visible_for_testing_member
-    final matches = router.routerDelegate.matches.matches;
-    assert(matches.isNotEmpty);
-    var params = <String, String>{};
-    var queryParams = <String, String>{};
-    String? name;
-    for (final match in matches) {
-      params.addAll(match.decodedParams);
-      queryParams.addAll(match.queryParams);
-      name = match.route.name;
-    }
-    return _RouteState(
-      params,
-      queryParams,
-      name,
-    );
-  }
-}
-
 
 Widget Function(BuildContext, GoRouterState) _builder(Widget child) {
   return (BuildContext context, GoRouterState state) {
