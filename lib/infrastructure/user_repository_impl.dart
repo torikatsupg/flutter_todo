@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/user.dart';
+import 'package:flutter_todo/util/logger.dart';
 
 const _username = 'username';
 
@@ -25,8 +26,9 @@ class UserRepositoryImpl extends UserRepository<FirestoreError> {
           ),
         );
       }
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle error correctly
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }
@@ -48,7 +50,8 @@ class UserRepositoryImpl extends UserRepository<FirestoreError> {
           username: username,
         ),
       );
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }

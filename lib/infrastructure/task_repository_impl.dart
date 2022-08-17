@@ -6,6 +6,7 @@ import 'package:flutter_todo/model/result.dart';
 
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/model/user.dart';
+import 'package:flutter_todo/util/logger.dart';
 
 const _name = 'name';
 const _createdAt = 'createdAt';
@@ -44,8 +45,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
           items.length == limit,
         ),
       );
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle firestore error.
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }
@@ -72,8 +74,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
           items.length == limit,
         ),
       );
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle firestore error.
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }
@@ -95,8 +98,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
           ),
         );
       }
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle firestore error.
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }
@@ -115,8 +119,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
       );
       final result = await _ref.doc(id).get();
       return Result.ok(_toTask(result));
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle firestore error.
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }
@@ -130,8 +135,9 @@ class TaskRepositoryImpl implements TaskRepository<CursorImpl, FirestoreError> {
         },
       );
       return Result.ok(null);
-    } on dynamic catch (e) {
+    } on dynamic catch (e, sc) {
       // TODO(torikatsu): handle firestore error.
+      logError(e, sc);
       return Result.err(FirestoreError.error);
     }
   }

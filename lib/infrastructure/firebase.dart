@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_todo/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_todo/util/env.dart';
+import 'package:flutter_todo/util/logger.dart';
 
 const _localhost = 'localhost';
 const firestorePort = 8080;
@@ -24,7 +25,8 @@ Future<void> initializeFirebase() async {
 bool _isInitialized() {
   try {
     return Firebase.apps.isNotEmpty;
-  } on dynamic catch (e) {
+  } on dynamic catch (e, sc) {
+    logError(e, sc);
     return false;
   }
 }
