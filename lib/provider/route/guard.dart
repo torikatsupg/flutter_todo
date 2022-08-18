@@ -4,7 +4,7 @@ import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-typedef RouteGuard = String? Function(Reader read, GoRouterState state);
+typedef RouteGuard = String? Function(Ref ref, GoRouterState state);
 
 String _deafultHomePath(GoRouterState state) {
   return state.namedLocation(
@@ -15,13 +15,9 @@ String _deafultHomePath(GoRouterState state) {
   );
 }
 
-String? combineGuard(
-  GoRouterState state,
-  Reader read,
-  List<RouteGuard> guards,
-) {
+String? combineGuard(GoRouterState state, Ref ref, List<RouteGuard> guards) {
   for (final guard in guards) {
-    final redirectTo = guard(read, state);
+    final redirectTo = guard(ref, state);
     if (redirectTo != null) {
       return redirectTo;
     }
@@ -29,11 +25,8 @@ String? combineGuard(
   return null;
 }
 
-String? authGuard(
-  Reader read,
-  GoRouterState state,
-) {
-  final isNotAuthenticated = read(authProvider).value == null;
+String? authGuard(Ref ref, GoRouterState state) {
+  final isNotAuthenticated = ref.read(authProvider).value == null;
   if (isNotAuthenticated) {
     return state.namedLocation(Routes.signIn.value);
   } else {
@@ -41,11 +34,8 @@ String? authGuard(
   }
 }
 
-String? noAuthGuard(
-  Reader read,
-  GoRouterState state,
-) {
-  final isAuthenticated = read(authProvider).value != null;
+String? noAuthGuard(Ref ref, GoRouterState state) {
+  final isAuthenticated = ref.read(authProvider).value != null;
   if (isAuthenticated) {
     return _deafultHomePath(state);
   } else {
@@ -53,11 +43,8 @@ String? noAuthGuard(
   }
 }
 
-String? userGuard(
-  Reader read,
-  GoRouterState state,
-) {
-  final isNotRegistered = read(userProvider).value == null;
+String? userGuard(Ref ref, GoRouterState state) {
+  final isNotRegistered = ref.read(userProvider).value == null;
   if (isNotRegistered) {
     return state.namedLocation(Routes.register.value);
   } else {
@@ -65,11 +52,8 @@ String? userGuard(
   }
 }
 
-String? noUserGuard(
-  Reader read,
-  GoRouterState state,
-) {
-  final isRegistered = read(userProvider).value != null;
+String? noUserGuard(Ref ref, GoRouterState state) {
+  final isRegistered = ref.read(userProvider).value != null;
   if (isRegistered) {
     return _deafultHomePath(state);
   } else {
@@ -78,7 +62,7 @@ String? noUserGuard(
 }
 
 String? todoTabGuard(
-  Reader read,
+  Ref ref,
   GoRouterState state,
 ) {
   final isNotTaskTab =
@@ -90,10 +74,7 @@ String? todoTabGuard(
   }
 }
 
-String? myPageTabGuard(
-  Reader read,
-  GoRouterState state,
-) {
+String? myPageTabGuard(Ref ref, GoRouterState state) {
   final isNotMyPageTab =
       HomeTab.parse(state.params[ParamKeys.tab.value]) != HomeTab.mypage;
   if (isNotMyPageTab) {

@@ -9,13 +9,11 @@ final homeControllerProvider =
 );
 
 class HomeController extends StateNotifier<void> {
-  HomeController(Ref ref)
-      : _read = ref.read,
-        super(null);
+  HomeController(this._ref) : super(null);
 
-  final Reader _read;
+  final Ref _ref;
 
-  void onTapTab(int index) => _read(routerProvider).goNamed_(
+  void onTapTab(int index) => _ref.read(routerProvider).goNamed_(
         Routes.home,
         params: {
           ParamKeys.tab: HomeTab.fromIndex(index).value,

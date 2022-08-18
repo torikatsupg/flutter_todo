@@ -7,8 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final authenticatorProvider = Provider(Authenticator.new);
 
 class Authenticator {
-  Authenticator(Ref ref) : _read = ref.read;
-  final Reader _read;
+  Authenticator(this._ref);
+  final Ref _ref;
 
   Future<Result<User?, SignupError>> signup({
     required String email,
@@ -18,7 +18,7 @@ class Authenticator {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       // wait for update of user
-      await _read(userProvider.stream).first;
+      await _ref.read(userProvider.stream).first;
       return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e, sc) {
       switch (e.code) {
@@ -53,7 +53,7 @@ class Authenticator {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       // wait for update of user
-      await _read(userProvider.stream).first;
+      await _ref.read(userProvider.stream).first;
       return Result.ok(FirebaseAuth.instance.currentUser);
     } on FirebaseAuthException catch (e, sc) {
       switch (e.code) {
@@ -82,7 +82,7 @@ class Authenticator {
     try {
       await FirebaseAuth.instance.signOut();
       // wait for update of user
-      await _read(userProvider.stream).first;
+      await _ref.read(userProvider.stream).first;
       return Result.ok(null);
     } on FirebaseAuthException catch (e, sc) {
       switch (e.code) {

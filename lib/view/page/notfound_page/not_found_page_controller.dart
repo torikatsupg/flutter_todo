@@ -6,10 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final notFoundController = Provider<NotFoundController>(NotFoundController.new);
 
 class NotFoundController {
-  NotFoundController(Ref ref) : _read = ref.read;
-  final Reader _read;
+  NotFoundController(this._ref);
+  final Ref _ref;
 
-  void backHome() => _read(routerProvider).goNamed_(
+  void backHome() => _ref.read(routerProvider).goNamed_(
         Routes.home,
         params: {
           ParamKeys.tab: HomeTab.task.value,

@@ -8,11 +8,11 @@ final taskScreenControllerProvider =
     Provider<TaskScreenController>(TaskScreenController.new);
 
 class TaskScreenController {
-  TaskScreenController(Ref ref) : _read = ref.read;
-  final Reader _read;
+  TaskScreenController(this._ref);
+  final Ref _ref;
 
   void onTap(int index) {
-    _read(routerProvider).goNamed_(
+    _ref.read(routerProvider).goNamed_(
       Routes.home,
       params: {
         ParamKeys.tab: HomeTab.task.value,
@@ -23,7 +23,7 @@ class TaskScreenController {
     );
   }
 
-  void toDetailPage(TaskId id) => _read(routerProvider).goNamed_(
+  void toDetailPage(TaskId id) => _ref.read(routerProvider).goNamed_(
         Routes.taskDetail,
         params: {
           ParamKeys.tab: HomeTab.task.value,
@@ -32,9 +32,7 @@ class TaskScreenController {
       );
 
   void onTapFab() {
-    // _read(routerProvider).go('/home/task/create');
-    // return;
-    _read(routerProvider).goNamed_(
+    _ref.read(routerProvider).goNamed_(
       Routes.taskCreate,
       params: {
         ParamKeys.tab: HomeTab.task.value,

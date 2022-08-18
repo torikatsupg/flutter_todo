@@ -5,6 +5,7 @@ import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,13 +17,12 @@ final createTaskControllerFamily = StateNotifierProvider.autoDispose
 );
 
 class CreateTaskController extends StateNotifier<_CreateTaskState> {
-  CreateTaskController(Ref ref, this.userId)
-      : _read = ref.read,
-        super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
+  CreateTaskController(this._ref, this.userId)
+      : super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
     state.name.setListeners(onFocusChangeName, onChangeName);
   }
 
-  final Reader _read;
+  final Ref _ref;
   final UserId userId;
 
   onFocusChangeName() =>
@@ -34,14 +34,15 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
     if (!state.isValidAll) {
       return;
     }
-    await _read(loadingProvider.notifier).run(
+    await _ref.read(loadingProvider.notifier).run(
       () async {
-        final result = await _read(taskRepositoryFamily(userId))
+        final result = await _ref
+            .read(taskRepositoryFamily(userId))
             .insert(name: state.name.text);
         result.map(
           ok: (data) {
-            _read(todoTasksFamily(userId).notifier).insert(data.value);
-            _read(routerProvider).pop_(_read);
+            _ref.read(todoTasksFamily(userId).notifier).insert(data.value);
+            _ref.read(routerProvider).goNamed_(Routes.home);
           },
           err: (e) {
             // TODO(torikatsu): handle error.

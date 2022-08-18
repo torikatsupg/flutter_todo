@@ -23,7 +23,6 @@ import 'package:flutter_todo/view/page/signup_page/signup_page.dart';
 
 final routerProvider = Provider(
   (ref) {
-    final read = ref.read;
     return GoRouter(
       routes: [
         GoRoute(
@@ -45,7 +44,7 @@ final routerProvider = Provider(
           name: Routes.signIn.value,
           redirect: (state) => combineGuard(
             state,
-            read,
+            ref,
             [
               noAuthGuard,
             ],
@@ -57,7 +56,7 @@ final routerProvider = Provider(
           name: Routes.signUp.value,
           redirect: (state) => combineGuard(
             state,
-            read,
+            ref,
             [
               noAuthGuard,
             ],
@@ -69,7 +68,7 @@ final routerProvider = Provider(
           name: Routes.register.value,
           redirect: (state) => combineGuard(
             state,
-            read,
+            ref,
             [
               authGuard,
               noUserGuard,
@@ -91,7 +90,7 @@ final routerProvider = Provider(
           name: Routes.home.value,
           redirect: (state) => combineGuard(
             state,
-            read,
+            ref,
             [
               authGuard,
               userGuard,
@@ -104,7 +103,7 @@ final routerProvider = Provider(
               name: Routes.taskCreate.value,
               redirect: (state) => combineGuard(
                 state,
-                read,
+                ref,
                 [
                   authGuard,
                   userGuard,
@@ -118,7 +117,7 @@ final routerProvider = Provider(
               name: Routes.setting.value,
               redirect: (state) => combineGuard(
                 state,
-                read,
+                ref,
                 [
                   authGuard,
                   userGuard,
@@ -132,7 +131,7 @@ final routerProvider = Provider(
               name: Routes.taskDetail.value,
               redirect: (state) => combineGuard(
                 state,
-                read,
+                ref,
                 [
                   authGuard,
                   userGuard,
@@ -146,7 +145,7 @@ final routerProvider = Provider(
                   name: Routes.taskEdit.value,
                   redirect: (state) => combineGuard(
                     state,
-                    read,
+                    ref,
                     [
                       authGuard,
                       userGuard,
@@ -197,7 +196,8 @@ extension GoRouterExt on GoRouter {
     goNamed(name.value, params: paramsMap, queryParams: nextQuery);
   }
 
-  void pop_(Reader read) => read(routerProvider).routerDelegate.pop();
+// TODO(torikatsu): maintain query
+  void pop_() => routerDelegate.pop();
 }
 
 Widget Function(BuildContext, GoRouterState) _builder(Widget child) {

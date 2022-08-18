@@ -23,11 +23,10 @@ final doneTaskListItemProvider = Provider<Task>(
 );
 
 class DoneTabController extends StateNotifier<_DoneTabState> {
-  DoneTabController(Ref ref, this._userId)
-      : _read = ref.read,
-        super(
+  DoneTabController(this._ref, this._userId)
+        :super(
           _DoneTabState(
-            list: ref.read(doneTasksFamily(_userId)),
+            list: _ref.read(doneTasksFamily(_userId)),
             scrollController: ScrollController(),
           ),
         ) {
@@ -35,21 +34,21 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
       // TODO(torikatsu): fix conditions
       if (state.scrollController.offset >
           state.scrollController.position.maxScrollExtent - 100) {
-        _read(doneTasksFamily(_userId).notifier).loadMore();
+        _ref.read(doneTasksFamily(_userId).notifier).loadMore();
       }
     });
 
-    ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
+    _ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
         doneTasksFamily(_userId), (_, next) => onChagneList(next));
   }
 
-  final Reader _read;
+  final Ref _ref;
   final UserId _userId;
 
   void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>
       state = state.copyWith(list: list);
 
-  void onTapListItem(TaskId taskId) => _read(routerProvider).goNamed_(
+  void onTapListItem(TaskId taskId) => _ref.read(routerProvider).goNamed_(
         Routes.taskDetail,
         params: {
           ParamKeys.tab: HomeTab.task.value,
@@ -57,10 +56,10 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
         },
       );
 
-  Future<void> refresh() => _read(doneTasksFamily(_userId).notifier).refresh();
+  Future<void> refresh() => _ref.read(doneTasksFamily(_userId).notifier).refresh();
 
   Future<void> resolveAndLoadMore() =>
-      _read(doneTasksFamily(_userId).notifier).loadMore();
+      _ref.read(doneTasksFamily(_userId).notifier).loadMore();
 }
 
 @freezed

@@ -15,9 +15,8 @@ final signupControllerProvider =
         SignupController.new);
 
 class SignupController extends StateNotifier<_SignupState> {
-  SignupController(Ref ref)
-      : _read = ref.read,
-        super(_SignupState(
+  SignupController(this._ref)
+      : super(_SignupState(
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
           confirmPassword: createFormModel(mandatoryValidator),
@@ -28,7 +27,7 @@ class SignupController extends StateNotifier<_SignupState> {
         .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
   }
 
-  final Reader _read;
+  final Ref _ref;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
@@ -48,20 +47,20 @@ class SignupController extends StateNotifier<_SignupState> {
   void onChangedConfirmPassword() => state =
       state.copyWith(confirmPassword: state.confirmPassword.onChangeText());
 
-  void toSignin() => _read(routerProvider).goNamed_(Routes.signIn);
+  void toSignin() => _ref.read(routerProvider).goNamed_(Routes.signIn);
 
   Future<void> submit() async {
-    return _read(loadingProvider.notifier).run(
+    return _ref.read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
         if (!state.isValidAll) {
           return;
         }
 
-        final result = await _read(authenticatorProvider).signup(
-          email: state.email.text,
-          password: state.password.text,
-        );
+        final result = await _ref.read(authenticatorProvider).signup(
+              email: state.email.text,
+              password: state.password.text,
+            );
 
         result.when(
           ok: (_) {},
@@ -72,7 +71,7 @@ class SignupController extends StateNotifier<_SignupState> {
                     email: state.email.addServerError('既に登録されたメールアドレスです'));
                 break;
               case SignupError.network:
-                _read(networkDialogProvider.notifier).show();
+                _ref.read(networkDialogProvider.notifier).show();
                 break;
             }
           },

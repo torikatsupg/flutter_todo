@@ -25,11 +25,10 @@ final todoTaskListItemProvider = Provider<Task>(
 );
 
 class TodoTabController extends StateNotifier<_TodoTabState> {
-  TodoTabController(Ref ref, this._userId)
-      : _read = ref.read,
-        super(
+  TodoTabController(this._ref, this._userId)
+      : super(
           _TodoTabState(
-            list: ref.read(todoTasksFamily(_userId)),
+            list: _ref.read(todoTasksFamily(_userId)),
             scrollController: ScrollController(),
           ),
         ) {
@@ -37,26 +36,27 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
       // TODO(torikatsu): fix conditions
       if (state.scrollController.offset >
           state.scrollController.position.maxScrollExtent - 100) {
-        _read(todoTasksFamily(_userId).notifier).loadMore();
+        _ref.read(todoTasksFamily(_userId).notifier).loadMore();
       }
     });
 
-    ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
+    _ref.listen<AsyncPagenatedList<Task, FirestoreError>>(
         todoTasksFamily(_userId), (_, next) => onChagneList(next));
   }
 
-  final Reader _read;
+  final Ref _ref;
   final UserId _userId;
 
   void onChagneList(AsyncPagenatedList<Task, FirestoreError> list) =>
       state = state.copyWith(list: list);
 
-  Future<void> refresh() => _read(todoTasksFamily(_userId).notifier).refresh();
+  Future<void> refresh() =>
+      _ref.read(todoTasksFamily(_userId).notifier).refresh();
 
   Future<void> resolveAndLoadMore() =>
-      _read(todoTasksFamily(_userId).notifier).loadMore();
+      _ref.read(todoTasksFamily(_userId).notifier).loadMore();
 
-  void onPressItem(TaskId taskId) => _read(routerProvider).goNamed_(
+  void onPressItem(TaskId taskId) => _ref.read(routerProvider).goNamed_(
         Routes.taskDetail,
         params: {
           ParamKeys.tab: HomeTab.task.value,
@@ -65,11 +65,11 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
       );
 
   Future<void> onDismissedItem(Task task) =>
-      _read(loadingProvider.notifier).run(
+      _ref.read(loadingProvider.notifier).run(
         () async {
-          await _read(taskRepositoryFamily(_userId)).update(task.done());
-          _read(todoTasksFamily(_userId).notifier).delete(task);
-          _read(doneTasksFamily(_userId).notifier).insert(task);
+          await _ref.read(taskRepositoryFamily(_userId)).update(task.done());
+          _ref.read(todoTasksFamily(_userId).notifier).delete(task);
+          _ref.read(doneTasksFamily(_userId).notifier).insert(task);
         },
       );
 }

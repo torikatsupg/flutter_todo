@@ -2,7 +2,7 @@ import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
-import 'package:flutter_todo/util/riverpod_type.dart';
+import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:flutter_todo/util/tupple.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,10 +27,8 @@ final taskEditControllerFamily = StateNotifierProvider.autoDispose
 );
 
 class TaskEditController extends StateNotifier<_TaskEditState> {
-  TaskEditController(Ref ref, T2<UserId, Task> args)
-      : _read = ref.read,
-        _refresh = ref.refresh,
-        userId = args.v1,
+  TaskEditController(this._ref, T2<UserId, Task> args)
+      : userId = args.v1,
         super(
           _TaskEditState(
             initTask: args.v2,
@@ -40,8 +38,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
     state.name.setListeners(_onChangeText, _onFocusChanged);
   }
 
-  final Reader _read;
-  final Refresh _refresh;
+  final Ref _ref;
   final UserId userId;
 
   void _onChangeText() {
@@ -60,14 +57,16 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
       return;
     }
     final updatedTask = state.initTask.updateName(state.name.text);
-    await _read(loadingProvider.notifier).run(() async {
-      await _read(taskRepositoryFamily(userId)).update(updatedTask);
+    await _ref.read(loadingProvider.notifier).run(() async {
+      await _ref.read(taskRepositoryFamily(userId)).update(updatedTask);
       updatedTask.isDone
-          ? _read(doneTasksFamily(userId).notifier)
+          ? _ref
+              .read(doneTasksFamily(userId).notifier)
               .update(_isTarget, updatedTask)
-          : _read(todoTasksFamily(userId).notifier)
+          : _ref
+              .read(todoTasksFamily(userId).notifier)
               .update(_isTarget, updatedTask);
-      _refresh(
+      _ref.refresh(
         taskFamily(
           T2(
             userId,
@@ -75,7 +74,7 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
           ),
         ),
       );
-      _read(routerProvider).pop_(_read);
+      _ref.read(routerProvider).goNamed_(Routes.home);
     });
   }
 }

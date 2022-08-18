@@ -9,11 +9,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final myPageControllerProvider = Provider(MyPageController.new);
 
 class MyPageController {
-  MyPageController(Ref ref) : _read = ref.read;
+  MyPageController(this._ref);
 
-  final Reader _read;
+  final Ref _ref;
 
-  void openSetting() => _read(routerProvider).goNamed_(
+  void openSetting() => _ref.read(routerProvider).goNamed_(
         Routes.setting,
         params: {
           ParamKeys.tab: HomeTab.mypage.value,
@@ -21,13 +21,13 @@ class MyPageController {
       );
 
   void signOut() async {
-    await _read(loadingProvider.notifier).run(() async {
-      final result = await _read(authenticatorProvider).signout();
+    await _ref.read(loadingProvider.notifier).run(() async {
+      final result = await _ref.read(authenticatorProvider).signout();
       result.maybeWhen(
         err: (e) {
           switch (e) {
             case SignOutError.network:
-              _read(networkDialogProvider.notifier).show();
+              _ref.read(networkDialogProvider.notifier).show();
           }
         },
         orElse: () {},

@@ -16,9 +16,8 @@ final signinControllerProvider =
 );
 
 class SigninNotifier extends StateNotifier<_SigninState> {
-  SigninNotifier(Ref ref)
-      : _read = ref.read,
-        super(
+  SigninNotifier(this._ref)
+      : super(
           _SigninState(
             email: createFormModel(emailValidator),
             password: createFormModel(passwordValidator),
@@ -28,7 +27,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
     state.password.setListeners(onChangedPassword, onFocusChangePassword);
   }
 
-  final Reader _read;
+  final Ref _ref;
 
   void onFocusChangeEmail() =>
       state = state.copyWith(email: state.email.onFocusChange());
@@ -39,10 +38,10 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void onChangedPassword() =>
       state = state.copyWith(password: state.password.onChangeText());
 
-  void toSignup() => _read(routerProvider).goNamed_(Routes.signUp);
+  void toSignup() => _ref.read(routerProvider).goNamed_(Routes.signUp);
 
   Future<void> submit() async {
-    _read(loadingProvider.notifier).run(
+    _ref.read(loadingProvider.notifier).run(
       () async {
         state = state.onSubmit();
         // TODO(torikatsu): change focus process implicitly
@@ -53,10 +52,10 @@ class SigninNotifier extends StateNotifier<_SigninState> {
           return;
         }
 
-        final result = await _read(authenticatorProvider).signin(
-          email: state.email.text,
-          password: state.password.text,
-        );
+        final result = await _ref.read(authenticatorProvider).signin(
+              email: state.email.text,
+              password: state.password.text,
+            );
 
         result.when(
           ok: (_) {},
@@ -75,7 +74,7 @@ class SigninNotifier extends StateNotifier<_SigninState> {
                     password: state.password.addServerError('パスワードが違います'));
                 break;
               case SigninError.network:
-                _read(networkDialogProvider.notifier).show();
+                _ref.read(networkDialogProvider.notifier).show();
                 break;
             }
           },
