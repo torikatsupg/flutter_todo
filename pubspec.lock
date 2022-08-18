@@ -261,11 +261,9 @@ packages:
   flutter_riverpod:
     dependency: transitive
     description:
-      path: "packages/flutter_riverpod"
-      ref: master
-      resolved-ref: "800da33a8a86f70c7e6b8be0a04ecaa2b6971a71"
-      url: "https://github.com/torikatsupg/riverpod"
-    source: git
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.0-dev.9"
   flutter_test:
     dependency: "direct dev"
@@ -322,11 +320,9 @@ packages:
   hooks_riverpod:
     dependency: "direct main"
     description:
-      path: "packages/hooks_riverpod"
-      ref: "800da33a8a86f70c7e6b8be0a04ecaa2b6971a71"
-      resolved-ref: "800da33a8a86f70c7e6b8be0a04ecaa2b6971a71"
-      url: "https://github.com/torikatsupg/riverpod"
-    source: git
+      name: hooks_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.0-dev.9"
   http_multi_server:
     dependency: transitive
@@ -464,11 +460,9 @@ packages:
   riverpod:
     dependency: transitive
     description:
-      path: "packages/riverpod"
-      ref: master
-      resolved-ref: "800da33a8a86f70c7e6b8be0a04ecaa2b6971a71"
-      url: "https://github.com/torikatsupg/riverpod"
-    source: git
+      name: riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.0-dev.9"
   shelf:
     dependency: transitive
