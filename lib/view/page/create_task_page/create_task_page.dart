@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/view/component/my_form.dart';
 import 'package:flutter_todo/view/page/create_task_page/create_task_page_controller.dart';
 import 'package:flutter_todo/provider/local/local_auth_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,16 +18,12 @@ class CreatePage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          TextField(
-            controller: state.name.controller,
-            focusNode: state.name.focusNode,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              errorText: state.name.errors,
-              hintText: 'task name',
-              helperText: 'task name',
-              label: const Text('task name'),
-            ),
+          MyForm(
+            model: state.name,
+            onChanged: controller.onChangeName,
+            hintText: 'task name',
+            helperText: 'task name',
+            label: 'task name',
           ),
           ElevatedButton(
             onPressed: controller.onSubmit,

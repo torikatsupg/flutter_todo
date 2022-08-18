@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/user.dart';
 import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/view/component/my_form.dart';
 import 'package:flutter_todo/view/page/register_page/register_page_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,16 +22,12 @@ class RegisterPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          TextField(
-            controller: state.username.controller,
-            focusNode: state.username.focusNode,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              errorText: state.username.errors,
-              hintText: 'username',
-              helperText: 'username',
-              label: const Text('username'),
-            ),
+          MyForm(
+            model: state.username,
+            onChanged: controller.onChangeUsername,
+            hintText: 'username',
+            helperText: 'username',
+            label: 'username',
           ),
           ElevatedButton(
             onPressed: controller.submit,

@@ -22,21 +22,14 @@ class SigninNotifier extends StateNotifier<_SigninState> {
             email: createFormModel(emailValidator),
             password: createFormModel(passwordValidator),
           ),
-        ) {
-    state.email.setListeners(onChangedEmail, onFocusChangeEmail);
-    state.password.setListeners(onChangedPassword, onFocusChangePassword);
-  }
+        );
 
   final Ref _ref;
 
-  void onFocusChangeEmail() =>
-      state = state.copyWith(email: state.email.onFocusChange());
-  void onFocusChangePassword() =>
-      state = state.copyWith(password: state.password.onFocusChange());
-  void onChangedEmail() =>
-      state = state.copyWith(email: state.email.onChangeText());
-  void onChangedPassword() =>
-      state = state.copyWith(password: state.password.onChangeText());
+  void onChangeEmail(FormModel email) => state = state.copyWith(email: email);
+
+  void onChangePassword(FormModel password) =>
+      state = state.copyWith(password: password);
 
   void toSignup() => _ref.read(routerProvider).goNamed_(Routes.signUp);
 
@@ -45,8 +38,8 @@ class SigninNotifier extends StateNotifier<_SigninState> {
       () async {
         state = state.onSubmit();
         // TODO(torikatsu): change focus process implicitly
-        state.email.focusNode.unfocus();
-        state.password.focusNode.unfocus();
+        state.email.unfocus();
+        state.password.unfocus();
 
         if (!state.isValidAll) {
           return;

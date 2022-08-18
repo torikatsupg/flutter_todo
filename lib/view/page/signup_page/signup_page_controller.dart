@@ -20,32 +20,17 @@ class SignupController extends StateNotifier<_SignupState> {
           email: createFormModel(emailValidator),
           password: createFormModel(passwordValidator),
           confirmPassword: createFormModel(mandatoryValidator),
-        )) {
-    state.email.setListeners(onChangedEmail, onFocusChangeEmail);
-    state.password.setListeners(onChangedPassword, onFocusChangePassword);
-    state.confirmPassword
-        .setListeners(onChangedConfirmPassword, onFocusChangeConfirmPassword);
-  }
+        ));
 
   final Ref _ref;
 
-  void onFocusChangeEmail() =>
-      state = state.copyWith(email: state.email.onFocusChange());
+  void onChangedEmail(FormModel email) => state = state.copyWith(email: email);
 
-  void onFocusChangePassword() =>
-      state = state.copyWith(password: state.password.onFocusChange());
+  void onChangedPassword(FormModel password) =>
+      state = state.copyWith(password: password);
 
-  void onFocusChangeConfirmPassword() => state =
-      state.copyWith(confirmPassword: state.confirmPassword.onFocusChange());
-
-  void onChangedEmail() =>
-      state = state.copyWith(email: state.email.onChangeText());
-
-  void onChangedPassword() =>
-      state = state.copyWith(password: state.password.onChangeText());
-
-  void onChangedConfirmPassword() => state =
-      state.copyWith(confirmPassword: state.confirmPassword.onChangeText());
+  void onChangedConfirmPassword(FormModel confirmFormModel) =>
+      state = state.copyWith(confirmPassword: confirmFormModel);
 
   void toSignin() => _ref.read(routerProvider).goNamed_(Routes.signIn);
 

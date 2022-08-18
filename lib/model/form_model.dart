@@ -40,17 +40,11 @@ class FormModel with _$FormModel {
     ];
   }
 
-  void setListeners(
-    VoidCallback onChangeText,
-    VoidCallback onFocusChange,
-  ) {
-    controller.addListener(onChangeText);
-    focusNode.addListener(onFocusChange);
-  }
-
   FormModel onChangeText() => this;
 
   FormModel onFocusChange() => copyWith(hasEdit: true, serverErrors: []);
+
+  void unfocus() => focusNode.unfocus();
 
   FormModel addServerError(String e) =>
       copyWith(serverErrors: [...serverErrors, e]);

@@ -23,21 +23,13 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
               mandatoryValidator,
             ),
           ),
-        ) {
-    state.username.setListeners(
-      _onChangeText,
-      _onFocusChange,
-    );
-  }
+        );
 
   final Ref _ref;
   final UserId _userid;
 
-  void _onChangeText() =>
-      state = state.copyWith(username: state.username.onChangeText());
-
-  void _onFocusChange() =>
-      state = state.copyWith(username: state.username.onFocusChange());
+  void onChangeUsername(FormModel username) =>
+      state = state.copyWith(username: username);
 
   Future<void> submit() async {
     await _ref.read(loadingProvider.notifier).run(

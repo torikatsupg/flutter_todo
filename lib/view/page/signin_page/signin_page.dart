@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/view/component/my_form.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'signin_page_controller.dart';
@@ -21,27 +22,19 @@ class SigninPage extends ConsumerWidget {
             onPressed: controller.toSignup,
             child: const Text('to signup'),
           ),
-          TextField(
-            controller: state.email.controller,
-            focusNode: state.email.focusNode,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              errorText: state.email.errors,
-              hintText: 'xxxx@example.com',
-              helperText: 'xxxx@example.com',
-              label: const Text('email'),
-            ),
+          MyForm(
+            model: state.email,
+            hintText: 'xxxx@example.com',
+            helperText: 'xxxx@example.com',
+            label: 'email',
+            onChanged: controller.onChangeEmail,
           ),
-          TextField(
-            controller: state.password.controller,
-            focusNode: state.password.focusNode,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              errorText: state.password.errors,
-              hintText: 'more than 8 characters',
-              helperText: 'more than 8 characters',
-              label: const Text('password'),
-            ),
+          MyForm(
+            model: state.password,
+            onChanged: controller.onChangePassword,
+            hintText: 'more than 8 characters',
+            helperText: 'more than 8 characters',
+            label: 'password',
           ),
           ElevatedButton(
             onPressed: controller.submit,
