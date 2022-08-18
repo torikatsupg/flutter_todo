@@ -9,7 +9,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.2+1
-  hooks_riverpod: ^2.0.0-dev.9
+  # hooks_riverpod: ^2.0.0-dev.9
+  hooks_riverpod: 
+    git:
+      url: https://github.com/torikatsupg/riverpod
+      ref: 800da33a8a86f70c7e6b8be0a04ecaa2b6971a71
+      path: packages/hooks_riverpod
   freezed_annotation: ^2.0.3
   json_annotation: ^4.4.0
   go_router: ^4.2.7
