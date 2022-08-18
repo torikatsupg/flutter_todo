@@ -183,13 +183,13 @@ abstract class _Task extends Task {
   _Task._() : super._();
 
   @override
-  TaskId get id => throw _privateConstructorUsedError;
+  TaskId get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @override
-  bool get isDone => throw _privateConstructorUsedError;
+  bool get isDone;
   @override
   @JsonKey(ignore: true)
   _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;
@@ -297,7 +297,7 @@ abstract class _TaskId extends TaskId {
   _TaskId._() : super._();
 
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
   @JsonKey(ignore: true)
   _$$_TaskIdCopyWith<_$_TaskId> get copyWith =>

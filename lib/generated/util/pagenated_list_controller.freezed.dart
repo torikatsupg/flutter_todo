@@ -255,19 +255,19 @@ abstract class _PagenatedList<Item, Err> extends PagenatedList<Item, Err> {
   _PagenatedList._() : super._();
 
   @override
-  List<Item> get list => throw _privateConstructorUsedError;
+  List<Item> get list;
   @override
-  CursorImpl? get cursor => throw _privateConstructorUsedError;
+  CursorImpl? get cursor;
   @override
-  dynamic get isRefreshing => throw _privateConstructorUsedError;
+  dynamic get isRefreshing;
   @override
-  dynamic get isMoreLoading => throw _privateConstructorUsedError;
+  dynamic get isMoreLoading;
   @override
-  dynamic get hasMoreData => throw _privateConstructorUsedError;
+  dynamic get hasMoreData;
   @override
-  Err? get refreshError => throw _privateConstructorUsedError;
+  Err? get refreshError;
   @override
-  Err? get loadMoreError => throw _privateConstructorUsedError;
+  Err? get loadMoreError;
   @override
   @JsonKey(ignore: true)
   _$$_PagenatedListCopyWith<Item, Err, _$_PagenatedList<Item, Err>>

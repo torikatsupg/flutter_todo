@@ -131,7 +131,7 @@ abstract class _UserAuth extends UserAuth {
   _UserAuth._() : super._();
 
   @override
-  AuthId get userId => throw _privateConstructorUsedError;
+  AuthId get userId;
   @override
   @JsonKey(ignore: true)
   _$$_UserAuthCopyWith<_$_UserAuth> get copyWith =>
@@ -240,7 +240,7 @@ abstract class _AuthId extends AuthId {
   _AuthId._() : super._();
 
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
   @JsonKey(ignore: true)
   _$$_AuthIdCopyWith<_$_AuthId> get copyWith =>

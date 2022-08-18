@@ -211,15 +211,15 @@ abstract class _FormModel extends FormModel {
   _FormModel._() : super._();
 
   @override
-  Validator get validator => throw _privateConstructorUsedError;
+  Validator get validator;
   @override
-  TextEditingController get controller => throw _privateConstructorUsedError;
+  TextEditingController get controller;
   @override
-  FocusNode get focusNode => throw _privateConstructorUsedError;
+  FocusNode get focusNode;
   @override
-  bool get hasEdit => throw _privateConstructorUsedError;
+  bool get hasEdit;
   @override
-  List<String> get serverErrors => throw _privateConstructorUsedError;
+  List<String> get serverErrors;
   @override
   @JsonKey(ignore: true)
   _$$_FormModelCopyWith<_$_FormModel> get copyWith =>

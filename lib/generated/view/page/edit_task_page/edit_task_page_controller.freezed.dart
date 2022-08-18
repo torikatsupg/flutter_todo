@@ -163,9 +163,9 @@ abstract class __TaskEditState extends _TaskEditState {
   __TaskEditState._() : super._();
 
   @override
-  Task get initTask => throw _privateConstructorUsedError;
+  Task get initTask;
   @override
-  FormModel get name => throw _privateConstructorUsedError;
+  FormModel get name;
   @override
   @JsonKey(ignore: true)
   _$$__TaskEditStateCopyWith<_$__TaskEditState> get copyWith =>

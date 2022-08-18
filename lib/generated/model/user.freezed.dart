@@ -145,9 +145,9 @@ abstract class _User extends User {
   _User._() : super._();
 
   @override
-  UserId get userId => throw _privateConstructorUsedError;
+  UserId get userId;
   @override
-  String get username => throw _privateConstructorUsedError;
+  String get username;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
@@ -255,7 +255,7 @@ abstract class _UserId extends UserId {
   _UserId._() : super._();
 
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
   @JsonKey(ignore: true)
   _$$_UserIdCopyWith<_$_UserId> get copyWith =>

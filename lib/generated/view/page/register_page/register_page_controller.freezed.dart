@@ -137,7 +137,7 @@ abstract class _RegisterPageState extends RegisterPageState {
   _RegisterPageState._() : super._();
 
   @override
-  FormModel get username => throw _privateConstructorUsedError;
+  FormModel get username;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterPageStateCopyWith<_$_RegisterPageState> get copyWith =>

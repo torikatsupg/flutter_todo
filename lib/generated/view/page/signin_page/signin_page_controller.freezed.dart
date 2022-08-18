@@ -164,9 +164,9 @@ abstract class __SigninInputState extends _SigninState {
   __SigninInputState._() : super._();
 
   @override
-  FormModel get email => throw _privateConstructorUsedError;
+  FormModel get email;
   @override
-  FormModel get password => throw _privateConstructorUsedError;
+  FormModel get password;
   @override
   @JsonKey(ignore: true)
   _$$__SigninInputStateCopyWith<_$__SigninInputState> get copyWith =>

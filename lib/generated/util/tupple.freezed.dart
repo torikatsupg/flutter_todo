@@ -135,9 +135,9 @@ abstract class _T2<V1, V2> extends T2<V1, V2> {
   _T2._() : super._();
 
   @override
-  V1 get v1 => throw _privateConstructorUsedError;
+  V1 get v1;
   @override
-  V2 get v2 => throw _privateConstructorUsedError;
+  V2 get v2;
   @override
   @JsonKey(ignore: true)
   _$$_T2CopyWith<V1, V2, _$_T2<V1, V2>> get copyWith =>

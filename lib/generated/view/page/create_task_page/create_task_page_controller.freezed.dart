@@ -138,7 +138,7 @@ abstract class __CreateTaskController extends _CreateTaskState {
   __CreateTaskController._() : super._();
 
   @override
-  FormModel get name => throw _privateConstructorUsedError;
+  FormModel get name;
   @override
   @JsonKey(ignore: true)
   _$$__CreateTaskControllerCopyWith<_$__CreateTaskController> get copyWith =>

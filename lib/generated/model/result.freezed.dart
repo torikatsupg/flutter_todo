@@ -202,7 +202,7 @@ abstract class Ok<Data, Err> extends Result<Data, Err> {
   factory Ok(final Data value) = _$Ok<Data, Err>;
   Ok._() : super._();
 
-  Data get value => throw _privateConstructorUsedError;
+  Data get value;
   @JsonKey(ignore: true)
   _$$OkCopyWith<Data, Err, _$Ok<Data, Err>> get copyWith =>
       throw _privateConstructorUsedError;
@@ -337,7 +337,7 @@ abstract class Error<Data, Err> extends Result<Data, Err> {
   factory Error(final Err value) = _$Error<Data, Err>;
   Error._() : super._();
 
-  Err get value => throw _privateConstructorUsedError;
+  Err get value;
   @JsonKey(ignore: true)
   _$$ErrorCopyWith<Data, Err, _$Error<Data, Err>> get copyWith =>
       throw _privateConstructorUsedError;

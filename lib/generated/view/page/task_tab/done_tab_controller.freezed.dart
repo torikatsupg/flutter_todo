@@ -156,9 +156,9 @@ abstract class __DoneTabState extends _DoneTabState {
 
   @override
   AsyncValue<Result<PagenatedList<Task, FirestoreError>, FirestoreError>>
-      get list => throw _privateConstructorUsedError;
+      get list;
   @override
-  ScrollController get scrollController => throw _privateConstructorUsedError;
+  ScrollController get scrollController;
   @override
   @JsonKey(ignore: true)
   _$$__DoneTabStateCopyWith<_$__DoneTabState> get copyWith =>
