@@ -20,6 +20,10 @@ class MyPageController {
         },
       );
 
+  void openDebugPage() => _ref.read(routerProvider).goNamed_(
+        Routes.debug,
+      );
+
   void signOut() async {
     await _ref.read(loadingProvider.notifier).run(() async {
       final result = await _ref.read(authenticatorProvider).signout();

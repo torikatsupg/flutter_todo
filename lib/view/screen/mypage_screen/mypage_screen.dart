@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/view/screen/mypage_screen/mypage_screen_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,6 +26,11 @@ class MyPageScreen extends ConsumerWidget {
           TextButton(
             onPressed: controller.signOut,
             child: const Text('signout'),
+          ),
+          if(kDebugMode)
+           TextButton(
+            onPressed: controller.openDebugPage,
+            child: const Text('debug'),
           ),
         ],
       ),
