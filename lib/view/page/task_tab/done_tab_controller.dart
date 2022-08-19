@@ -8,7 +8,6 @@ final doneTabControllerFamily =
   DoneTabController.new,
 );
 
-// TODO(torikatsu): remove pagenated list;
 class DoneTabController extends StateNotifier<ScrollController> {
   DoneTabController(this._ref, this._userId) : super(ScrollController()) {
     state.addListener(() {

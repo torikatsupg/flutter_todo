@@ -1,6 +1,7 @@
 import 'package:flutter_todo/infrastructure/firestore_error.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/user.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:flutter_todo/util/tupple.dart';
@@ -49,25 +50,33 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
       return;
     }
     final updatedTask = state.initTask.updateName(state.name.text);
-    await _ref.read(loadingProvider.notifier).run(() async {
-      await _ref.read(taskRepositoryFamily(userId)).update(updatedTask);
-      updatedTask.isDone
-          ? _ref
-              .read(doneTasksFamily(userId).notifier)
-              .update(_isTarget, updatedTask)
-          : _ref
-              .read(todoTasksFamily(userId).notifier)
-              .update(_isTarget, updatedTask);
-      _ref.refresh(
-        taskFamily(
-          T2(
-            userId,
-            state.initTask.id,
+    await _ref.read(loadingProvider.notifier).run(
+      () async {
+        await _ref.read(taskRepositoryFamily(userId)).update(updatedTask);
+        updatedTask.isDone
+            ? _ref
+                .read(doneTasksFamily(userId).notifier)
+                .update(_isTarget, updatedTask)
+            : _ref
+                .read(todoTasksFamily(userId).notifier)
+                .update(_isTarget, updatedTask);
+        _ref.refresh(
+          taskFamily(
+            T2(
+              userId,
+              state.initTask.id,
+            ),
           ),
-        ),
-      );
-      _ref.read(routerProvider).goNamed_(Routes.home);
-    });
+        );
+        _ref.read(routerProvider).goNamed_(
+          Routes.taskDetail,
+          params: {
+            ParamKeys.tab: HomeTab.task.value,
+            ParamKeys.taskId: state.initTask.id.value,
+          },
+        );
+      },
+    );
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:flutter_todo/model/form_model.dart';
 import 'package:flutter_todo/model/validator.dart';
 import 'package:flutter_todo/provider/global_controller/loading_provider.dart';
+import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -38,7 +39,12 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
         result.map(
           ok: (data) {
             _ref.read(todoTasksFamily(userId).notifier).insert(data.value);
-            _ref.read(routerProvider).goNamed_(Routes.home);
+            _ref.read(routerProvider).goNamed_(
+              Routes.home,
+              params: {
+                ParamKeys.tab: HomeTab.task.value,
+              },
+            );
           },
           err: (e) {
             // TODO(torikatsu): handle error.
