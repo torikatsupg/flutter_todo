@@ -28,7 +28,7 @@ class PagenatedListController<Item, Err>
   }
 
   Future<void> refresh() async {
-    if (!state.maybeFlatMap((v) => v.canRefresh, false)) return;
+    if (!state.maybeFlatMap(data: (v) => v.canRefresh, orElse: false)) return;
     state = state.flatMapData((data) => data.copyWith(isRefreshing: true));
     final result = await _fetch();
     state = state.flatMapData(
@@ -53,9 +53,12 @@ class PagenatedListController<Item, Err>
   }
 
   Future<void> loadMore() async {
-    if (!state.maybeFlatMap((data) => data.canLoadMore, false)) return;
+    if (!state.maybeFlatMap(data: (data) => data.canLoadMore, orElse: false)) {
+      return;
+    }
     state = state.flatMapData((data) => data.copyWith(isMoreLoading: true));
-    final cursor = state.maybeFlatMap((data) => data.cursor, null);
+    final cursor =
+        state.maybeFlatMap(data: (data) => data.cursor, orElse: null);
     final result = await _fetch(cursor);
     state = state.flatMapData(
       (data) => result.map(

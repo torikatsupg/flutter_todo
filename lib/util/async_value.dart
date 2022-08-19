@@ -3,15 +3,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_todo/model/result.dart';
 
 extension AsyncValueExt<Data, Err> on AsyncValue<Result<Data, Err>> {
-  T maybeFlatMap<T>(
-    T Function(Data data) data,
-    T orElse,
-  ) =>
+  T maybeFlatMap<T>({
+    required T Function(Data data) data,
+    T Function()? loading,
+    required T orElse,
+  }) =>
       maybeMap<T>(
         data: (v) => v.value.map<T>(
           ok: (ok) => data(ok.value),
           err: (e) => orElse,
         ),
+        loading: (_) {
+          if (loading != null) {
+            return loading();
+          } else {
+            return orElse;
+          }
+        },
         orElse: () => orElse,
       );
 
