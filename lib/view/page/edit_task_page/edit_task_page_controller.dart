@@ -81,8 +81,8 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }
 

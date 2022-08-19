@@ -78,8 +78,8 @@ class SigninNotifier extends StateNotifier<_SigninState> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }
 

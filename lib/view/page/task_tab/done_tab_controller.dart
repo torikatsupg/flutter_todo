@@ -23,7 +23,7 @@ class DoneTabController extends StateNotifier<ScrollController> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }

@@ -67,8 +67,8 @@ class SignupController extends StateNotifier<_SignupState> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }
 

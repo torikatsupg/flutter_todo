@@ -75,8 +75,8 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }
 

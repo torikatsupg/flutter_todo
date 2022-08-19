@@ -56,8 +56,8 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
 
   @override
   void dispose() {
-    super.dispose();
     state.dispose();
+    super.dispose();
   }
 }
 
