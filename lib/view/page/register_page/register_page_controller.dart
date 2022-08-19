@@ -72,6 +72,12 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -87,4 +93,6 @@ class RegisterPageState with _$RegisterPageState {
       );
 
   late final bool isValidAll = username.isValid;
+
+  void dispose() => username.dispose();
 }

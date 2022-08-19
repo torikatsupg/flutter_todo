@@ -64,6 +64,12 @@ class SignupController extends StateNotifier<_SignupState> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -73,6 +79,8 @@ class _SignupState with _$_SignupState {
     required FormModel password,
     required FormModel confirmPassword,
   }) = __SignupInputState;
+
+  _SignupState._();
 
   late final isValidAll =
       email.isValid && password.isValid && isValidConrirmPassword;
@@ -98,5 +106,9 @@ class _SignupState with _$_SignupState {
     }
   }
 
-  _SignupState._();
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+  }
 }

@@ -75,6 +75,12 @@ class SigninNotifier extends StateNotifier<_SigninState> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -84,6 +90,8 @@ class _SigninState with _$_SigninState {
     required FormModel password,
   }) = __SigninInputState;
 
+  _SigninState._();
+
   late final isValidAll = email.isValid && password.isValid;
 
   _SigninState onSubmit() => copyWith(
@@ -91,5 +99,8 @@ class _SigninState with _$_SigninState {
         password: password.onSubmit(),
       );
 
-  _SigninState._();
+  void dispose() {
+    email.dispose();
+    password.dispose();
+  }
 }

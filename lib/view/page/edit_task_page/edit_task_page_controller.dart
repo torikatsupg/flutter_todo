@@ -69,6 +69,12 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
       _ref.read(routerProvider).goNamed_(Routes.home);
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -78,7 +84,9 @@ class _TaskEditState with _$_TaskEditState {
     required FormModel name,
   }) = __TaskEditState;
 
+  _TaskEditState._();
+
   late final isValidAll = name.isValid;
 
-  _TaskEditState._();
+  void dispose() => name.dispose();
 }

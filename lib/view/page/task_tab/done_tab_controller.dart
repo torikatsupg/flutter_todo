@@ -22,9 +22,10 @@ final doneTaskListItemProvider = Provider<Task>(
   (ref) => throw UnimplementedError(),
 );
 
+// TODO(torikatsu): remove pagenated list;
 class DoneTabController extends StateNotifier<_DoneTabState> {
   DoneTabController(this._ref, this._userId)
-        :super(
+      : super(
           _DoneTabState(
             list: _ref.read(doneTasksFamily(_userId)),
             scrollController: ScrollController(),
@@ -56,10 +57,17 @@ class DoneTabController extends StateNotifier<_DoneTabState> {
         },
       );
 
-  Future<void> refresh() => _ref.read(doneTasksFamily(_userId).notifier).refresh();
+  Future<void> refresh() =>
+      _ref.read(doneTasksFamily(_userId).notifier).refresh();
 
   Future<void> resolveAndLoadMore() =>
       _ref.read(doneTasksFamily(_userId).notifier).loadMore();
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -70,4 +78,8 @@ class _DoneTabState with _$_DoneTabState {
   }) = __DoneTabState;
 
   _DoneTabState._();
+
+  void dispose() {
+    scrollController.dispose();
+  }
 }

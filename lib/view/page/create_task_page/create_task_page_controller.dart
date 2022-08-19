@@ -47,6 +47,12 @@ class CreateTaskController extends StateNotifier<_CreateTaskState> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -60,4 +66,6 @@ class _CreateTaskState with _$_CreateTaskState {
   late final isValidAll = name.isValid;
 
   _CreateTaskState onSubmit() => copyWith(name: name.onSubmit());
+
+  void dispose() => name.dispose();
 }

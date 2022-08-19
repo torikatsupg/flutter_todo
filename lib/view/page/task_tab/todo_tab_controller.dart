@@ -72,6 +72,12 @@ class TodoTabController extends StateNotifier<_TodoTabState> {
           _ref.read(doneTasksFamily(_userId).notifier).insert(task);
         },
       );
+
+  @override
+  void dispose() {
+    super.dispose();
+    state.dispose();
+  }
 }
 
 @freezed
@@ -82,4 +88,8 @@ class _TodoTabState with _$_TodoTabState {
   }) = __TodoTabState;
 
   _TodoTabState._();
+
+  void dispose() {
+    scrollController.dispose();
+  }
 }
