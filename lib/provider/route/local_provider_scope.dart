@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/task.dart';
 import 'package:flutter_todo/provider/infrastructure/user_provider.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
 import 'package:go_router/go_router.dart';

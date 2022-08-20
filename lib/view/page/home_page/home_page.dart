@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:flutter_todo/view/component/lazy_indexed_stack.dart';
 import 'package:flutter_todo/view/page/home_page/home_page_controller.dart';
 import 'package:flutter_todo/view/screen/mypage_screen/mypage_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:flutter_todo/util/tupple.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';

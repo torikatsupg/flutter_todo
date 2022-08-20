@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/view/component/my_form.dart';
 import 'package:flutter_todo/view/page/create_task_page/create_task_page_controller.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CreatePage extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/model/result.dart';
 import 'package:flutter_todo/model/task.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:flutter_todo/provider/model/task_repository_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

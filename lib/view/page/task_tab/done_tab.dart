@@ -4,8 +4,9 @@ import 'package:flutter_todo/provider/model/task_provider.dart';
 import 'package:flutter_todo/provider/route/pram.dart';
 import 'package:flutter_todo/provider/route/router_provider.dart';
 import 'package:flutter_todo/provider/route/routes.dart';
+import 'package:flutter_todo/view/component/task_list_item.dart';
 import 'package:flutter_todo/view/page/task_tab/done_tab_controller.dart';
-import 'package:flutter_todo/provider/local/local_auth_provider.dart';
+import 'package:flutter_todo/provider/local/local_provider.dart';
 import 'package:flutter_todo/view/component/error_view.dart';
 import 'package:flutter_todo/view/component/loading_view.dart';
 import 'package:flutter_todo/util/async_value.dart';
@@ -83,10 +84,10 @@ class _ListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      leading: Text(task.id.value),
-      title: Text(task.name),
-      onTap: () {
+    return TaskListItem(
+      key: ValueKey(task.id),
+      task: task,
+      onTap: (task) {
         ref.read(routerProvider).goNamed_(
           Routes.taskDetail,
           params: {
