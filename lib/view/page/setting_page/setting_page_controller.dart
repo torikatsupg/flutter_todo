@@ -29,14 +29,14 @@ class SettingPageController extends StateNotifier<SettingPageState> {
       state = state.copyWith(username: username);
 
   void onSubmit() async {
+    state = state.onSubmit();
+    if (!state.isValidAll) {
+      return;
+    }
+
+    final nextUser = state.initUser.copyWith(username: state.username.text);
     ref.read(loadingProvider.notifier).run(
       () async {
-        state = state.onSubmit();
-        if (!state.isValidAll) {
-          return;
-        }
-
-        final nextUser = state.initUser.copyWith(username: state.username.text);
         final result = await ref.read(userRepositoryProvider).update(nextUser);
 
         // TODO(torikatsu): handle result

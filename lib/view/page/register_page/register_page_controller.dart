@@ -32,22 +32,17 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
       state = state.copyWith(username: username);
 
   Future<void> submit() async {
+    state = state.onSubmit();
+    if (!state.isValidAll) {
+      return;
+    }
+    final result = await _ref.read(userRepositoryProvider).register(
+          id: _userid,
+          username: state.username.text,
+        );
+
     await _ref.read(loadingProvider.notifier).run(
       () async {
-        state = state.onSubmit();
-        // TODO(torikatsu): change focus process implicitly
-        state.username.focusNode.unfocus();
-
-        if (!state.isValidAll) {
-          return;
-        }
-
-        // TODO(torikatsu): implement user provider.
-        final result = await _ref.read(userRepositoryProvider).register(
-              id: _userid,
-              username: state.username.text,
-            );
-
         await result.when(
           ok: (_) async {
             // refresh user and wait for update of user

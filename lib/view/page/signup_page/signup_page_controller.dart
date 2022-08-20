@@ -35,13 +35,12 @@ class SignupController extends StateNotifier<_SignupState> {
   void toSignin() => _ref.read(routerProvider).goNamed_(Routes.signIn);
 
   Future<void> submit() async {
+    state = state.onSubmit();
+    if (!state.isValidAll) {
+      return;
+    }
     return _ref.read(loadingProvider.notifier).run(
       () async {
-        state = state.onSubmit();
-        if (!state.isValidAll) {
-          return;
-        }
-
         final result = await _ref.read(authenticatorProvider).signup(
               email: state.email.text,
               password: state.password.text,

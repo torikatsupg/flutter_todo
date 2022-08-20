@@ -34,17 +34,12 @@ class SigninNotifier extends StateNotifier<_SigninState> {
   void toSignup() => _ref.read(routerProvider).goNamed_(Routes.signUp);
 
   Future<void> submit() async {
+    state = state.onSubmit();
+    if (!state.isValidAll) {
+      return;
+    }
     _ref.read(loadingProvider.notifier).run(
       () async {
-        state = state.onSubmit();
-        // TODO(torikatsu): change focus process implicitly
-        state.email.unfocus();
-        state.password.unfocus();
-
-        if (!state.isValidAll) {
-          return;
-        }
-
         final result = await _ref.read(authenticatorProvider).signin(
               email: state.email.text,
               password: state.password.text,
