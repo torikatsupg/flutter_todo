@@ -22,19 +22,23 @@ class SigninPage extends ConsumerWidget {
             onPressed: controller.toSignup,
             child: const Text('to signup'),
           ),
-          MyForm(
+          MyTextField(
             model: state.email,
-            hintText: 'xxxx@example.com',
-            helperText: 'xxxx@example.com',
-            label: 'email',
+            decoration: const InputDecoration(
+              hintText: 'xxxx@example.com',
+              helperText: 'xxxx@example.com',
+              label: Text('email'),
+            ),
             onChanged: controller.onChangeEmail,
           ),
-          MyForm(
+          MyTextField(
             model: state.password,
             onChanged: controller.onChangePassword,
-            hintText: 'more than 8 characters',
-            helperText: 'more than 8 characters',
-            label: 'password',
+            decoration: const InputDecoration(
+              hintText: 'more than 8 characters',
+              helperText: 'more than 8 characters',
+              label: Text('password'),
+            ),
           ),
           ElevatedButton(
             onPressed: controller.submit,

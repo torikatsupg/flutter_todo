@@ -45,12 +45,14 @@ class _EditView extends ConsumerWidget {
         ref.read(taskEditControllerFamily(T2(userId, task)).notifier);
     return Column(
       children: [
-        MyForm(
+        MyTextField(
           model: state.name,
           onChanged: controller.onChangeName,
-          hintText: 'task name',
-          helperText: 'task name',
-          label: 'task name',
+          decoration: const InputDecoration(
+            hintText: 'task name',
+            helperText: 'task name',
+            label: Text('task name'),
+          ),
         ),
         ElevatedButton(
           onPressed: controller.onSubmit,

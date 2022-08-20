@@ -16,11 +16,20 @@ final signupControllerProvider =
 
 class SignupController extends StateNotifier<_SignupState> {
   SignupController(this._ref)
-      : super(_SignupState(
-          email: createFormModel(emailValidator),
-          password: createFormModel(passwordValidator),
-          confirmPassword: createFormModel(mandatoryValidator),
-        ));
+      : super(
+          _SignupState(
+            email: createFormModel(emailValidator),
+            password: createFormModel(passwordValidator),
+            confirmPassword: createFormModel(mandatoryValidator),
+          ),
+        ) {
+    // TODO(torikatsu): validate confirm password correctly
+    state = state.copyWith(
+      confirmPassword: createFormModel(
+        confirmPasswordValidator(() => state.password.text),
+      ),
+    );
+  }
 
   final Ref _ref;
 

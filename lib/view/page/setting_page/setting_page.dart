@@ -18,14 +18,16 @@ class SettingPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          MyForm(
+          MyTextField(
             model: state.username,
             onChanged: ref
                 .read(settingPageControllerProvider(user).notifier)
                 .onChangeUsername,
-            hintText: 'enter new username',
-            helperText: 'enter new username',
-            label: 'username',
+            decoration: const InputDecoration(
+              hintText: 'enter new username',
+              helperText: 'enter new username',
+              label: Text('username'),
+            ),
           ),
           ElevatedButton(
             onPressed:

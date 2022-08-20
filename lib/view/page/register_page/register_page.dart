@@ -22,12 +22,14 @@ class RegisterPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          MyForm(
+          MyTextField(
             model: state.username,
             onChanged: controller.onChangeUsername,
-            hintText: 'username',
-            helperText: 'username',
-            label: 'username',
+            decoration: const InputDecoration(
+              hintText: 'username',
+              helperText: 'username',
+              label: Text('username'),
+            ),
           ),
           ElevatedButton(
             onPressed: controller.submit,
