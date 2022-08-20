@@ -55,4 +55,22 @@ class UserRepositoryImpl extends UserRepository<FirestoreError> {
       return Result.err(FirestoreError.error);
     }
   }
+
+  @override
+  Future<Result<void, FirestoreError>> update(User user) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.userId.value)
+          .update(
+        {
+          _username: user.username,
+        },
+      );
+      return Result.ok(null);
+    } on dynamic catch (e, sc) {
+      logError(e, sc);
+      return Result.err(FirestoreError.error);
+    }
+  }
 }
