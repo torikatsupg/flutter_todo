@@ -16,6 +16,7 @@ dependencies:
   firebase_core: ^1.20.0
   firebase_auth: ^3.5.0
   cloud_firestore: ^3.4.0
+  intl: ^0.17.0
   # TODO(torikatsu): configure podfile to speed up for building ios
 
 dev_dependencies:
