@@ -19,10 +19,8 @@ class FormModel with _$FormModel {
   FormModel._();
 
   void initialize(void Function(FormModel model) onChange) {
-    controller.addListener(() => onChange(copyWith()));
-    focusNode.addListener(
-      () => onChange(copyWith(hasEdit: true, serverErrors: [])),
-    );
+    focusNode
+        .addListener(() => onChange(copyWith(hasEdit: true, serverErrors: [])));
   }
 
   String? get errors {
