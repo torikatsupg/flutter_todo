@@ -20,7 +20,7 @@ class SignupController extends StateNotifier<_SignupState> {
           _SignupState(
             email: createFormModel(emailValidator),
             password: createFormModel(passwordValidator),
-            confirmPassword: createFormModel(),
+            confirmPassword: createFormModel(mandatoryValidator),
           ),
         ) {
     state.email.initialize(_onChangeEmail);
@@ -111,28 +111,18 @@ class _SignupState with _$_SignupState {
   _SignupState._();
 
   late final isValidAll =
-      email.isValid && password.isValid && isValidConrirmPassword;
-
-  late final isValidConrirmPassword = _confirmPasswordError == null;
-
-  late final confirmPasswordError =
-      confirmPassword.canDisplayError ? _confirmPasswordError : null;
+      email.isValid && password.isValid && confirmPassword.isValid;
 
   _SignupState onSubmit() => copyWith(
         email: email.onSubmit(),
         password: password.onSubmit(),
-        confirmPassword: confirmPassword.onSubmit(),
+        confirmPassword: confirmPassword.onSubmit().copyWith(
+              additionalValidationError: confirmPasswordValidator(
+                password.text,
+                confirmPassword.text,
+              ),
+            ),
       );
-
-  String? get _confirmPasswordError {
-    if (confirmPassword.errors != null) {
-      return confirmPassword.errors;
-    } else if (confirmPassword.controller.text != password.controller.text) {
-      return 'パスワードと確認用パスワードが一致しません';
-    } else {
-      return null;
-    }
-  }
 
   void dispose() {
     email.dispose();

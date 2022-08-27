@@ -44,8 +44,10 @@ class FormModel with _$FormModel {
     final validationError = validator(controller.text);
     final addionalError = additionalValidationError;
     return [
-      if (validationError != null) validationError,
-      if (addionalError != null) addionalError,
+      if (validationError != null)
+        validationError
+      else if (addionalError != null)
+        addionalError,
       ...serverErrors,
     ];
   }
