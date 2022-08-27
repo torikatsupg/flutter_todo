@@ -23,7 +23,6 @@ class SignupPage extends ConsumerWidget {
           ),
           MyTextField(
             model: state.email,
-            onChanged: controller.onChangedEmail,
             decoration: const InputDecoration(
               hintText: 'xxxx@example.com',
               helperText: 'xxxx@example.com',
@@ -32,7 +31,6 @@ class SignupPage extends ConsumerWidget {
           ),
           MyTextField(
             model: state.password,
-            onChanged: controller.onChangedPassword,
             decoration: const InputDecoration(
               hintText: 'more than 8 characters',
               helperText: 'more than 8 characters',
@@ -41,7 +39,6 @@ class SignupPage extends ConsumerWidget {
           ),
           MyTextField(
             model: state.confirmPassword,
-            onChanged: controller.onChangedConfirmPassword,
             decoration: const InputDecoration(
               label: Text('confirm password'),
             ),

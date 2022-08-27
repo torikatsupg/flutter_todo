@@ -22,13 +22,16 @@ class SigninNotifier extends StateNotifier<_SigninState> {
             email: createFormModel(emailValidator),
             password: createFormModel(passwordValidator),
           ),
-        );
+        ) {
+    state.email.initialize(_onChangeEmail);
+    state.password.initialize(_onChangePassword);
+  }
 
   final Ref _ref;
 
-  void onChangeEmail(FormModel email) => state = state.copyWith(email: email);
+  _onChangeEmail(FormModel email) => state = state.copyWith(email: email);
 
-  void onChangePassword(FormModel password) =>
+  _onChangePassword(FormModel password) =>
       state = state.copyWith(password: password);
 
   void toSignup() => _ref.read(routerProvider).goNamed_(Routes.signUp);

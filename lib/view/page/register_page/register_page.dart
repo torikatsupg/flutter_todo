@@ -24,7 +24,6 @@ class RegisterPage extends ConsumerWidget {
         children: [
           MyTextField(
             model: state.username,
-            onChanged: controller.onChangeUsername,
             decoration: const InputDecoration(
               hintText: 'username',
               helperText: 'username',

@@ -29,11 +29,9 @@ class SigninPage extends ConsumerWidget {
               helperText: 'xxxx@example.com',
               label: Text('email'),
             ),
-            onChanged: controller.onChangeEmail,
           ),
           MyTextField(
             model: state.password,
-            onChanged: controller.onChangePassword,
             decoration: const InputDecoration(
               hintText: 'more than 8 characters',
               helperText: 'more than 8 characters',

@@ -9,6 +9,7 @@ typedef Validator = String? Function(String value);
 class FormModel with _$FormModel {
   factory FormModel({
     required Validator validator,
+    String? additionalValidationError,
     required TextEditingController controller,
     required FocusNode focusNode,
     @Default(false) bool hasEdit,
@@ -16,6 +17,13 @@ class FormModel with _$FormModel {
   }) = _FormModel;
 
   FormModel._();
+
+  void initialize(void Function(FormModel model) onChange) {
+    controller.addListener(() => onChange(copyWith()));
+    focusNode.addListener(
+      () => onChange(copyWith(hasEdit: true, serverErrors: [])),
+    );
+  }
 
   String? get errors {
     if (!canDisplayError) {
@@ -34,17 +42,13 @@ class FormModel with _$FormModel {
 
   List<String> get _errors {
     final validationError = validator(controller.text);
+    final addionalError = additionalValidationError;
     return [
       if (validationError != null) validationError,
+      if (addionalError != null) addionalError,
       ...serverErrors,
     ];
   }
-
-  FormModel onChangeText() => this;
-
-  FormModel onFocusChange() => copyWith(hasEdit: true, serverErrors: []);
-
-  void unfocus() => focusNode.unfocus();
 
   FormModel addServerError(String e) =>
       copyWith(serverErrors: [...serverErrors, e]);
@@ -60,9 +64,10 @@ class FormModel with _$FormModel {
   }
 }
 
-FormModel createFormModel(Validator validator, [String initText = '']) =>
-    FormModel(
-      validator: validator,
-      controller: TextEditingController(text: initText),
-      focusNode: FocusNode(),
-    );
+FormModel createFormModel([Validator? validator, String initText = '']) {
+  return FormModel(
+    validator: validator ?? (_) => null,
+    controller: TextEditingController(text: initText),
+    focusNode: FocusNode(),
+  );
+}

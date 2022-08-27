@@ -23,17 +23,14 @@ String? passwordValidator(String? value) {
   }
 }
 
-String? Function(String?) confirmPasswordValidator(
-    String Function() getPassword) {
-  return (String? value) {
-    if (value == null || value.isEmpty) {
+String? confirmPasswordValidator(String? password, String? confirmPassword) {
+    if (confirmPassword == null || confirmPassword.isEmpty) {
       return '必須項目です';
-    } else if (value != getPassword()) {
+    } else if (password != confirmPassword) {
       return 'パスワードが一致しません';
     } else {
       return null;
     }
-  };
 }
 
 String? mandatoryValidator(String? value) {

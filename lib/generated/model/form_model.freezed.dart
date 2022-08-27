@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FormModel {
   Validator get validator => throw _privateConstructorUsedError;
+  String? get additionalValidationError => throw _privateConstructorUsedError;
   TextEditingController get controller => throw _privateConstructorUsedError;
   FocusNode get focusNode => throw _privateConstructorUsedError;
   bool get hasEdit => throw _privateConstructorUsedError;
@@ -33,6 +34,7 @@ abstract class $FormModelCopyWith<$Res> {
       _$FormModelCopyWithImpl<$Res>;
   $Res call(
       {Validator validator,
+      String? additionalValidationError,
       TextEditingController controller,
       FocusNode focusNode,
       bool hasEdit,
@@ -50,6 +52,7 @@ class _$FormModelCopyWithImpl<$Res> implements $FormModelCopyWith<$Res> {
   @override
   $Res call({
     Object? validator = freezed,
+    Object? additionalValidationError = freezed,
     Object? controller = freezed,
     Object? focusNode = freezed,
     Object? hasEdit = freezed,
@@ -60,6 +63,10 @@ class _$FormModelCopyWithImpl<$Res> implements $FormModelCopyWith<$Res> {
           ? _value.validator
           : validator // ignore: cast_nullable_to_non_nullable
               as Validator,
+      additionalValidationError: additionalValidationError == freezed
+          ? _value.additionalValidationError
+          : additionalValidationError // ignore: cast_nullable_to_non_nullable
+              as String?,
       controller: controller == freezed
           ? _value.controller
           : controller // ignore: cast_nullable_to_non_nullable
@@ -88,6 +95,7 @@ abstract class _$$_FormModelCopyWith<$Res> implements $FormModelCopyWith<$Res> {
   @override
   $Res call(
       {Validator validator,
+      String? additionalValidationError,
       TextEditingController controller,
       FocusNode focusNode,
       bool hasEdit,
@@ -107,6 +115,7 @@ class __$$_FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? validator = freezed,
+    Object? additionalValidationError = freezed,
     Object? controller = freezed,
     Object? focusNode = freezed,
     Object? hasEdit = freezed,
@@ -117,6 +126,10 @@ class __$$_FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
           ? _value.validator
           : validator // ignore: cast_nullable_to_non_nullable
               as Validator,
+      additionalValidationError: additionalValidationError == freezed
+          ? _value.additionalValidationError
+          : additionalValidationError // ignore: cast_nullable_to_non_nullable
+              as String?,
       controller: controller == freezed
           ? _value.controller
           : controller // ignore: cast_nullable_to_non_nullable
@@ -142,6 +155,7 @@ class __$$_FormModelCopyWithImpl<$Res> extends _$FormModelCopyWithImpl<$Res>
 class _$_FormModel extends _FormModel {
   _$_FormModel(
       {required this.validator,
+      this.additionalValidationError,
       required this.controller,
       required this.focusNode,
       this.hasEdit = false,
@@ -151,6 +165,8 @@ class _$_FormModel extends _FormModel {
 
   @override
   final Validator validator;
+  @override
+  final String? additionalValidationError;
   @override
   final TextEditingController controller;
   @override
@@ -168,7 +184,7 @@ class _$_FormModel extends _FormModel {
 
   @override
   String toString() {
-    return 'FormModel(validator: $validator, controller: $controller, focusNode: $focusNode, hasEdit: $hasEdit, serverErrors: $serverErrors)';
+    return 'FormModel(validator: $validator, additionalValidationError: $additionalValidationError, controller: $controller, focusNode: $focusNode, hasEdit: $hasEdit, serverErrors: $serverErrors)';
   }
 
   @override
@@ -178,6 +194,8 @@ class _$_FormModel extends _FormModel {
             other is _$_FormModel &&
             (identical(other.validator, validator) ||
                 other.validator == validator) &&
+            const DeepCollectionEquality().equals(
+                other.additionalValidationError, additionalValidationError) &&
             const DeepCollectionEquality()
                 .equals(other.controller, controller) &&
             const DeepCollectionEquality().equals(other.focusNode, focusNode) &&
@@ -190,6 +208,7 @@ class _$_FormModel extends _FormModel {
   int get hashCode => Object.hash(
       runtimeType,
       validator,
+      const DeepCollectionEquality().hash(additionalValidationError),
       const DeepCollectionEquality().hash(controller),
       const DeepCollectionEquality().hash(focusNode),
       const DeepCollectionEquality().hash(hasEdit),
@@ -204,6 +223,7 @@ class _$_FormModel extends _FormModel {
 abstract class _FormModel extends FormModel {
   factory _FormModel(
       {required final Validator validator,
+      final String? additionalValidationError,
       required final TextEditingController controller,
       required final FocusNode focusNode,
       final bool hasEdit,
@@ -212,6 +232,8 @@ abstract class _FormModel extends FormModel {
 
   @override
   Validator get validator;
+  @override
+  String? get additionalValidationError;
   @override
   TextEditingController get controller;
   @override

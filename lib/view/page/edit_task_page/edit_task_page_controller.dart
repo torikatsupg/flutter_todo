@@ -35,12 +35,14 @@ class TaskEditController extends StateNotifier<_TaskEditState> {
             initTask: args.v2,
             name: createFormModel(mandatoryValidator, args.v2.name),
           ),
-        );
+        ) {
+    state.name.initialize(_onChangeName);
+  }
 
   final Ref _ref;
   final UserId userId;
 
-  void onChangeName(FormModel name) => state = state.copyWith(name: name);
+  _onChangeName(FormModel name) => state = state.copyWith(name: name);
 
   bool _isTarget(Task item) => item.id == state.initTask.id;
 

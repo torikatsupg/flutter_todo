@@ -20,9 +20,6 @@ class SettingPage extends ConsumerWidget {
         children: [
           MyTextField(
             model: state.username,
-            onChanged: ref
-                .read(settingPageControllerProvider(user).notifier)
-                .onChangeUsername,
             decoration: const InputDecoration(
               hintText: 'enter new username',
               helperText: 'enter new username',

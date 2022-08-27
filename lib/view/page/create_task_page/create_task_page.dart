@@ -20,7 +20,6 @@ class CreatePage extends ConsumerWidget {
         children: [
           MyTextField(
             model: state.name,
-            onChanged: controller.onChangeName,
             decoration: const InputDecoration(
               hintText: 'task name',
               helperText: 'task name',

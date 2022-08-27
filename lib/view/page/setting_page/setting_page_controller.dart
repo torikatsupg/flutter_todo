@@ -21,11 +21,13 @@ class SettingPageController extends StateNotifier<SettingPageState> {
             initUser: initUser,
             username: createFormModel(mandatoryValidator),
           ),
-        );
+        ) {
+    state.username.initialize(_onChangeUsername);
+  }
 
   final Ref ref;
 
-  void onChangeUsername(FormModel username) =>
+  _onChangeUsername(FormModel username) =>
       state = state.copyWith(username: username);
 
   void onSubmit() async {

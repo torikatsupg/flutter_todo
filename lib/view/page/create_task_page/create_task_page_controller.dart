@@ -19,12 +19,14 @@ final createTaskControllerFamily = StateNotifierProvider.autoDispose
 
 class CreateTaskController extends StateNotifier<_CreateTaskState> {
   CreateTaskController(this._ref, this.userId)
-      : super(_CreateTaskState(name: createFormModel(mandatoryValidator)));
+      : super(_CreateTaskState(name: createFormModel(mandatoryValidator))) {
+    state.name.initialize(_onChangeName);
+  }
 
   final Ref _ref;
   final UserId userId;
 
-  onChangeName(FormModel name) => state = state.copyWith(name: name);
+  _onChangeName(FormModel name) => state = state.copyWith(name: name);
 
   Future<void> onSubmit() async {
     state = state.onSubmit();

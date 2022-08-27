@@ -20,26 +20,38 @@ class SignupController extends StateNotifier<_SignupState> {
           _SignupState(
             email: createFormModel(emailValidator),
             password: createFormModel(passwordValidator),
-            confirmPassword: createFormModel(mandatoryValidator),
+            confirmPassword: createFormModel(),
           ),
         ) {
-    // TODO(torikatsu): validate confirm password correctly
+    state.email.initialize(_onChangeEmail);
+    state.password.initialize(_onChangePassword);
+    state.confirmPassword.initialize(_onChangeConfirmPassword);
+  }
+
+  void _onChangeEmail(FormModel email) {
+    state = state.copyWith(email: email);
+  }
+
+  void _onChangePassword(FormModel password) {
     state = state.copyWith(
-      confirmPassword: createFormModel(
-        confirmPasswordValidator(() => state.password.text),
+      password: password,
+      confirmPassword: _validateConfirmPassword(
+        password,
+        state.confirmPassword,
+      ),
+    );
+  }
+
+  void _onChangeConfirmPassword(FormModel confirmPassword) {
+    state = state.copyWith(
+      confirmPassword: _validateConfirmPassword(
+        state.password,
+        confirmPassword,
       ),
     );
   }
 
   final Ref _ref;
-
-  void onChangedEmail(FormModel email) => state = state.copyWith(email: email);
-
-  void onChangedPassword(FormModel password) =>
-      state = state.copyWith(password: password);
-
-  void onChangedConfirmPassword(FormModel confirmFormModel) =>
-      state = state.copyWith(confirmPassword: confirmFormModel);
 
   void toSignin() => _ref.read(routerProvider).goNamed_(Routes.signIn);
 
@@ -70,6 +82,14 @@ class SignupController extends StateNotifier<_SignupState> {
           },
         );
       },
+    );
+  }
+
+  FormModel _validateConfirmPassword(
+      FormModel password, FormModel confirmPassword) {
+    return confirmPassword.copyWith(
+      additionalValidationError:
+          confirmPasswordValidator(password.text, confirmPassword.text),
     );
   }
 
