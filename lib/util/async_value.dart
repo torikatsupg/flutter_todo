@@ -31,7 +31,8 @@ extension AsyncValueExt<Data, Err> on AsyncValue<Result<Data, Err>> {
           (v) => v.map_(ok: functor, err: (e) => e),
         ),
         loading: (_) => AsyncValue<Result<T, Err>>.loading(),
-        error: (e) => AsyncValue<Result<T, Err>>.error(e),
+        error: (e) =>
+            AsyncValue<Result<T, Err>>.error(e, StackTrace.empty),
       );
 
   void flatWhenData(

@@ -10,6 +10,7 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
+    final a = "hoge";
     return FutureBuilder<bool>(
       future: _init(ref),
       builder: (context, snapshot) {
@@ -38,5 +39,10 @@ Future<bool> _init(WidgetRef ref) async {
     // the GoRouter is attached after waiting for the first event.
     ref.read(userProvider.stream).first,
   ]);
+  try {
+    throw "test";
+  } catch (e) {
+    print(e);
+  }
   return true;
 }
