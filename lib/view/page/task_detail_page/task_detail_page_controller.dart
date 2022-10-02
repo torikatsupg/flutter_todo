@@ -14,20 +14,22 @@ final taskDetailFamily = StateNotifierProvider.autoDispose.family<
     TaskDetailController,
     AsyncValue<Result<Task, FirestoreError>>,
     T2<UserId, TaskId>>(
-  (ref, args) => TaskDetailController(
-    ref,
-    ref.watch(taskFamily(args)),
-  ),
+  (ref, args) => TaskDetailController(args.v1, args.v2),
 );
 
-class TaskDetailController
-    extends StateNotifier<AsyncValue<Result<Task, FirestoreError>>> {
-  TaskDetailController(this._ref, super._state);
+class TaskDetailController extends AsyncNotifier<Result<Task, FirestoreError>> {
+  TaskDetailController(this._userId, this._taskId) : super();
 
-  final Ref _ref;
+  final UserId _userId;
+  final TaskId _taskId;
+
+  @override
+  Future<Result<Task, FirestoreError>> build() async {
+    return ref.watch(taskFamily(T2(_userId, _taskId)).future);
+  }
 
   void toEditPage() => state.flatWhenData(
-        (task) => _ref.read(routerProvider).goNamed_(
+        (task) => ref.read(routerProvider).goNamed_(
           Routes.taskEdit,
           params: {
             ParamKeys.tab: HomeTab.task.value,
@@ -36,3 +38,4 @@ class TaskDetailController
         ),
       );
 }
+

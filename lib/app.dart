@@ -39,10 +39,5 @@ Future<bool> _init(WidgetRef ref) async {
     // the GoRouter is attached after waiting for the first event.
     ref.read(userProvider.stream).first,
   ]);
-  try {
-    throw "test";
-  } catch (e) {
-    print(e);
-  }
   return true;
 }
